@@ -1,0 +1,1131 @@
+2025-07-24 21:15:03 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 21:15:03 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 21:15:03 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 21:52:31 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 21:52:31 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 21:52:31 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 21:56:03 - utils.audio_utils - ERROR - Failed to load audio: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+2025-07-24 21:56:03 - services.transcription_service - ERROR - Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+2025-07-24 21:56:03 - routes.api - ERROR - Transcription endpoint error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+2025-07-24 21:56:03 - utils.error_handlers - ERROR - ToneBridge Error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 40, in load_audio
+    audio_array, sample_rate = librosa.load(
+                               ^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 185, in load
+    raise exc
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 175, in load
+    y, sr_native = __soundfile_load(path, offset, duration, dtype)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 208, in __soundfile_load
+    context = sf.SoundFile(path)
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 658, in __init__
+    self._file = self._open(file, mode_int, closefd)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 1216, in _open
+    raise LibsndfileError(err, prefix="Error opening {0!r}: ".format(self.name))
+soundfile.LibsndfileError: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 76, in transcribe_audio
+    audio_array, sample_rate = audio_processor.load_audio(audio_data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 58, in load_audio
+    raise AudioProcessingError(f"Failed to load audio: {str(e)}")
+utils.error_handlers.AudioProcessingError: Failed to load audio: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\routes\api.py", line 73, in transcribe_audio
+    transcription_result = transcription_service.transcribe_audio(audio_data, audio_format)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 91, in transcribe_audio
+    raise AudioProcessingError(f"Transcription failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000162AA234590>: Format not recognised.
+2025-07-24 22:01:03 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:01:03 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:01:03 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:01:09 - utils.audio_utils - ERROR - Failed to load audio: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+2025-07-24 22:01:09 - services.transcription_service - ERROR - Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+2025-07-24 22:01:09 - routes.api - ERROR - Transcription endpoint error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+2025-07-24 22:01:09 - utils.error_handlers - ERROR - ToneBridge Error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 40, in load_audio
+    audio_array, sample_rate = librosa.load(
+                               ^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 185, in load
+    raise exc
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 175, in load
+    y, sr_native = __soundfile_load(path, offset, duration, dtype)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 208, in __soundfile_load
+    context = sf.SoundFile(path)
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 658, in __init__
+    self._file = self._open(file, mode_int, closefd)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 1216, in _open
+    raise LibsndfileError(err, prefix="Error opening {0!r}: ".format(self.name))
+soundfile.LibsndfileError: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 76, in transcribe_audio
+    audio_array, sample_rate = audio_processor.load_audio(audio_data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 58, in load_audio
+    raise AudioProcessingError(f"Failed to load audio: {str(e)}")
+utils.error_handlers.AudioProcessingError: Failed to load audio: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\routes\api.py", line 73, in transcribe_audio
+    transcription_result = transcription_service.transcribe_audio(audio_data, audio_format)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 91, in transcribe_audio
+    raise AudioProcessingError(f"Transcription failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x000001D0C47E48B0>: Format not recognised.
+2025-07-24 22:06:27 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:06:27 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:06:27 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:06:32 - utils.audio_utils - ERROR - Failed to load audio: Expecting value: line 1 column 1 (char 0)
+2025-07-24 22:06:32 - services.transcription_service - ERROR - Transcription failed: Failed to load audio: Expecting value: line 1 column 1 (char 0)
+2025-07-24 22:06:32 - routes.api - ERROR - Transcription endpoint error: Transcription failed: Failed to load audio: Expecting value: line 1 column 1 (char 0)
+2025-07-24 22:06:32 - utils.error_handlers - ERROR - ToneBridge Error: Transcription failed: Failed to load audio: Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 41, in load_audio
+    audio = AudioSegment.from_file(io.BytesIO(audio_data), format='webm')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\pydub\audio_segment.py", line 728, in from_file
+    info = mediainfo_json(orig_file, read_ahead_limit=read_ahead_limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\pydub\utils.py", line 279, in mediainfo_json
+    info = json.loads(output)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 76, in transcribe_audio
+    audio_array, sample_rate = audio_processor.load_audio(audio_data, format=audio_format)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 69, in load_audio
+    raise AudioProcessingError(f"Failed to load audio: {str(e)}")
+utils.error_handlers.AudioProcessingError: Failed to load audio: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\routes\api.py", line 73, in transcribe_audio
+    transcription_result = transcription_service.transcribe_audio(audio_data, audio_format)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 91, in transcribe_audio
+    raise AudioProcessingError(f"Transcription failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Transcription failed: Failed to load audio: Expecting value: line 1 column 1 (char 0)
+2025-07-24 22:18:17 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:18:17 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:18:17 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:18:26 - routes.api - INFO - Audio data decoded successfully: 27209 bytes, format: webm
+2025-07-24 22:18:26 - utils.audio_utils - INFO - Loading audio: 27209 bytes, format: webm
+2025-07-24 22:18:26 - utils.audio_utils - INFO - Converting webm to wav using pydub...
+2025-07-24 22:18:26 - utils.audio_utils - ERROR - Webm conversion failed: Expecting value: line 1 column 1 (char 0)
+2025-07-24 22:18:26 - utils.audio_utils - INFO - Trying direct loading as fallback...
+2025-07-24 22:18:28 - utils.audio_utils - ERROR - Failed to load audio: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+2025-07-24 22:18:28 - utils.audio_utils - ERROR - Audio data length: 27209
+2025-07-24 22:18:28 - utils.audio_utils - ERROR - Audio format: webm
+2025-07-24 22:18:28 - services.transcription_service - ERROR - Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+2025-07-24 22:18:28 - routes.api - ERROR - Transcription endpoint error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+2025-07-24 22:18:28 - utils.error_handlers - ERROR - ToneBridge Error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 48, in load_audio
+    audio = AudioSegment.from_file(io.BytesIO(audio_data), format='webm')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\pydub\audio_segment.py", line 728, in from_file
+    info = mediainfo_json(orig_file, read_ahead_limit=read_ahead_limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\pydub\utils.py", line 279, in mediainfo_json
+    info = json.loads(output)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 65, in load_audio
+    audio_array, sample_rate = librosa.load(
+                               ^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 185, in load
+    raise exc
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 175, in load
+    y, sr_native = __soundfile_load(path, offset, duration, dtype)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 208, in __soundfile_load
+    context = sf.SoundFile(path)
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 658, in __init__
+    self._file = self._open(file, mode_int, closefd)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 1216, in _open
+    raise LibsndfileError(err, prefix="Error opening {0!r}: ".format(self.name))
+soundfile.LibsndfileError: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 76, in transcribe_audio
+    audio_array, sample_rate = audio_processor.load_audio(audio_data, format=audio_format)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 91, in load_audio
+    raise AudioProcessingError(f"Failed to load audio: {str(e)}")
+utils.error_handlers.AudioProcessingError: Failed to load audio: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\routes\api.py", line 82, in transcribe_audio
+    transcription_result = transcription_service.transcribe_audio(audio_data, audio_format)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 91, in transcribe_audio
+    raise AudioProcessingError(f"Transcription failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000207C74F8400>: Format not recognised.
+2025-07-24 22:23:17 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:23:17 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:23:17 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:23:27 - routes.api - INFO - Audio data decoded successfully: 31073 bytes, format: webm
+2025-07-24 22:23:27 - utils.audio_utils - INFO - Loading audio: 31073 bytes, format: webm
+2025-07-24 22:23:27 - utils.audio_utils - INFO - Saved received audio to debug_received.webm
+2025-07-24 22:23:27 - utils.audio_utils - INFO - Converting webm to wav using pydub...
+2025-07-24 22:23:27 - utils.audio_utils - ERROR - Webm conversion failed: Expecting value: line 1 column 1 (char 0)
+2025-07-24 22:23:27 - utils.audio_utils - INFO - Trying direct loading as fallback...
+2025-07-24 22:23:29 - utils.audio_utils - ERROR - Failed to load audio: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+2025-07-24 22:23:29 - utils.audio_utils - ERROR - Audio data length: 31073
+2025-07-24 22:23:29 - utils.audio_utils - ERROR - Audio format: webm
+2025-07-24 22:23:29 - services.transcription_service - ERROR - Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+2025-07-24 22:23:29 - routes.api - ERROR - Transcription endpoint error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+2025-07-24 22:23:29 - utils.error_handlers - ERROR - ToneBridge Error: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 55, in load_audio
+    audio = AudioSegment.from_file(io.BytesIO(audio_data), format='webm')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\pydub\audio_segment.py", line 728, in from_file
+    info = mediainfo_json(orig_file, read_ahead_limit=read_ahead_limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\pydub\utils.py", line 279, in mediainfo_json
+    info = json.loads(output)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 72, in load_audio
+    audio_array, sample_rate = librosa.load(
+                               ^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 185, in load
+    raise exc
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 175, in load
+    y, sr_native = __soundfile_load(path, offset, duration, dtype)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\librosa\core\audio.py", line 208, in __soundfile_load
+    context = sf.SoundFile(path)
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 658, in __init__
+    self._file = self._open(file, mode_int, closefd)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\soundfile.py", line 1216, in _open
+    raise LibsndfileError(err, prefix="Error opening {0!r}: ".format(self.name))
+soundfile.LibsndfileError: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 76, in transcribe_audio
+    audio_array, sample_rate = audio_processor.load_audio(audio_data, format=audio_format)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\utils\audio_utils.py", line 98, in load_audio
+    raise AudioProcessingError(f"Failed to load audio: {str(e)}")
+utils.error_handlers.AudioProcessingError: Failed to load audio: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\routes\api.py", line 82, in transcribe_audio
+    transcription_result = transcription_service.transcribe_audio(audio_data, audio_format)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 91, in transcribe_audio
+    raise AudioProcessingError(f"Transcription failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Transcription failed: Failed to load audio: Error opening <_io.BytesIO object at 0x00000165DAD1C5E0>: Format not recognised.
+2025-07-24 22:29:36 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:29:36 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:29:36 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:29:41 - routes.api - INFO - Audio data decoded successfully: 30107 bytes, format: webm
+2025-07-24 22:29:41 - utils.audio_utils - INFO - Loading audio: 30107 bytes, format: webm
+2025-07-24 22:29:41 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:29:41 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp11btw90r.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp11btw90r.wav
+2025-07-24 22:29:41 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:29:55 - utils.audio_utils - INFO - Audio loaded successfully: 29760 samples, 16000Hz
+2025-07-24 22:29:58 - utils.audio_utils - INFO - Audio preprocessed: 28672 samples
+2025-07-24 22:29:59 - services.transcription_service - ERROR - Sphinx recognition failed: missing PocketSphinx module: ensure that PocketSphinx is set up correctly.
+2025-07-24 22:29:59 - services.transcription_service - ERROR - Speech recognition failed: All speech recognition methods failed
+2025-07-24 22:29:59 - services.transcription_service - ERROR - Transcription failed: Speech recognition failed: All speech recognition methods failed
+2025-07-24 22:29:59 - routes.api - ERROR - Transcription endpoint error: Transcription failed: Speech recognition failed: All speech recognition methods failed
+2025-07-24 22:29:59 - utils.error_handlers - ERROR - ToneBridge Error: Transcription failed: Speech recognition failed: All speech recognition methods failed
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\speech_recognition\__init__.py", line 600, in recognize_sphinx
+    from pocketsphinx import pocketsphinx, Jsgf, FsgModel
+ModuleNotFoundError: No module named 'pocketsphinx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 142, in _transcribe_with_speech_recognition
+    text = self.recognizer.recognize_sphinx(audio)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\speech_recognition\__init__.py", line 603, in recognize_sphinx
+    raise RequestError("missing PocketSphinx module: ensure that PocketSphinx is set up correctly.")
+speech_recognition.exceptions.RequestError: missing PocketSphinx module: ensure that PocketSphinx is set up correctly.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 147, in _transcribe_with_speech_recognition
+    raise AudioProcessingError("All speech recognition methods failed")
+utils.error_handlers.AudioProcessingError: All speech recognition methods failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 84, in transcribe_audio
+    result = self._transcribe_with_speech_recognition(audio_data, audio_format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 158, in _transcribe_with_speech_recognition
+    raise AudioProcessingError(f"Speech recognition failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Speech recognition failed: All speech recognition methods failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\routes\api.py", line 82, in transcribe_audio
+    transcription_result = transcription_service.transcribe_audio(audio_data, audio_format)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\transcription_service.py", line 91, in transcribe_audio
+    raise AudioProcessingError(f"Transcription failed: {str(e)}")
+utils.error_handlers.AudioProcessingError: Transcription failed: Speech recognition failed: All speech recognition methods failed
+2025-07-24 22:32:14 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:32:14 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:32:14 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:32:19 - routes.api - INFO - Audio data decoded successfully: 28175 bytes, format: webm
+2025-07-24 22:32:19 - utils.audio_utils - INFO - Loading audio: 28175 bytes, format: webm
+2025-07-24 22:32:19 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:32:19 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp6s926v5u.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp6s926v5u.wav
+2025-07-24 22:32:20 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:32:22 - utils.audio_utils - INFO - Audio loaded successfully: 27840 samples, 16000Hz
+2025-07-24 22:32:22 - utils.audio_utils - INFO - Audio preprocessed: 17920 samples
+2025-07-24 22:32:24 - services.transcription_service - INFO - Used Sphinx recognition
+2025-07-24 22:32:24 - services.transcription_service - INFO - Transcription completed: 0 characters
+2025-07-24 22:32:24 - routes.api - INFO - API Request - Duration: 4.039s | Request: {'audio_length': 28175, 'format': 'webm', 'include_emotion': True} | Response: {'transcript': '', 'confidence': 0.5, 'model': 'speech_recognition', 'language': 'en'}
+2025-07-24 22:32:44 - routes.api - INFO - Audio data decoded successfully: 40733 bytes, format: webm
+2025-07-24 22:32:44 - utils.audio_utils - INFO - Loading audio: 40733 bytes, format: webm
+2025-07-24 22:32:44 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:32:44 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpjj396lqg.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpjj396lqg.wav
+2025-07-24 22:32:44 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:32:44 - utils.audio_utils - INFO - Audio loaded successfully: 40320 samples, 16000Hz
+2025-07-24 22:32:44 - utils.audio_utils - INFO - Audio preprocessed: 33280 samples
+2025-07-24 22:32:45 - services.transcription_service - INFO - Used Sphinx recognition
+2025-07-24 22:32:45 - services.transcription_service - INFO - Transcription completed: 0 characters
+2025-07-24 22:32:45 - routes.api - INFO - API Request - Duration: 1.138s | Request: {'audio_length': 40733, 'format': 'webm', 'include_emotion': True} | Response: {'transcript': '', 'confidence': 0.5, 'model': 'speech_recognition', 'language': 'en'}
+2025-07-24 22:33:49 - routes.api - INFO - Audio data decoded successfully: 52325 bytes, format: webm
+2025-07-24 22:33:49 - utils.audio_utils - INFO - Loading audio: 52325 bytes, format: webm
+2025-07-24 22:33:49 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:33:49 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp0w58_ps1.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp0w58_ps1.wav
+2025-07-24 22:33:49 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:33:49 - utils.audio_utils - INFO - Audio loaded successfully: 51840 samples, 16000Hz
+2025-07-24 22:33:49 - utils.audio_utils - INFO - Audio preprocessed: 29696 samples
+2025-07-24 22:33:50 - services.transcription_service - INFO - Used Sphinx recognition
+2025-07-24 22:33:50 - services.transcription_service - INFO - Transcription completed: 0 characters
+2025-07-24 22:33:50 - routes.api - INFO - API Request - Duration: 1.298s | Request: {'audio_length': 52325, 'format': 'webm', 'include_emotion': True} | Response: {'transcript': '', 'confidence': 0.5, 'model': 'speech_recognition', 'language': 'en'}
+2025-07-24 22:34:36 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:34:36 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:34:36 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:34:45 - routes.api - INFO - Audio data decoded successfully: 48461 bytes, format: webm
+2025-07-24 22:34:45 - utils.audio_utils - INFO - Loading audio: 48461 bytes, format: webm
+2025-07-24 22:34:45 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:34:45 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpdelue4vz.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpdelue4vz.wav
+2025-07-24 22:34:45 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:34:47 - utils.audio_utils - INFO - Audio loaded successfully: 48000 samples, 16000Hz
+2025-07-24 22:34:48 - utils.audio_utils - INFO - Audio preprocessed: 36352 samples
+2025-07-24 22:34:49 - services.transcription_service - INFO - Used Sphinx recognition
+2025-07-24 22:34:49 - services.transcription_service - INFO - Transcription completed: 0 characters
+2025-07-24 22:34:49 - routes.api - INFO - API Request - Duration: 3.915s | Request: {'audio_length': 48461, 'format': 'webm', 'include_emotion': True} | Response: {'transcript': '', 'confidence': 0.5, 'model': 'speech_recognition', 'language': 'en'}
+2025-07-24 22:36:23 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: False
+2025-07-24 22:36:23 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:36:23 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:36:23 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:36:33 - routes.api - INFO - Audio data decoded successfully: 64883 bytes, format: webm
+2025-07-24 22:36:33 - utils.audio_utils - INFO - Loading audio: 64883 bytes, format: webm
+2025-07-24 22:36:33 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:36:33 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpht0v6sec.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpht0v6sec.wav
+2025-07-24 22:36:33 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:36:36 - utils.audio_utils - INFO - Audio loaded successfully: 64320 samples, 16000Hz
+2025-07-24 22:36:36 - utils.audio_utils - INFO - Audio preprocessed: 42496 samples
+2025-07-24 22:36:36 - services.transcription_service - INFO - Using speech_recognition fallback
+2025-07-24 22:36:37 - services.transcription_service - INFO - Used Sphinx recognition
+2025-07-24 22:36:37 - services.transcription_service - INFO - Transcription completed: '' (0 characters)
+2025-07-24 22:36:37 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-24 22:36:37 - services.transcription_service - INFO - Model used: speech_recognition
+2025-07-24 22:36:37 - routes.api - INFO - API Request - Duration: 4.072s | Request: {'audio_length': 64883, 'format': 'webm', 'include_emotion': True} | Response: {'transcript': '', 'confidence': 0.5, 'model': 'speech_recognition', 'language': 'en'}
+2025-07-24 22:39:55 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: False
+2025-07-24 22:39:55 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:39:55 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:39:55 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:40:04 - routes.api - INFO - Audio data decoded successfully: 49427 bytes, format: webm
+2025-07-24 22:40:04 - utils.audio_utils - INFO - Loading audio: 49427 bytes, format: webm
+2025-07-24 22:40:04 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:40:04 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp5zomef8c.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp5zomef8c.wav
+2025-07-24 22:40:04 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:40:07 - utils.audio_utils - INFO - Audio loaded successfully: 48960 samples, 16000Hz
+2025-07-24 22:40:07 - utils.audio_utils - INFO - Audio preprocessed: 32768 samples
+2025-07-24 22:40:07 - services.transcription_service - INFO - Using speech_recognition fallback
+2025-07-24 22:40:08 - services.transcription_service - INFO - Used Sphinx recognition
+2025-07-24 22:40:08 - services.transcription_service - INFO - Transcription completed: '' (0 characters)
+2025-07-24 22:40:08 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-24 22:40:08 - services.transcription_service - INFO - Model used: speech_recognition
+2025-07-24 22:40:08 - routes.api - INFO - API Request - Duration: 4.277s | Request: {'audio_length': 49427, 'format': 'webm', 'include_emotion': True} | Response: {'transcript': '', 'confidence': 0.5, 'model': 'speech_recognition', 'language': 'en'}
+2025-07-24 22:43:37 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: False
+2025-07-24 22:43:37 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:43:37 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:43:37 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:44:39 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: False
+2025-07-24 22:44:39 - services.transcription_service - INFO - PyTorch/Transformers not available. Using speech_recognition library only.
+2025-07-24 22:44:39 - services.emotion_service - INFO - PyTorch/Transformers not available. Using rule-based emotion detection.
+2025-07-24 22:44:39 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:50:34 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 22:50:34 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 22:50:34 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 22:50:34 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 22:50:34 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 22:51:37 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 22:51:37 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 22:51:37 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 22:51:38 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-07-24 22:51:38 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 22:51:38 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:51:54 - routes.api - INFO - Audio data decoded successfully: 29141 bytes, format: webm
+2025-07-24 22:51:54 - utils.audio_utils - INFO - Loading audio: 29141 bytes, format: webm
+2025-07-24 22:51:54 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:51:54 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp2f_yxs5_.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp2f_yxs5_.wav
+2025-07-24 22:51:54 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:51:56 - utils.audio_utils - INFO - Audio loaded successfully: 28800 samples, 16000Hz
+2025-07-24 22:51:56 - utils.audio_utils - INFO - Audio preprocessed: 22016 samples
+2025-07-24 22:51:56 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:51:57 - services.transcription_service - INFO - Transcription completed: 'Testing.' (8 characters)
+2025-07-24 22:51:57 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:51:57 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:51:57 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:52:05 - routes.api - INFO - Audio data decoded successfully: 28175 bytes, format: webm
+2025-07-24 22:52:05 - utils.audio_utils - INFO - Loading audio: 28175 bytes, format: webm
+2025-07-24 22:52:05 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:52:05 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpz2pw8cra.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpz2pw8cra.wav
+2025-07-24 22:52:05 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:52:05 - utils.audio_utils - INFO - Audio loaded successfully: 27840 samples, 16000Hz
+2025-07-24 22:52:05 - utils.audio_utils - INFO - Audio preprocessed: 19456 samples
+2025-07-24 22:52:05 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:52:06 - services.transcription_service - INFO - Transcription completed: 'Hey guys, how's it going?' (25 characters)
+2025-07-24 22:52:06 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:52:06 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:52:06 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:52:16 - routes.api - INFO - Audio data decoded successfully: 29141 bytes, format: webm
+2025-07-24 22:52:16 - utils.audio_utils - INFO - Loading audio: 29141 bytes, format: webm
+2025-07-24 22:52:16 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:52:16 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpmt0b33e8.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpmt0b33e8.wav
+2025-07-24 22:52:16 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:52:16 - utils.audio_utils - INFO - Audio loaded successfully: 28800 samples, 16000Hz
+2025-07-24 22:52:16 - utils.audio_utils - INFO - Audio preprocessed: 28160 samples
+2025-07-24 22:52:16 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:52:17 - services.transcription_service - INFO - Transcription completed: 'I'm so excited for this.' (24 characters)
+2025-07-24 22:52:17 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:52:17 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:52:17 - services.emotion_service - INFO - Rule-based emotion detected: happy (confidence: 0.200)
+2025-07-24 22:52:36 - routes.api - INFO - Audio data decoded successfully: 40733 bytes, format: webm
+2025-07-24 22:52:36 - utils.audio_utils - INFO - Loading audio: 40733 bytes, format: webm
+2025-07-24 22:52:36 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:52:36 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp5_lv84ln.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp5_lv84ln.wav
+2025-07-24 22:52:37 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:52:37 - utils.audio_utils - INFO - Audio loaded successfully: 40320 samples, 16000Hz
+2025-07-24 22:52:37 - utils.audio_utils - INFO - Audio preprocessed: 36864 samples
+2025-07-24 22:52:37 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:52:37 - services.transcription_service - INFO - Transcription completed: 'Whoa, what the heck does that have?' (35 characters)
+2025-07-24 22:52:37 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:52:37 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:52:37 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:52:44 - routes.api - INFO - Audio data decoded successfully: 35903 bytes, format: webm
+2025-07-24 22:52:44 - utils.audio_utils - INFO - Loading audio: 35903 bytes, format: webm
+2025-07-24 22:52:44 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:52:44 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpnkt1cwwr.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpnkt1cwwr.wav
+2025-07-24 22:52:44 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:52:44 - utils.audio_utils - INFO - Audio loaded successfully: 35520 samples, 16000Hz
+2025-07-24 22:52:44 - utils.audio_utils - INFO - Audio preprocessed: 30720 samples
+2025-07-24 22:52:44 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:52:45 - services.transcription_service - INFO - Transcription completed: 'Whoa what the heck just happened' (32 characters)
+2025-07-24 22:52:45 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:52:45 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:52:45 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:53:48 - routes.api - INFO - Audio data decoded successfully: 62951 bytes, format: webm
+2025-07-24 22:53:48 - utils.audio_utils - INFO - Loading audio: 62951 bytes, format: webm
+2025-07-24 22:53:48 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:53:48 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpot8qvanx.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpot8qvanx.wav
+2025-07-24 22:53:48 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:53:48 - utils.audio_utils - INFO - Audio loaded successfully: 62400 samples, 16000Hz
+2025-07-24 22:53:48 - utils.audio_utils - INFO - Audio preprocessed: 22016 samples
+2025-07-24 22:53:48 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:53:49 - services.transcription_service - INFO - Transcription completed: 'Surprise!' (9 characters)
+2025-07-24 22:53:49 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:53:49 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:53:49 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:53:57 - routes.api - INFO - Audio data decoded successfully: 58121 bytes, format: webm
+2025-07-24 22:53:57 - utils.audio_utils - INFO - Loading audio: 58121 bytes, format: webm
+2025-07-24 22:53:57 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:53:57 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpoo1g3nr2.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpoo1g3nr2.wav
+2025-07-24 22:53:57 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:53:57 - utils.audio_utils - INFO - Audio loaded successfully: 57600 samples, 16000Hz
+2025-07-24 22:53:57 - utils.audio_utils - INFO - Audio preprocessed: 37376 samples
+2025-07-24 22:53:57 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:53:58 - services.transcription_service - INFO - Transcription completed: 'Oh, is that really true?' (24 characters)
+2025-07-24 22:53:58 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:53:58 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:53:58 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:54:14 - routes.api - INFO - Audio data decoded successfully: 82271 bytes, format: webm
+2025-07-24 22:54:14 - utils.audio_utils - INFO - Loading audio: 82271 bytes, format: webm
+2025-07-24 22:54:14 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:54:14 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpz03i0l7o.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpz03i0l7o.wav
+2025-07-24 22:54:14 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:54:14 - utils.audio_utils - INFO - Audio loaded successfully: 81600 samples, 16000Hz
+2025-07-24 22:54:14 - utils.audio_utils - INFO - Audio preprocessed: 35328 samples
+2025-07-24 22:54:14 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:54:15 - services.transcription_service - INFO - Transcription completed: 'Hello? Can you see me?' (22 characters)
+2025-07-24 22:54:15 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:54:15 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:54:15 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:54:23 - routes.api - INFO - Audio data decoded successfully: 33005 bytes, format: webm
+2025-07-24 22:54:23 - utils.audio_utils - INFO - Loading audio: 33005 bytes, format: webm
+2025-07-24 22:54:23 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:54:23 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp8u3gpwtx.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp8u3gpwtx.wav
+2025-07-24 22:54:23 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:54:23 - utils.audio_utils - INFO - Audio loaded successfully: 32640 samples, 16000Hz
+2025-07-24 22:54:23 - utils.audio_utils - INFO - Audio preprocessed: 29184 samples
+2025-07-24 22:54:23 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:54:23 - services.transcription_service - INFO - Transcription completed: 'Are you kidding me?' (19 characters)
+2025-07-24 22:54:23 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:54:23 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:54:23 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:54:48 - routes.api - INFO - Audio data decoded successfully: 106421 bytes, format: webm
+2025-07-24 22:54:48 - utils.audio_utils - INFO - Loading audio: 106421 bytes, format: webm
+2025-07-24 22:54:48 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:54:48 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp0e7jrjtu.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp0e7jrjtu.wav
+2025-07-24 22:54:48 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:54:48 - utils.audio_utils - INFO - Audio loaded successfully: 105600 samples, 16000Hz
+2025-07-24 22:54:48 - utils.audio_utils - INFO - Audio preprocessed: 99328 samples
+2025-07-24 22:54:48 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:54:49 - services.transcription_service - INFO - Transcription completed: 'Happy birthday!' (15 characters)
+2025-07-24 22:54:49 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:54:49 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:54:49 - services.emotion_service - INFO - Rule-based emotion detected: happy (confidence: 0.500)
+2025-07-24 22:55:11 - routes.api - INFO - Audio data decoded successfully: 70679 bytes, format: webm
+2025-07-24 22:55:11 - utils.audio_utils - INFO - Loading audio: 70679 bytes, format: webm
+2025-07-24 22:55:11 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:55:11 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp1c19n_pb.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp1c19n_pb.wav
+2025-07-24 22:55:11 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:55:11 - utils.audio_utils - INFO - Audio loaded successfully: 70080 samples, 16000Hz
+2025-07-24 22:55:11 - utils.audio_utils - INFO - Audio preprocessed: 40448 samples
+2025-07-24 22:55:11 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:55:12 - services.transcription_service - INFO - Transcription completed: 'My head is hurting' (18 characters)
+2025-07-24 22:55:12 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:55:12 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:55:12 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:55:26 - routes.api - INFO - Audio data decoded successfully: 57155 bytes, format: webm
+2025-07-24 22:55:26 - utils.audio_utils - INFO - Loading audio: 57155 bytes, format: webm
+2025-07-24 22:55:26 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:55:26 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp_av1zj70.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp_av1zj70.wav
+2025-07-24 22:55:26 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:55:26 - utils.audio_utils - INFO - Audio loaded successfully: 56640 samples, 16000Hz
+2025-07-24 22:55:26 - utils.audio_utils - INFO - Audio preprocessed: 52736 samples
+2025-07-24 22:55:26 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:55:27 - services.transcription_service - INFO - Transcription completed: 'Yes I did! Yeah!' (16 characters)
+2025-07-24 22:55:27 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:55:27 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:55:27 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:55:41 - routes.api - INFO - Audio data decoded successfully: 56189 bytes, format: webm
+2025-07-24 22:55:41 - utils.audio_utils - INFO - Loading audio: 56189 bytes, format: webm
+2025-07-24 22:55:41 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:55:41 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp12cemzhh.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp12cemzhh.wav
+2025-07-24 22:55:41 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:55:41 - utils.audio_utils - INFO - Audio loaded successfully: 55680 samples, 16000Hz
+2025-07-24 22:55:41 - utils.audio_utils - INFO - Audio preprocessed: 43520 samples
+2025-07-24 22:55:41 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:55:42 - services.transcription_service - INFO - Transcription completed: 'Happy anniversary!' (18 characters)
+2025-07-24 22:55:42 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:55:42 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:55:42 - services.emotion_service - INFO - Rule-based emotion detected: happy (confidence: 0.500)
+2025-07-24 22:56:09 - routes.api - INFO - Audio data decoded successfully: 52325 bytes, format: webm
+2025-07-24 22:56:09 - utils.audio_utils - INFO - Loading audio: 52325 bytes, format: webm
+2025-07-24 22:56:09 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:56:09 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpcw_57u4v.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpcw_57u4v.wav
+2025-07-24 22:56:09 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:56:09 - utils.audio_utils - INFO - Audio loaded successfully: 51840 samples, 16000Hz
+2025-07-24 22:56:09 - utils.audio_utils - INFO - Audio preprocessed: 36864 samples
+2025-07-24 22:56:09 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:56:10 - services.transcription_service - INFO - Transcription completed: 'I have my water in your doing.' (30 characters)
+2025-07-24 22:56:10 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:56:10 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:56:10 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:56:22 - routes.api - INFO - Audio data decoded successfully: 50393 bytes, format: webm
+2025-07-24 22:56:22 - utils.audio_utils - INFO - Loading audio: 50393 bytes, format: webm
+2025-07-24 22:56:22 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:56:22 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpp5efu_fy.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpp5efu_fy.wav
+2025-07-24 22:56:22 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:56:22 - utils.audio_utils - INFO - Audio loaded successfully: 49920 samples, 16000Hz
+2025-07-24 22:56:22 - utils.audio_utils - INFO - Audio preprocessed: 49920 samples
+2025-07-24 22:56:22 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:56:23 - services.transcription_service - INFO - Transcription completed: 'I'm so bad!' (11 characters)
+2025-07-24 22:56:23 - services.transcription_service - INFO - Confidence: 0.0
+2025-07-24 22:56:23 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:56:23 - services.emotion_service - INFO - Rule-based emotion detected: neutral (confidence: 0.500)
+2025-07-24 22:58:51 - routes.api - INFO - Audio data decoded successfully: 11753 bytes, format: webm
+2025-07-24 22:58:51 - utils.audio_utils - INFO - Loading audio: 11753 bytes, format: webm
+2025-07-24 22:58:51 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:58:51 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp0vd791zi.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp0vd791zi.wav
+2025-07-24 22:58:51 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:58:51 - utils.audio_utils - INFO - Audio loaded successfully: 11520 samples, 16000Hz
+2025-07-24 22:58:51 - utils.audio_utils - INFO - Audio preprocessed: 2560 samples
+2025-07-24 22:58:51 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:00 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 22:59:00 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 22:59:00 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 22:59:00 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 22:59:00 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 22:59:02 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 22:59:02 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 22:59:02 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 22:59:02 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-07-24 22:59:02 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 22:59:02 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 22:59:08 - routes.api - INFO - Audio data decoded successfully: 26243 bytes, format: webm
+2025-07-24 22:59:08 - utils.audio_utils - INFO - Loading audio: 26243 bytes, format: webm
+2025-07-24 22:59:08 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:08 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpn1nfdfdx.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpn1nfdfdx.wav
+2025-07-24 22:59:08 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:11 - utils.audio_utils - INFO - Audio loaded successfully: 25920 samples, 16000Hz
+2025-07-24 22:59:11 - utils.audio_utils - INFO - Audio preprocessed: 18432 samples
+2025-07-24 22:59:11 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:12 - services.transcription_service - INFO - Transcription completed: 'I'm happy.' (10 characters)
+2025-07-24 22:59:12 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 22:59:12 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:12 - services.emotion_service - INFO - Enhanced rule-based emotion detected: happy (confidence: 0.300)
+2025-07-24 22:59:18 - routes.api - INFO - Audio data decoded successfully: 32039 bytes, format: webm
+2025-07-24 22:59:18 - utils.audio_utils - INFO - Loading audio: 32039 bytes, format: webm
+2025-07-24 22:59:18 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:18 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpznim_n02.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpznim_n02.wav
+2025-07-24 22:59:18 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:18 - utils.audio_utils - INFO - Audio loaded successfully: 31680 samples, 16000Hz
+2025-07-24 22:59:18 - utils.audio_utils - INFO - Audio preprocessed: 27648 samples
+2025-07-24 22:59:18 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:19 - services.transcription_service - INFO - Transcription completed: 'This is terrible.' (17 characters)
+2025-07-24 22:59:19 - services.transcription_service - INFO - Confidence: 0.7999999999999999
+2025-07-24 22:59:19 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:19 - services.emotion_service - INFO - Enhanced rule-based emotion detected: sad (confidence: 0.300)
+2025-07-24 22:59:25 - routes.api - INFO - Audio data decoded successfully: 30107 bytes, format: webm
+2025-07-24 22:59:25 - utils.audio_utils - INFO - Loading audio: 30107 bytes, format: webm
+2025-07-24 22:59:25 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:25 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp_dl4li02.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp_dl4li02.wav
+2025-07-24 22:59:26 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:26 - utils.audio_utils - INFO - Audio loaded successfully: 29760 samples, 16000Hz
+2025-07-24 22:59:26 - utils.audio_utils - INFO - Audio preprocessed: 22528 samples
+2025-07-24 22:59:26 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:26 - services.transcription_service - INFO - Transcription completed: 'I'm so angry' (12 characters)
+2025-07-24 22:59:26 - services.transcription_service - INFO - Confidence: 0.7999999999999999
+2025-07-24 22:59:26 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:26 - services.emotion_service - INFO - Enhanced rule-based emotion detected: angry (confidence: 0.333)
+2025-07-24 22:59:33 - routes.api - INFO - Audio data decoded successfully: 36869 bytes, format: webm
+2025-07-24 22:59:33 - utils.audio_utils - INFO - Loading audio: 36869 bytes, format: webm
+2025-07-24 22:59:33 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:33 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpgxgbh8ra.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpgxgbh8ra.wav
+2025-07-24 22:59:33 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:33 - utils.audio_utils - INFO - Audio loaded successfully: 36480 samples, 16000Hz
+2025-07-24 22:59:33 - utils.audio_utils - INFO - Audio preprocessed: 22528 samples
+2025-07-24 22:59:33 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:34 - services.transcription_service - INFO - Transcription completed: 'Hello world!' (12 characters)
+2025-07-24 22:59:34 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 22:59:34 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:34 - services.emotion_service - INFO - Enhanced rule-based emotion detected: neutral (confidence: 0.400)
+2025-07-24 22:59:38 - routes.api - INFO - Audio data decoded successfully: 23345 bytes, format: webm
+2025-07-24 22:59:38 - utils.audio_utils - INFO - Loading audio: 23345 bytes, format: webm
+2025-07-24 22:59:38 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:38 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmptury1jrh.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmptury1jrh.wav
+2025-07-24 22:59:38 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:38 - utils.audio_utils - INFO - Audio loaded successfully: 23040 samples, 16000Hz
+2025-07-24 22:59:38 - utils.audio_utils - INFO - Audio preprocessed: 17920 samples
+2025-07-24 22:59:38 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:39 - services.transcription_service - INFO - Transcription completed: 'Hello world!' (12 characters)
+2025-07-24 22:59:39 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 22:59:39 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:39 - services.emotion_service - INFO - Enhanced rule-based emotion detected: neutral (confidence: 0.400)
+2025-07-24 22:59:45 - routes.api - INFO - Audio data decoded successfully: 31073 bytes, format: webm
+2025-07-24 22:59:45 - utils.audio_utils - INFO - Loading audio: 31073 bytes, format: webm
+2025-07-24 22:59:45 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:45 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpsbhkfg7s.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpsbhkfg7s.wav
+2025-07-24 22:59:45 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:45 - utils.audio_utils - INFO - Audio loaded successfully: 30720 samples, 16000Hz
+2025-07-24 22:59:45 - utils.audio_utils - INFO - Audio preprocessed: 20480 samples
+2025-07-24 22:59:45 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:46 - services.transcription_service - INFO - Transcription completed: 'Hello, warriors.' (16 characters)
+2025-07-24 22:59:46 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 22:59:46 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:46 - services.emotion_service - INFO - Enhanced rule-based emotion detected: neutral (confidence: 0.400)
+2025-07-24 22:59:53 - routes.api - INFO - Audio data decoded successfully: 51359 bytes, format: webm
+2025-07-24 22:59:53 - utils.audio_utils - INFO - Loading audio: 51359 bytes, format: webm
+2025-07-24 22:59:53 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 22:59:53 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpn_varoig.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpn_varoig.wav
+2025-07-24 22:59:53 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 22:59:53 - utils.audio_utils - INFO - Audio loaded successfully: 50880 samples, 16000Hz
+2025-07-24 22:59:53 - utils.audio_utils - INFO - Audio preprocessed: 20992 samples
+2025-07-24 22:59:53 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 22:59:54 - services.transcription_service - INFO - Transcription completed: 'Hello, glorious' (15 characters)
+2025-07-24 22:59:54 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 22:59:54 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 22:59:54 - services.emotion_service - INFO - Enhanced rule-based emotion detected: neutral (confidence: 0.400)
+2025-07-24 23:00:01 - routes.api - INFO - Audio data decoded successfully: 24311 bytes, format: webm
+2025-07-24 23:00:01 - utils.audio_utils - INFO - Loading audio: 24311 bytes, format: webm
+2025-07-24 23:00:01 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:00:01 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp7y_f_swh.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp7y_f_swh.wav
+2025-07-24 23:00:01 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:00:01 - utils.audio_utils - INFO - Audio loaded successfully: 24000 samples, 16000Hz
+2025-07-24 23:00:01 - utils.audio_utils - INFO - Audio preprocessed: 19968 samples
+2025-07-24 23:00:01 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:00:02 - services.transcription_service - INFO - Transcription completed: 'I'm excited.' (12 characters)
+2025-07-24 23:00:02 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 23:00:02 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:00:02 - services.emotion_service - INFO - Enhanced rule-based emotion detected: happy (confidence: 0.300)
+2025-07-24 23:01:05 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 23:01:05 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 23:01:05 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 23:01:05 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 23:01:05 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 23:01:07 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 23:01:07 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 23:01:07 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 23:01:07 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+2025-07-24 23:01:07 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 23:01:07 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 23:02:28 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 23:02:28 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 23:02:28 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 23:02:28 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 23:02:28 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 23:02:31 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 23:02:31 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 23:02:31 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-24 23:02:31 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 23:02:31 - services.emotion_service - INFO - Initializing emotion pipeline with model: m3hrdadfi/emotion-english-distilroberta-base
+2025-07-24 23:02:31 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 430, in cached_file
+    resolved_file = hf_hub_download(
+                    ^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1346, in hf_hub_download
+    raise head_call_error
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1232, in hf_hub_download
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1608, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-688301d7-00e434ff31e78aab4ec01e5e;67292dae-e6a9-4e04-9b0a-92f9c3089c96)
+
+Repository Not Found for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+Invalid username or password.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\emotion_service.py", line 54, in _initialize_models
+    self.text_emotion_pipeline = pipeline(
+                                 ^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\pipelines\__init__.py", line 747, in pipeline
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 451, in cached_file
+    raise EnvironmentError(
+OSError: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+
+2025-07-24 23:02:31 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 23:02:31 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 23:02:39 - routes.api - INFO - Audio data decoded successfully: 30107 bytes, format: webm
+2025-07-24 23:02:39 - utils.audio_utils - INFO - Loading audio: 30107 bytes, format: webm
+2025-07-24 23:02:39 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:02:39 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpqby662ex.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpqby662ex.wav
+2025-07-24 23:02:40 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:02:42 - utils.audio_utils - INFO - Audio loaded successfully: 29760 samples, 16000Hz
+2025-07-24 23:02:42 - utils.audio_utils - INFO - Audio preprocessed: 22528 samples
+2025-07-24 23:02:42 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:02:43 - services.transcription_service - INFO - Transcription completed: 'Here's a quick test.' (20 characters)
+2025-07-24 23:02:43 - services.transcription_service - INFO - Confidence: 0.8999999999999999
+2025-07-24 23:02:43 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:02:43 - services.emotion_service - INFO - Using rule-based emotion detection (fallback)
+2025-07-24 23:02:43 - services.emotion_service - INFO - Enhanced rule-based emotion detected: neutral (confidence: 0.400)
+2025-07-24 23:03:55 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 23:03:55 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 23:03:56 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 23:03:56 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 23:03:56 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 23:03:58 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 23:03:58 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 23:03:58 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-24 23:03:58 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 23:03:58 - services.emotion_service - INFO - Initializing emotion pipeline with model: m3hrdadfi/emotion-english-distilroberta-base
+2025-07-24 23:03:58 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 430, in cached_file
+    resolved_file = hf_hub_download(
+                    ^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1346, in hf_hub_download
+    raise head_call_error
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1232, in hf_hub_download
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1608, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-6883022e-58684c9a361bd1257d294f50;03b76f8a-b4b7-4b55-bd1d-49f0165f3613)
+
+Repository Not Found for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+Invalid username or password.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\emotion_service.py", line 54, in _initialize_models
+    self.text_emotion_pipeline = pipeline(
+                                 ^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\pipelines\__init__.py", line 747, in pipeline
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 451, in cached_file
+    raise EnvironmentError(
+OSError: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+
+2025-07-24 23:03:58 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 23:03:58 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 23:04:30 - routes.api - INFO - Audio data decoded successfully: 25277 bytes, format: webm
+2025-07-24 23:04:30 - utils.audio_utils - INFO - Loading audio: 25277 bytes, format: webm
+2025-07-24 23:04:30 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:04:30 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpaz8vhgnu.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpaz8vhgnu.wav
+2025-07-24 23:04:30 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:04:32 - utils.audio_utils - INFO - Audio loaded successfully: 24960 samples, 16000Hz
+2025-07-24 23:04:32 - utils.audio_utils - INFO - Audio preprocessed: 19456 samples
+2025-07-24 23:04:32 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:04:33 - services.transcription_service - INFO - Transcription completed: 'I'm scared.' (11 characters)
+2025-07-24 23:04:33 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 23:04:33 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:04:33 - services.emotion_service - INFO - Using rule-based emotion detection (fallback)
+2025-07-24 23:04:33 - services.emotion_service - INFO - Enhanced rule-based emotion detected: fear (confidence: 0.300)
+2025-07-24 23:05:33 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 23:05:33 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 23:05:33 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 23:05:33 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 23:05:33 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 23:05:35 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 23:05:35 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 23:05:35 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-24 23:05:35 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 23:05:35 - services.emotion_service - INFO - Initializing emotion pipeline with model: m3hrdadfi/emotion-english-distilroberta-base
+2025-07-24 23:05:35 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 430, in cached_file
+    resolved_file = hf_hub_download(
+                    ^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1346, in hf_hub_download
+    raise head_call_error
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1232, in hf_hub_download
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1608, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-6883028f-00af8e230ce67a867706d317;a829d1d2-7a39-4071-bf93-5facc9471971)
+
+Repository Not Found for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+Invalid username or password.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\emotion_service.py", line 54, in _initialize_models
+    self.text_emotion_pipeline = pipeline(
+                                 ^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\pipelines\__init__.py", line 747, in pipeline
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 451, in cached_file
+    raise EnvironmentError(
+OSError: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+
+2025-07-24 23:05:35 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 23:05:35 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 23:05:54 - routes.api - INFO - Audio data decoded successfully: 29141 bytes, format: webm
+2025-07-24 23:05:54 - utils.audio_utils - INFO - Loading audio: 29141 bytes, format: webm
+2025-07-24 23:05:54 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:05:54 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpp1lh8z89.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpp1lh8z89.wav
+2025-07-24 23:05:54 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:05:56 - utils.audio_utils - INFO - Audio loaded successfully: 28800 samples, 16000Hz
+2025-07-24 23:05:57 - utils.audio_utils - INFO - Audio preprocessed: 26112 samples
+2025-07-24 23:05:57 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:05:57 - services.transcription_service - INFO - Transcription completed: 'I'm scared.' (11 characters)
+2025-07-24 23:05:57 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-24 23:05:57 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:05:57 - services.emotion_service - INFO - Using rule-based emotion detection (fallback)
+2025-07-24 23:05:57 - services.emotion_service - INFO - Enhanced rule-based emotion detected: fear (confidence: 0.300)
+2025-07-24 23:06:40 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 23:06:40 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 23:06:40 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 23:06:40 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 23:06:40 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 23:06:43 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 23:06:43 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 23:06:43 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-24 23:06:43 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 23:06:43 - services.emotion_service - INFO - Initializing emotion pipeline with model: m3hrdadfi/emotion-english-distilroberta-base
+2025-07-24 23:06:43 - services.emotion_service - ERROR - Failed to initialize emotion models: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 430, in cached_file
+    resolved_file = hf_hub_download(
+                    ^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1346, in hf_hub_download
+    raise head_call_error
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1232, in hf_hub_download
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py", line 1608, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\utils\_errors.py", line 293, in hf_raise_for_status
+    raise RepositoryNotFoundError(message, response) from e
+huggingface_hub.utils._errors.RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-688302d3-4a6824751231b0f8658726c6;41db9adf-c580-4bca-9b3c-566e3a9f6f32)
+
+Repository Not Found for url: https://huggingface.co/m3hrdadfi/emotion-english-distilroberta-base/resolve/main/config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated.
+Invalid username or password.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "X:\Projects\Personal Projects\Tone Bridge\backend\services\emotion_service.py", line 54, in _initialize_models
+    self.text_emotion_pipeline = pipeline(
+                                 ^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\pipelines\__init__.py", line 747, in pipeline
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\transformers\utils\hub.py", line 451, in cached_file
+    raise EnvironmentError(
+OSError: m3hrdadfi/emotion-english-distilroberta-base is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `huggingface-cli login` or by passing `token=<your_token>`
+
+2025-07-24 23:06:43 - services.emotion_service - INFO - Falling back to rule-based emotion detection
+2025-07-24 23:06:43 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 23:07:11 - routes.api - INFO - Audio data decoded successfully: 34937 bytes, format: webm
+2025-07-24 23:07:11 - utils.audio_utils - INFO - Loading audio: 34937 bytes, format: webm
+2025-07-24 23:07:11 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:07:11 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpzgne9454.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpzgne9454.wav
+2025-07-24 23:07:11 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:07:14 - utils.audio_utils - INFO - Audio loaded successfully: 34560 samples, 16000Hz
+2025-07-24 23:07:14 - utils.audio_utils - INFO - Audio preprocessed: 28160 samples
+2025-07-24 23:07:14 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:07:15 - services.transcription_service - INFO - Transcription completed: 'Man, this sucks.' (16 characters)
+2025-07-24 23:07:15 - services.transcription_service - INFO - Confidence: 0.7999999999999999
+2025-07-24 23:07:15 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:07:15 - services.emotion_service - INFO - Using rule-based emotion detection (fallback)
+2025-07-24 23:07:15 - services.emotion_service - INFO - Enhanced rule-based emotion detected: neutral (confidence: 0.400)
+2025-07-24 23:08:41 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-24 23:08:41 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-24 23:08:41 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-24 23:08:41 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-24 23:08:41 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-24 23:08:44 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-24 23:08:44 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-24 23:08:44 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-24 23:08:44 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-24 23:08:44 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-24 23:10:21 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-24 23:10:21 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-24 23:10:21 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-24 23:11:14 - routes.api - INFO - Audio data decoded successfully: 34937 bytes, format: webm
+2025-07-24 23:11:14 - utils.audio_utils - INFO - Loading audio: 34937 bytes, format: webm
+2025-07-24 23:11:14 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:11:14 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpym25eua0.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpym25eua0.wav
+2025-07-24 23:11:14 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:11:17 - utils.audio_utils - INFO - Audio loaded successfully: 34560 samples, 16000Hz
+2025-07-24 23:11:17 - utils.audio_utils - INFO - Audio preprocessed: 20480 samples
+2025-07-24 23:11:17 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:11:18 - services.transcription_service - INFO - Transcription completed: 'Wow' (3 characters)
+2025-07-24 23:11:18 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-24 23:11:18 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:11:18 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-24 23:11:19 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.778)
+2025-07-24 23:11:27 - routes.api - INFO - Audio data decoded successfully: 47495 bytes, format: webm
+2025-07-24 23:11:27 - utils.audio_utils - INFO - Loading audio: 47495 bytes, format: webm
+2025-07-24 23:11:27 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-24 23:11:27 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpt8yjvg8z.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpt8yjvg8z.wav
+2025-07-24 23:11:27 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-24 23:11:27 - utils.audio_utils - INFO - Audio loaded successfully: 47040 samples, 16000Hz
+2025-07-24 23:11:27 - utils.audio_utils - INFO - Audio preprocessed: 33792 samples
+2025-07-24 23:11:27 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-24 23:11:28 - services.transcription_service - INFO - Transcription completed: 'Wow this really sucks' (21 characters)
+2025-07-24 23:11:28 - services.transcription_service - INFO - Confidence: 0.7999999999999999
+2025-07-24 23:11:28 - services.transcription_service - INFO - Model used: whisper
+2025-07-24 23:11:28 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-24 23:11:28 - services.emotion_service - INFO - Text emotion detected: frustrated (confidence: 0.577)

@@ -1,0 +1,273 @@
+/* ToneBridge Custom Styles */
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --ion-color-primary: #000000;
+    --ion-color-primary-rgb: 0, 0, 0;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #000000;
+    --ion-color-primary-tint: #1a1a1a;
+  }
+}
+
+/* Dyslexia-friendly Font */
+.dyslexia-friendly {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  word-spacing: 0.2em;
+}
+
+/* Font Size Variations */
+.font-size-small {
+  font-size: 0.875rem;
+}
+
+.font-size-medium {
+  font-size: 1rem;
+}
+
+.font-size-large {
+  font-size: 1.25rem;
+}
+
+/* Audio Recorder Styles */
+.audio-recorder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.recording-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recording-info {
+  text-align: center;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}
+
+.recording-error {
+  text-align: center;
+  color: var(--ion-color-danger);
+  font-weight: bold;
+}
+
+/* Transcription Display Styles */
+.transcription-segment {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--ion-color-light);
+  transition: background-color 0.2s ease;
+}
+
+.transcription-segment:hover {
+  background: var(--ion-color-light-shade);
+}
+
+.transcription-segment.highlighted {
+  background: var(--ion-color-primary-tint);
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+.emotion-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.emotion-emoji {
+  font-size: 1.2em;
+}
+
+.emotion-tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* Settings Panel Styles */
+.settings-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.settings-panel .ion-card {
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Loading Styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* Button Enhancements */
+.ion-button {
+  --border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.ion-button:hover {
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.ion-button:active {
+  transform: translateY(0);
+}
+
+/* Card Enhancements */
+.ion-card {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .recording-controls {
+    flex-direction: column;
+  }
+  
+  .settings-panel {
+    padding: 0.5rem;
+  }
+  
+  .settings-panel .ion-card {
+    max-width: 100%;
+    max-height: 90vh;
+  }
+  
+  .transcription-segment {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .font-size-large {
+    font-size: 1.1rem;
+  }
+  
+  .ion-button {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+  }
+}
+
+/* Focus Indicators for Accessibility */
+.ion-button:focus,
+.ion-item:focus,
+.ion-toggle:focus {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .ion-header,
+  .ion-fab,
+  .settings-panel,
+  .recording-controls {
+    display: none !important;
+  }
+  
+  .transcription-segment {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .transcription-segment {
+    background: var(--ion-color-dark);
+  }
+  
+  .transcription-segment:hover {
+    background: var(--ion-color-dark-shade);
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+
+.flex { display: flex; }
+.flex-column { flex-direction: column; }
+.flex-center { justify-content: center; align-items: center; }
+.flex-between { justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; } 
