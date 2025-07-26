@@ -1,9 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { IonButton, IonIcon, IonText } from '@ionic/react';
-import { mic, micOutline, stop, pause, play } from 'ionicons/icons';
+import { mic, micOutline, stop } from 'ionicons/icons';
 import { AudioRecording, RecordingState } from '../../types';
 import { AudioUtils } from '../../utils';
-import { Button } from '../common';
 
 interface AudioRecorderProps {
   onRecordingComplete: (recording: AudioRecording) => void;
@@ -14,8 +14,8 @@ interface AudioRecorderProps {
 }
 
 /**
- * Reusable Audio Recorder Component
- * Following DRY principles by providing consistent audio recording functionality
+ * Modern Audio Recorder Component with Single Circular Button
+ * Clean, intuitive design with smooth animations
  */
 const AudioRecorder: React.FC<AudioRecorderProps> = ({
   onRecordingComplete,
@@ -104,19 +104,13 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
     }
   }, [recordingState.isRecording]);
 
-  const pauseRecording = useCallback(() => {
-    if (mediaRecorderRef.current && recordingState.isRecording) {
-      mediaRecorderRef.current.pause();
-      setRecordingState(prev => ({ ...prev, isPaused: true }));
+  const toggleRecording = useCallback(() => {
+    if (recordingState.isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
     }
-  }, [recordingState.isRecording]);
-
-  const resumeRecording = useCallback(() => {
-    if (mediaRecorderRef.current && recordingState.isPaused) {
-      mediaRecorderRef.current.resume();
-      setRecordingState(prev => ({ ...prev, isPaused: false }));
-    }
-  }, [recordingState.isPaused]);
+  }, [recordingState.isRecording, startRecording, stopRecording]);
 
   // Auto-stop if max duration reached
   React.useEffect(() => {
@@ -134,78 +128,137 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
     };
   }, []);
 
-  const getRecordingButton = () => {
-    if (recordingState.isRecording) {
-      return recordingState.isPaused ? (
-        <Button
-          onClick={resumeRecording}
-          color="success"
-          size="large"
-          className={className}
-        >
-          <IonIcon icon={play} />
-          Resume
-        </Button>
-      ) : (
-        <Button
-          onClick={pauseRecording}
-          color="warning"
-          size="large"
-          className={className}
-        >
-          <IonIcon icon={pause} />
-          Pause
-        </Button>
-      );
-    }
-
-    return (
-      <Button
-        onClick={startRecording}
-        disabled={disabled}
-        color="primary"
-        size="large"
-        className={className}
-      >
-        <IonIcon icon={recordingState.isRecording ? mic : micOutline} />
-        {recordingState.isRecording ? 'Recording...' : 'Start Recording'}
-      </Button>
-    );
-  };
-
   return (
-    <div className="audio-recorder">
-      <div className="recording-controls">
-        {getRecordingButton()}
-        
-        {recordingState.isRecording && (
-          <Button
-            onClick={stopRecording}
-            color="danger"
+    <div className={`audio-recorder ${className}`} style={{ textAlign: 'center' }}>
+      {/* Main Circular Recording Button */}
+      <div className="recording-button-container" style={{ marginBottom: '1rem' }}>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          <IonButton
+            onClick={toggleRecording}
+            disabled={disabled}
+            color={recordingState.isRecording ? 'danger' : 'primary'}
+            fill="solid"
+            shape="round"
             size="large"
-            className={className}
+            style={{
+              width: '80px',
+              height: '80px',
+            }}
           >
-            <IonIcon icon={stop} />
-            Stop
-          </Button>
-        )}
+            <motion.div
+              animate={recordingState.isRecording ? {
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              } : {
+                scale: 1,
+                rotate: 0
+              }}
+              transition={{
+                duration: 2,
+                repeat: recordingState.isRecording ? Infinity : 0,
+                ease: "easeInOut"
+              }}
+            >
+              <IonIcon 
+                icon={recordingState.isRecording ? stop : micOutline} 
+                style={{ fontSize: '2rem' }}
+              />
+            </motion.div>
+          </IonButton>
+        </motion.div>
       </div>
 
-      {recordingState.isRecording && (
-        <div className="recording-info">
-          <IonText>
-            <p>Recording: {AudioUtils.formatDuration(recordingState.duration)}</p>
-          </IonText>
-        </div>
-      )}
+      {/* Status Messages Container */}
+      <div style={{ 
+        minHeight: '1.5rem', 
+        marginBottom: '0.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <AnimatePresence mode="wait">
+          {recordingState.isRecording && (
+            <motion.div
+              key="recording"
+              initial={{ opacity: 0, y: -10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="recording-status"
+            >
+              <IonText color="danger">
+                <p style={{ 
+                  fontSize: '1.1rem', 
+                  fontWeight: 'bold',
+                  margin: '0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <motion.span 
+                    style={{ 
+                      display: 'inline-block',
+                      width: '8px',
+                      height: '8px',
+                      backgroundColor: '#ff4444',
+                      borderRadius: '50%'
+                    }}
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [1, 0.7, 1]
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  Recording: {AudioUtils.formatDuration(recordingState.duration)}
+                </p>
+              </IonText>
+            </motion.div>
+          )}
 
-      {recordingState.error && (
-        <div className="recording-error">
-          <IonText color="danger">
-            <p>Error: {recordingState.error}</p>
-          </IonText>
-        </div>
-      )}
+          {recordingState.error && (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="recording-error"
+            >
+              <IonText color="danger">
+                <p style={{ margin: '0', fontSize: '0.9rem' }}>
+                  Error: {recordingState.error}
+                </p>
+              </IonText>
+            </motion.div>
+          )}
+
+          {!recordingState.isRecording && !recordingState.error && (
+            <motion.div
+              key="instructions"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+              className="instructions"
+            >
+              <IonText color="medium">
+                <p style={{ margin: '0', fontSize: '0.9rem' }}>
+                  Tap to start recording
+                </p>
+              </IonText>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

@@ -157,7 +157,7 @@ export class StorageUtils {
 
   static getSettings(): UserSettings {
     return this.get<UserSettings>('settings') || {
-      theme: 'system',
+      theme: 'modern-blue',
       fontSize: 'medium',
       showEmojis: true,
       showTags: true,
@@ -321,9 +321,57 @@ export class ThemeUtils {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  static applyTheme(theme: 'light' | 'dark' | 'system'): void {
-    const actualTheme = theme === 'system' ? this.getSystemTheme() : theme;
-    document.documentElement.setAttribute('data-theme', actualTheme);
+  static applyTheme(theme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray'): void {
+    // Remove all existing theme classes
+    document.documentElement.classList.remove(
+      'theme-modern-blue',
+      'theme-warm-sunset', 
+      'theme-forest-green',
+      'theme-ocean-depth',
+      'theme-neutral-gray'
+    );
+
+    // Handle legacy light/dark/system themes
+    if (theme === 'light' || theme === 'dark' || theme === 'system') {
+      const actualTheme = theme === 'system' ? this.getSystemTheme() : theme;
+      document.documentElement.setAttribute('data-theme', actualTheme);
+      return;
+    }
+
+    // Apply new color palette themes
+    const themeClass = `theme-${theme}`;
+    document.documentElement.classList.add(themeClass);
+    
+    // Set data-theme for compatibility
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    
+    // Debug: Log the applied theme
+    console.log('Theme applied:', {
+      theme,
+      themeClass,
+      isDarkMode,
+      dataTheme: isDarkMode ? 'dark' : 'light',
+      element: document.documentElement,
+      classes: document.documentElement.className,
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--ion-background-color')
+    });
+  }
+
+  static applyFontSize(fontSize: 'small' | 'medium' | 'large'): void {
+    // Remove existing font size classes
+    document.documentElement.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+    
+    // Apply new font size class
+    document.documentElement.classList.add(`font-size-${fontSize}`);
+    
+    // Debug: Log the applied font size
+    console.log('Font size applied:', {
+      fontSize,
+      class: `font-size-${fontSize}`,
+      element: document.documentElement,
+      classes: document.documentElement.className
+    });
   }
 
   static getThemeColors(): Record<string, string> {

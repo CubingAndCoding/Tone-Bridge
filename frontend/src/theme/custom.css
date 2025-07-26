@@ -51,24 +51,55 @@
   padding: 1rem;
 }
 
-.recording-controls {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+.recording-button-container {
+  position: relative;
 }
 
-.recording-info {
+.recording-button-container ion-button {
+  --border-radius: 50%;
+  --padding-start: 0;
+  --padding-end: 0;
+  transition: all 0.2s ease;
+}
+
+.recording-button-container ion-button:hover {
+  transform: scale(1.05);
+}
+
+.recording-button-container ion-button:active {
+  transform: scale(0.95);
+}
+
+.recording-status {
   text-align: center;
   font-weight: bold;
-  color: var(--ion-color-primary);
+  color: var(--ion-color-danger);
 }
 
 .recording-error {
   text-align: center;
   color: var(--ion-color-danger);
   font-weight: bold;
+}
+
+/* Recording Animations */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.recording-pulse {
+  animation: pulse 2s infinite;
+}
+
+.recording-blink {
+  animation: blink 1s infinite;
 }
 
 /* Transcription Display Styles */
@@ -215,6 +246,394 @@
   }
 }
 
+/* Base background styles like portfolio */
+html, body {
+  background: var(--bg-primary);
+}
+
+#root {
+  background: var(--bg-primary);
+}
+
+/* Theme-specific background variables */
+.theme-modern-blue {
+  --bg-primary: #f8fafc;
+  --bg-primary-dark: #020617;
+}
+
+.theme-warm-sunset {
+  --bg-primary: #fef7ed;
+  --bg-primary-dark: #0c0a09;
+}
+
+.theme-forest-green {
+  --bg-primary: #f0fdf4;
+  --bg-primary-dark: #022c22;
+}
+
+.theme-ocean-depth {
+  --bg-primary: #f0f9ff;
+  --bg-primary-dark: #0c4a6e;
+}
+
+.theme-neutral-gray {
+  --bg-primary: #f9fafb;
+  --bg-primary-dark: #111827;
+}
+
+/* Dark mode background override */
+.md.dark {
+  --bg-primary: var(--bg-primary-dark);
+}
+
+/* Apply layering colors to components */
+ion-toolbar {
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  /* Make toolbar completely static - no state changes */
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Force toolbar to stay constant regardless of focus state */
+ion-toolbar,
+ion-toolbar:focus,
+ion-toolbar:focus-within,
+ion-toolbar:hover,
+ion-toolbar:active,
+ion-toolbar:focus-visible,
+ion-toolbar:focus-within *,
+ion-toolbar *:focus,
+ion-toolbar *:focus-within,
+ion-toolbar *:hover,
+ion-toolbar *:active {
+  background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  color: var(--ion-text-color) !important;
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Debug: Add a distinctive color to see if toolbar is changing */
+ion-toolbar {
+  border: 2px solid red !important;
+}
+
+/* Global focus prevention - prevent ANY element from affecting navbar */
+*:focus,
+*:focus-within,
+*:focus-visible {
+  outline: none !important;
+}
+
+/* Prevent any focus-related navbar changes */
+ion-toolbar,
+ion-toolbar *,
+ion-header,
+ion-header * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Force navbar to ignore all focus states */
+ion-toolbar:focus,
+ion-toolbar:focus-within,
+ion-toolbar:focus-visible,
+ion-toolbar:hover,
+ion-toolbar:active,
+ion-toolbar *:focus,
+ion-toolbar *:focus-within,
+ion-toolbar *:focus-visible,
+ion-toolbar *:hover,
+ion-toolbar *:active {
+  background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  color: var(--ion-text-color) !important;
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  border: 2px solid red !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Prevent focus effects on range sliders */
+ion-range:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+ion-range:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+ion-range .range-knob {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+ion-range .range-knob:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Fix overflow for range sliders */
+ion-range {
+  overflow: visible !important;
+  margin: 8px 0 !important;
+}
+
+ion-range .range-bar {
+  overflow: visible !important;
+}
+
+ion-range .range-knob {
+  overflow: visible !important;
+  z-index: 10 !important;
+}
+
+/* Fix pin visibility and prevent clipping */
+ion-range .range-pin {
+  overflow: visible !important;
+  z-index: 20 !important;
+  position: absolute !important;
+  transform: translateX(-50%) !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+
+ion-range .range-pin .range-pin-value {
+  background: var(--ion-color-primary) !important;
+  color: var(--ion-color-primary-contrast) !important;
+  padding: 4px 6px !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Specific styling for font size slider */
+.font-size-slider {
+  overflow: visible !important;
+  margin: 12px 0 !important;
+}
+
+.font-size-slider .range-pin {
+  overflow: visible !important;
+  z-index: 100 !important;
+  position: absolute !important;
+  transform: translateX(-50%) !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+  top: -25px !important;
+}
+
+.font-size-slider .range-pin .range-pin-value {
+  background: var(--ion-color-primary) !important;
+  color: var(--ion-color-primary-contrast) !important;
+  padding: 6px 8px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3) !important;
+  min-width: 20px !important;
+  text-align: center !important;
+}
+
+/* Prevent navbar color changes on focus */
+ion-toolbar:focus-within {
+  background: var(--ion-toolbar-background) !important;
+  color: var(--ion-toolbar-color) !important;
+}
+
+ion-toolbar *:focus {
+  outline: none !important;
+}
+
+/* Ensure alert text is readable in all themes */
+ion-alert {
+  --background: var(--ion-background-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+ion-alert .alert-wrapper {
+  background: var(--ion-background-color) !important;
+  color: var(--ion-text-color) !important;
+}
+
+ion-alert .alert-head {
+  color: var(--ion-text-color) !important;
+}
+
+ion-alert .alert-message {
+  color: var(--ion-text-color) !important;
+}
+
+ion-alert .alert-button {
+  color: var(--ion-text-color) !important;
+}
+
+ion-alert .alert-button-cancel {
+  color: var(--ion-color-medium) !important;
+}
+
+ion-alert .alert-button-confirm {
+  color: var(--ion-color-danger) !important;
+}
+
+/* Remove all toolbar borders */
+ion-toolbar::after {
+  display: none !important;
+  border: none !important;
+  border-bottom: none !important;
+}
+
+ion-toolbar::before {
+  display: none !important;
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* Target Ionic's internal border elements */
+ion-toolbar .toolbar-background {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+ion-toolbar .toolbar-container {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+ion-card {
+  --background: var(--ion-card-background);
+  --color: var(--ion-text-color);
+}
+
+ion-modal {
+  --background: var(--ion-modal-background);
+}
+
+ion-item {
+  --background: var(--ion-item-background);
+  --color: var(--ion-text-color);
+}
+
+/* Apply border colors for better visibility in dark modes */
+ion-button {
+  --border-color: var(--ion-border-color, var(--ion-color-primary));
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+ion-card {
+  --border-color: var(--ion-border-color, var(--ion-color-primary));
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+ion-modal {
+  --border-color: var(--ion-border-color, var(--ion-color-primary));
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+/* Theme selector buttons specifically */
+.theme-selector-button {
+  border: 1px solid var(--ion-border-color, var(--ion-color-primary));
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.theme-selector-button:focus {
+  outline-color: var(--ion-outline-color, var(--ion-color-primary));
+}
+
+/* Override inline styles for theme selector buttons in dark mode */
+@media (prefers-color-scheme: dark) {
+  ion-button[fill="clear"] {
+    border-color: var(--ion-border-color, var(--ion-color-primary)) !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+  }
+  
+  /* Specifically target theme selector buttons */
+  ion-button[fill="clear"]:not([style*="var(--ion-color-primary)"]) {
+    border-color: var(--ion-border-color, var(--ion-color-primary)) !important;
+  }
+}
+
+/* Settings modal specific styling */
+.settings-modal ion-button {
+  --border-color: var(--ion-border-color, var(--ion-color-primary));
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+.settings-modal ion-card {
+  --border-color: var(--ion-border-color, var(--ion-color-primary));
+  --border-width: 1px;
+  --border-style: solid;
+}
+
+/* Hide scrollbars but allow scrolling */
+.settings-modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.settings-modal-content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Settings modal specific styling */
+.settings-modal-content {
+  background: var(--ion-modal-background) !important;
+  color: var(--ion-text-color) !important;
+  overflow: hidden !important;
+}
+
+/* Theme selector container */
+.theme-selector-container {
+  width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 0 1rem !important;
+}
+
+/* Theme selector grid */
+.theme-selector-grid {
+  width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 0 1rem !important;
+}
+
+/* Prevent theme button clipping */
+.theme-selector-container ion-button,
+.theme-selector-grid ion-button {
+  margin: 0 0.5rem !important;
+  box-sizing: border-box !important;
+  max-width: calc(100% - 1rem) !important;
+}
+
+.settings-modal-backdrop {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+
+
+
+
 /* Dark Mode Enhancements */
 @media (prefers-color-scheme: dark) {
   .transcription-segment {
@@ -223,6 +642,25 @@
   
   .transcription-segment:hover {
     background: var(--ion-color-dark-shade);
+  }
+}
+
+/* Modal Backdrop for Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .settings-modal-backdrop {
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  .settings-modal-content {
+    border: 1px solid var(--ion-color-dark-shade) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7) !important;
+  }
+}
+
+/* Light Mode Modal Enhancements */
+@media (prefers-color-scheme: light) {
+  .settings-modal-backdrop {
+    background: rgba(0, 0, 0, 0.6) !important;
   }
 }
 

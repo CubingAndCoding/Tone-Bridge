@@ -15,7 +15,12 @@ const Toast: React.FC<ToastProps> = ({
   const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
-    setIsOpen(true);
+    // Only show toast if there's actually a message
+    if (message && message.trim() !== '') {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
   }, [message]);
 
   const getColor = () => {
@@ -31,6 +36,11 @@ const Toast: React.FC<ToastProps> = ({
     }
   };
 
+  // Don't render anything if no message
+  if (!message || message.trim() === '') {
+    return null;
+  }
+
   return (
     <IonToast
       isOpen={isOpen}
@@ -41,7 +51,7 @@ const Toast: React.FC<ToastProps> = ({
       color={getColor()}
       buttons={[
         {
-          text: 'Dismiss',
+          text: '✕',
           role: 'cancel',
         },
       ]}

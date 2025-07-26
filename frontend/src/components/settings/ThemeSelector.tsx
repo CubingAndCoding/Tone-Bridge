@@ -1,0 +1,225 @@
+import React from 'react';
+import { IonButton, IonIcon } from '@ionic/react';
+import { motion } from 'framer-motion';
+import { colorPaletteOutline } from 'ionicons/icons';
+
+export interface ThemeOption {
+  id: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray';
+  name: string;
+  description: string;
+  className: string;
+  previewColors: string[];
+}
+
+const themeOptions: ThemeOption[] = [
+  {
+    id: 'modern-blue' as const,
+    name: 'Modern Blue',
+    description: 'Professional and clean blue theme',
+    className: 'theme-modern-blue',
+    previewColors: ['#2563eb', '#64748b', '#0ea5e9', '#10b981']
+  },
+  {
+    id: 'warm-sunset' as const,
+    name: 'Warm Sunset',
+    description: 'Vibrant orange and purple gradient',
+    className: 'theme-warm-sunset',
+    previewColors: ['#f97316', '#8b5cf6', '#ec4899', '#10b981']
+  },
+  {
+    id: 'forest-green' as const,
+    name: 'Forest Green',
+    description: 'Natural and calming green tones',
+    className: 'theme-forest-green',
+    previewColors: ['#059669', '#65a30d', '#0891b2', '#16a34a']
+  },
+  {
+    id: 'ocean-depth' as const,
+    name: 'Ocean Depth',
+    description: 'Deep blue and teal palette',
+    className: 'theme-ocean-depth',
+    previewColors: ['#0891b2', '#6366f1', '#8b5cf6', '#059669']
+  },
+  {
+    id: 'neutral-gray' as const,
+    name: 'Neutral Gray',
+    description: 'Minimal and sophisticated grays',
+    className: 'theme-neutral-gray',
+    previewColors: ['#6b7280', '#9ca3af', '#d1d5db', '#10b981']
+  }
+];
+
+interface ThemeSelectorProps {
+  currentTheme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray';
+  onThemeChange: (themeId: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray') => void;
+}
+
+const ThemeSelector: React.FC<ThemeSelectorProps> = ({ 
+  currentTheme, 
+  onThemeChange 
+}) => {
+  return (
+    <div style={{ marginBottom: '1.5rem' }}>
+      <h3 style={{ 
+        marginBottom: '1rem', 
+        fontSize: '1.1rem',
+        fontWeight: '600',
+        color: 'var(--ion-text-color)'
+      }}>
+        <IonIcon 
+          icon={colorPaletteOutline} 
+          style={{ 
+            marginRight: '0.5rem',
+            verticalAlign: 'middle'
+          }} 
+        />
+        Theme Selection
+      </h3>
+      
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        gap: '0.75rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        width: '100%',
+        alignItems: 'center'
+      }}>
+        {themeOptions.map((theme, index) => (
+          <motion.div
+            key={theme.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              delay: index * 0.1,
+              duration: 0.3
+            }}
+            style={{
+              width: '95%',
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <IonButton
+              fill="clear"
+              style={{
+                width: '100%',
+                height: 'auto',
+                padding: '0.5rem',
+                border: currentTheme === theme.id 
+                  ? '1px solid var(--ion-color-primary)' 
+                  : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
+                borderRadius: '12px',
+                background: currentTheme === theme.id 
+                  ? 'var(--ion-color-primary-tint)' 
+                  : 'var(--ion-background-color)',
+                color: 'var(--ion-text-color)',
+                textTransform: 'none',
+                fontWeight: '500',
+                boxSizing: 'border-box',
+                overflow: 'hidden',
+                margin: '0 auto',
+                transition: 'transform 0.2s ease'
+              }}
+              onClick={() => onThemeChange(theme.id)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.transform = 'scale(0.95)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+            >
+              <div style={{ 
+                width: '100%',
+                textAlign: 'left'
+              }}>
+                {/* Theme Preview */}
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '0.5rem',
+                  marginBottom: '0.75rem',
+                  justifyContent: 'center'
+                }}>
+                  {theme.previewColors.map((color, colorIndex) => (
+                    <motion.div
+                      key={colorIndex}
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        background: color,
+                        border: '2px solid var(--ion-border-color, var(--ion-color-light-shade))'
+                      }}
+                      whileHover={{ scale: 1.5 }}
+                      transition={{ type: "spring", stiffness: 200 }}
+                    />
+                  ))}
+                </div>
+                
+                {/* Theme Info */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.25rem',
+                  alignItems: 'center'
+                }}>
+                  <div style={{ 
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    marginBottom: '0.25rem',
+                    color: currentTheme === theme.id 
+                      ? 'var(--ion-color-primary-contrast)' 
+                      : 'var(--ion-text-color)'
+                  }}>
+                    {theme.name}
+                  </div>
+                  <div style={{ 
+                    fontSize: '0.875rem',
+                    opacity: 0.8,
+                    color: currentTheme === theme.id 
+                      ? 'var(--ion-color-primary-contrast)' 
+                      : 'var(--ion-color-medium)'
+                  }}>
+                    {theme.description}
+                  </div>
+                </div>
+                
+                {/* Selection Indicator */}
+                {currentTheme === theme.id && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    style={{
+                      position: 'absolute',
+                      top: '0.5rem',
+                      right: '0.5rem',
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      background: 'var(--ion-color-primary-contrast)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--ion-color-primary)',
+                      fontSize: '0.75rem',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    ✓
+                  </motion.div>
+                )}
+              </div>
+            </IonButton>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ThemeSelector; 

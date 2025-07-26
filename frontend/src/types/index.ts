@@ -111,7 +111,7 @@ export interface ToastProps {
 
 // Settings Types
 export interface UserSettings {
-  theme: 'light' | 'dark' | 'system';
+  theme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray';
   fontSize: 'small' | 'medium' | 'large';
   showEmojis: boolean;
   showTags: boolean;

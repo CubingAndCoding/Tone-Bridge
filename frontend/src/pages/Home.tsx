@@ -11,6 +11,7 @@ import {
   IonActionSheet,
   IonToast,
   IonBadge,
+  IonButton,
 } from '@ionic/react';
 import {
   settingsOutline,
@@ -18,9 +19,10 @@ import {
   shareOutline,
   micOutline,
   heartOutline,
+  optionsOutline,
 } from 'ionicons/icons';
 import { AudioRecording, TranscriptionSegment, DisplayMode, UserSettings } from '../types';
-import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils } from '../utils';
+import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils, ThemeUtils } from '../utils';
 import { DebugUtils } from '../utils/debug';
 import { Button, Loading, Toast } from '../components/common';
 import AudioRecorder from '../components/audio/AudioRecorder';
@@ -72,6 +74,7 @@ const Home: React.FC = () => {
     // Apply saved theme
     const savedSettings = StorageUtils.getSettings();
     setSettings(savedSettings);
+    ThemeUtils.applyTheme(savedSettings.theme);
   }, []);
 
   // Handle recording completion
@@ -220,26 +223,53 @@ const Home: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <IonIcon icon={heartOutline} />
               ToneBridge
-              <IonBadge color="primary" style={{ marginLeft: '0.5rem' }}>
-                {transcriptionSegments.length} segments
-              </IonBadge>
+              {transcriptionSegments.length > 0 && (
+                <IonBadge color="primary" style={{ marginLeft: '0.5rem' }}>
+                  {transcriptionSegments.length}
+                </IonBadge>
+              )}
             </div>
           </IonTitle>
-          <IonIcon
-            icon={settingsOutline}
+          <IonButton
+            fill="clear"
             slot="end"
-            style={{ fontSize: '1.5rem', cursor: 'pointer', padding: '0.5rem' }}
-            onClick={() => setShowSettings(true)}
-          />
+            onClick={() => setShowSettings(!showSettings)}
+            style={{ marginRight: '0.5rem' }}
+          >
+            <IonIcon icon={settingsOutline} />
+          </IonButton>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="ion-padding">
-        {/* Main recording area */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2>Hear Beyond Words</h2>
-          <p>Real-time speech-to-text with emotion detection for accessibility</p>
+        {/* Hero Section */}
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '2rem',
+          padding: '1.5rem 1rem'
+        }}>
+          <h1 style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: 'bold', 
+            marginBottom: '1rem',
+            background: 'linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>
+            Hear Beyond Words
+          </h1>
+          <p style={{ 
+            fontSize: '1.1rem', 
+            color: 'var(--ion-color-medium)',
+            marginBottom: '2rem',
+            maxWidth: '600px',
+            margin: '0 auto 2rem auto'
+          }}>
+            Real-time speech-to-text with emotion detection for accessibility
+          </p>
           
+          {/* Main Recording Button */}
           <AudioRecorder
             onRecordingComplete={handleRecordingComplete}
             onRecordingError={handleRecordingError}
@@ -248,64 +278,89 @@ const Home: React.FC = () => {
           />
         </div>
 
-        {/* Display mode selector */}
-        <div style={{ marginBottom: '1rem' }}>
-          <h3>Display Mode</h3>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            {displayModes.map(mode => (
-              <Button
-                key={mode.id}
-                onClick={() => setCurrentDisplayMode(mode)}
-                color={currentDisplayMode.id === mode.id ? 'primary' : 'medium'}
-                fill={currentDisplayMode.id === mode.id ? 'solid' : 'outline'}
-                size="small"
-              >
-                {mode.name}
-              </Button>
-            ))}
-          </div>
-        </div>
 
-        {/* Transcription display */}
-        <TranscriptionDisplay
-          segments={transcriptionSegments}
-          displayMode={currentDisplayMode}
-          showTimestamps={true}
-          showConfidence={settings.showTags}
-          highlightCurrent={true}
-          onSegmentClick={(segment) => {
-            showToast(`Clicked: ${segment.text}`, 'info');
-          }}
-        />
 
-        {/* Action buttons */}
+        {/* Transcription Display */}
         {transcriptionSegments.length > 0 && (
-          <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Button
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ marginBottom: '0.75rem', fontSize: '1.2rem' }}>
+              Live Transcript
+            </h3>
+            <TranscriptionDisplay
+              segments={transcriptionSegments}
+              displayMode={currentDisplayMode}
+              showTimestamps={true}
+              showConfidence={settings.showTags}
+              highlightCurrent={true}
+              onSegmentClick={(segment) => {
+                showToast(`Clicked: ${segment.text}`, 'info');
+              }}
+            />
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        {transcriptionSegments.length > 0 && (
+          <div style={{ 
+            display: 'flex', 
+            gap: '1rem', 
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            padding: '1rem',
+            background: 'var(--ion-color-light)',
+            borderRadius: '12px',
+            marginTop: '1rem'
+          }}>
+            <IonButton
               onClick={downloadTranscript}
               color="success"
               fill="outline"
+              size="default"
             >
-              <IonIcon icon={downloadOutline} />
+              <IonIcon icon={downloadOutline} slot="start" />
               Download
-            </Button>
+            </IonButton>
             
-            <Button
+            <IonButton
               onClick={shareTranscript}
               color="secondary"
               fill="outline"
+              size="default"
             >
-              <IonIcon icon={shareOutline} />
+              <IonIcon icon={shareOutline} slot="start" />
               Share
-            </Button>
+            </IonButton>
             
-            <Button
+            <IonButton
               onClick={clearTranscript}
               color="danger"
               fill="outline"
+              size="default"
             >
-              Clear
-            </Button>
+              Clear All
+            </IonButton>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {transcriptionSegments.length === 0 && !isProcessing && (
+          <div style={{ 
+            textAlign: 'center', 
+            padding: '2rem 1rem',
+            color: 'var(--ion-color-medium)'
+          }}>
+            <IonIcon 
+              icon={micOutline} 
+              style={{ 
+                fontSize: '4rem', 
+                marginBottom: '1rem',
+                opacity: 0.5
+              }} 
+            />
+            <h3 style={{ marginBottom: '0.5rem' }}>Ready to Record</h3>
+            <p style={{ margin: '0', fontSize: '0.9rem' }}>
+              Tap the microphone button above to start your first recording
+            </p>
           </div>
         )}
 
@@ -314,7 +369,11 @@ const Home: React.FC = () => {
           isOpen={showSettings}
           onClose={() => setShowSettings(false)}
           onSettingsChange={handleSettingsChange}
+          currentDisplayMode={currentDisplayMode}
+          onDisplayModeChange={setCurrentDisplayMode}
         />
+
+
 
         {/* Loading overlay */}
         {isProcessing && (
