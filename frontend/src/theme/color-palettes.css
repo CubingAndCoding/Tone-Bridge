@@ -72,8 +72,8 @@
   --ion-text-color-rgb: 30, 41, 59;
   
   /* Layering colors for Modern Blue */
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-background-rgb: 255, 255, 255;
+  --ion-toolbar-background: #f8fafc;
+  --ion-toolbar-background-rgb: 248, 250, 252;
   --ion-card-background: #ffffff;
   --ion-card-background-rgb: 255, 255, 255;
   --ion-modal-background: #ffffff;
@@ -247,8 +247,8 @@
   --ion-text-color-rgb: 41, 37, 36;
   
   /* Layering colors for Warm Sunset */
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-background-rgb: 255, 255, 255;
+  --ion-toolbar-background: #fef7ed;
+  --ion-toolbar-background-rgb: 254, 247, 237;
   --ion-card-background: #ffffff;
   --ion-card-background-rgb: 255, 255, 255;
   --ion-modal-background: #ffffff;
@@ -422,8 +422,8 @@
   --ion-text-color-rgb: 20, 83, 45;
   
   /* Layering colors for Forest Green */
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-background-rgb: 255, 255, 255;
+  --ion-toolbar-background: #f0fdf4;
+  --ion-toolbar-background-rgb: 240, 253, 244;
   --ion-card-background: #ffffff;
   --ion-card-background-rgb: 255, 255, 255;
   --ion-modal-background: #ffffff;
@@ -597,8 +597,8 @@
   --ion-text-color-rgb: 12, 74, 110;
   
   /* Layering colors for Ocean Depth */
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-background-rgb: 255, 255, 255;
+  --ion-toolbar-background: #f0f9ff;
+  --ion-toolbar-background-rgb: 240, 249, 255;
   --ion-card-background: #ffffff;
   --ion-card-background-rgb: 255, 255, 255;
   --ion-modal-background: #ffffff;
@@ -772,8 +772,8 @@
   --ion-text-color-rgb: 55, 65, 81;
   
   /* Layering colors for Neutral Gray */
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-background-rgb: 255, 255, 255;
+  --ion-toolbar-background: #f9fafb;
+  --ion-toolbar-background-rgb: 249, 250, 251;
   --ion-card-background: #ffffff;
   --ion-card-background-rgb: 255, 255, 255;
   --ion-modal-background: #ffffff;
@@ -972,23 +972,17 @@
 .theme-high-contrast ion-button[color="primary"].selected {
   --color: #000000 !important;
   --background: #ffffff !important;
-  --border-color: #000000 !important;
-  border: 2px solid #000000 !important;
 }
 
 .theme-high-contrast ion-button[fill="outline"] {
   --color: #000000 !important;
   --background: transparent !important;
-  --border-color: #000000 !important;
-  border: 2px solid #000000 !important;
 }
 
 .theme-high-contrast ion-button[fill="outline"].button-selected,
 .theme-high-contrast ion-button[fill="outline"].selected {
   --color: #ffffff !important;
   --background: #000000 !important;
-  --border-color: #000000 !important;
-  border: 2px solid #000000 !important;
 }
 
 /* Dark Mode for High Contrast - Pure White on Black */

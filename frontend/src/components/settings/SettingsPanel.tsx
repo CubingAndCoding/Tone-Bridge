@@ -360,13 +360,19 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                               ? '1px solid var(--ion-color-primary)' 
                               : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
                             background: currentDisplayMode.id === mode.id 
-                              ? 'var(--ion-color-primary)' 
-                              : 'var(--ion-color-light)',
+                              ? (settings.theme === 'high-contrast' 
+                                  ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                                  : 'var(--ion-color-primary)')
+                              : (settings.theme === 'high-contrast' 
+                                  ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                  : 'var(--ion-color-light)'),
                             color: currentDisplayMode.id === mode.id 
                               ? (settings.theme === 'high-contrast' 
                                   ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
                                   : 'white')
-                              : 'var(--ion-color-dark)',
+                              : (settings.theme === 'high-contrast' 
+                                  ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                                  : 'var(--ion-color-dark)'),
                             fontSize: '0.9rem',
                             fontWeight: currentDisplayMode.id === mode.id ? '600' : '400',
                             cursor: 'pointer',
@@ -403,7 +409,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                 ? (settings.theme === 'high-contrast' 
                                     ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
                                     : 'rgba(255, 255, 255, 0.8)')
-                                : 'var(--ion-text-color)',
+                                : (settings.theme === 'high-contrast' 
+                                    ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                                    : 'var(--ion-text-color)'),
                               lineHeight: '1.3'
                             }}>
                               {mode.description}
@@ -538,8 +546,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                 ? '1px solid var(--ion-color-primary)' 
                                 : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
                               background: settings.fontSize === option.value 
-                                ? 'var(--ion-color-primary)' 
-                                : 'var(--ion-color-light)',
+                                ? (settings.theme === 'high-contrast' 
+                                    ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                                    : 'var(--ion-color-primary)')
+                                : (settings.theme === 'high-contrast' 
+                                    ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                    : 'var(--ion-color-light)'),
                               color: settings.fontSize === option.value 
                                 ? (settings.theme === 'high-contrast' 
                                     ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
@@ -712,7 +724,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       color="warning"
                       fill="outline"
                       expand="block"
-                      className="reset-button"
+                      className="reset-button action-button"
                       style={{
                         color: 'var(--ion-text-color)',
                         borderColor: settings.theme === 'high-contrast' ? 'var(--ion-text-color)' : 'var(--ion-color-warning)',

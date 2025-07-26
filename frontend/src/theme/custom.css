@@ -431,6 +431,128 @@ body.font-size-large span {
   font-weight: bold;
 }
 
+/* High Contrast Theme - Recording Status Overrides */
+.theme-high-contrast .recording-status {
+  color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-status p {
+  color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-error {
+  color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-error p {
+  color: var(--ion-text-color) !important;
+}
+
+/* Ultra specific recording status overrides */
+.theme-high-contrast .recording-status ion-text {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-status ion-text p {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-status ion-text p span {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-error ion-text {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast .recording-error ion-text p {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+/* Force override Ionic's danger color in high contrast mode */
+.theme-high-contrast ion-text[color="danger"] {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast ion-text[color="danger"] p {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.theme-high-contrast ion-text[color="danger"] span {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+/* Light mode high contrast specific overrides */
+.light-mode.theme-high-contrast ion-text[color="danger"] {
+  color: #000000 !important;
+  --color: #000000 !important;
+}
+
+.light-mode.theme-high-contrast ion-text[color="danger"] p {
+  color: #000000 !important;
+  --color: #000000 !important;
+}
+
+.light-mode.theme-high-contrast ion-text[color="danger"] span {
+  color: #000000 !important;
+  --color: #000000 !important;
+}
+
+/* Dark mode high contrast specific overrides */
+.dark-mode.theme-high-contrast ion-text[color="danger"] {
+  color: #ffffff !important;
+  --color: #ffffff !important;
+}
+
+.dark-mode.theme-high-contrast ion-text[color="danger"] p {
+  color: #ffffff !important;
+  --color: #ffffff !important;
+}
+
+.dark-mode.theme-high-contrast ion-text[color="danger"] span {
+  color: #ffffff !important;
+  --color: #ffffff !important;
+}
+
+/* Nuclear option - override any recording status text */
+.theme-high-contrast .recording-status,
+.theme-high-contrast .recording-status *,
+.theme-high-contrast .recording-status ion-text,
+.theme-high-contrast .recording-status ion-text *,
+.theme-high-contrast .recording-status p,
+.theme-high-contrast .recording-status span {
+  color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+}
+
+.light-mode.theme-high-contrast .recording-status,
+.light-mode.theme-high-contrast .recording-status *,
+.light-mode.theme-high-contrast .recording-status ion-text,
+.light-mode.theme-high-contrast .recording-status ion-text *,
+.light-mode.theme-high-contrast .recording-status p,
+.light-mode.theme-high-contrast .recording-status span {
+  color: #000000 !important;
+  --color: #000000 !important;
+}
+
+.dark-mode.theme-high-contrast .recording-status,
+.dark-mode.theme-high-contrast .recording-status *,
+.dark-mode.theme-high-contrast .recording-status ion-text,
+.dark-mode.theme-high-contrast .recording-status ion-text *,
+.dark-mode.theme-high-contrast .recording-status p,
+.dark-mode.theme-high-contrast .recording-status span {
+  color: #ffffff !important;
+  --color: #ffffff !important;
+}
+
 /* Recording Animations */
 @keyframes pulse {
   0% { transform: scale(1); }
@@ -519,7 +641,6 @@ body.font-size-large span {
 
 /* Button Enhancements */
 .ion-button {
-  --border-radius: 8px;
   --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
 }
@@ -789,26 +910,6 @@ ion-header * {
   animation: none !important;
 }
 
-/* Force navbar to ignore all focus states */
-ion-toolbar:focus,
-ion-toolbar:focus-within,
-ion-toolbar:focus-visible,
-ion-toolbar:hover,
-ion-toolbar:active,
-ion-toolbar *:focus,
-ion-toolbar *:focus-within,
-ion-toolbar *:focus-visible,
-ion-toolbar *:hover,
-ion-toolbar *:active {
-  background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
-  color: var(--ion-text-color) !important;
-  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
-  --color: var(--ion-text-color) !important;
-  border: 2px solid red !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
 /* Prevent focus effects on range sliders */
 ion-range:focus {
   outline: none !important;
@@ -974,9 +1075,6 @@ ion-item {
 
 /* Apply border colors for better visibility in dark modes */
 ion-button {
-  --border-color: var(--ion-border-color, var(--ion-color-primary));
-  --border-width: 1px;
-  --border-style: solid;
 }
 
 ion-card {
@@ -1000,20 +1098,6 @@ ion-modal {
 
 .theme-selector-button:focus {
   outline-color: var(--ion-outline-color, var(--ion-color-primary));
-}
-
-/* Override inline styles for theme selector buttons in dark mode */
-@media (prefers-color-scheme: dark) {
-  ion-button[fill="clear"] {
-    border-color: var(--ion-border-color, var(--ion-color-primary)) !important;
-    border-width: 2px !important;
-    border-style: solid !important;
-  }
-  
-  /* Specifically target theme selector buttons */
-  ion-button[fill="clear"]:not([style*="var(--ion-color-primary)"]) {
-    border-color: var(--ion-border-color, var(--ion-color-primary)) !important;
-  }
 }
 
 /* Settings modal specific styling */
@@ -1073,10 +1157,6 @@ ion-modal {
 .settings-modal-backdrop {
   background: rgba(0, 0, 0, 0.5) !important;
 }
-
-
-
-
 
 /* Dark Mode Enhancements */
 @media (prefers-color-scheme: dark) {
@@ -1165,23 +1245,18 @@ ion-modal {
 .theme-high-contrast ion-button[color="primary"].selected {
   --color: #000000 !important;
   --background: #ffffff !important;
-  --border-color: #000000 !important;
-  border: 2px solid #000000 !important;
 }
 
+/* High Contrast Theme - Outline Buttons (but exclude action buttons) */
 .theme-high-contrast ion-button[fill="outline"] {
   --color: #000000 !important;
   --background: transparent !important;
-  --border-color: #000000 !important;
-  border: 2px solid #000000 !important;
 }
 
 .theme-high-contrast ion-button[fill="outline"].button-selected,
 .theme-high-contrast ion-button[fill="outline"].selected {
   --color: #ffffff !important;
   --background: #000000 !important;
-  --border-color: #000000 !important;
-  border: 2px solid #000000 !important;
 }
 
 /* High Contrast Theme - Dark Mode Button States */
@@ -1189,39 +1264,26 @@ ion-modal {
   .theme-high-contrast ion-button[color="primary"] {
     --color: #000000 !important;
     --background: #ffffff !important;
-    --border-color: #ffffff !important;
   }
 
   .theme-high-contrast ion-button[color="primary"].button-selected,
   .theme-high-contrast ion-button[color="primary"].selected {
     --color: #ffffff !important;
     --background: #000000 !important;
-    --border-color: #ffffff !important;
-    border: 2px solid #ffffff !important;
   }
 
+  /* High Contrast Theme - Dark Mode Outline Buttons (but exclude action buttons) */
   .theme-high-contrast ion-button[fill="outline"] {
     --color: #ffffff !important;
     --background: transparent !important;
-    --border-color: #ffffff !important;
-    border: 2px solid #ffffff !important;
   }
 
   .theme-high-contrast ion-button[fill="outline"].button-selected,
   .theme-high-contrast ion-button[fill="outline"].selected {
     --color: #000000 !important;
     --background: #ffffff !important;
-    --border-color: #ffffff !important;
-    border: 2px solid #ffffff !important;
   }
 } 
-
-/* High Contrast Theme - Reset Button Override */
-.theme-high-contrast .reset-button {
-  --border-color: var(--ion-text-color) !important;
-  --color: var(--ion-text-color) !important;
-  background: transparent !important;
-}
 
 /* Force toolbar background to match modal background */
 ion-toolbar {
@@ -1248,141 +1310,6 @@ ion-toolbar {
   background: #ffffff !important;
   color: #000000 !important;
   border: 2px solid #000000 !important;
-}
-
-/* Aggressive Border Overrides for Light Mode - All Themes */
-.theme-neutral-gray .display-mode-button,
-.theme-neutral-gray .font-size-button,
-.theme-forest-green .display-mode-button,
-.theme-forest-green .font-size-button,
-.theme-ocean-depth .display-mode-button,
-.theme-ocean-depth .font-size-button,
-.theme-modern-blue .display-mode-button,
-.theme-modern-blue .font-size-button,
-.theme-warm-sunset .display-mode-button,
-.theme-warm-sunset .font-size-button {
-  border: 3px solid var(--ion-border-color) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-.theme-neutral-gray .display-mode-button:not(.selected),
-.theme-neutral-gray .font-size-button:not(.selected),
-.theme-forest-green .display-mode-button:not(.selected),
-.theme-forest-green .font-size-button:not(.selected),
-.theme-ocean-depth .display-mode-button:not(.selected),
-.theme-ocean-depth .font-size-button:not(.selected),
-.theme-modern-blue .display-mode-button:not(.selected),
-.theme-modern-blue .font-size-button:not(.selected),
-.theme-warm-sunset .display-mode-button:not(.selected),
-.theme-warm-sunset .font-size-button:not(.selected) {
-  border: 3px solid var(--ion-border-color) !important;
-  background: var(--ion-color-light) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-.theme-neutral-gray .display-mode-button.selected,
-.theme-neutral-gray .font-size-button.selected,
-.theme-forest-green .display-mode-button.selected,
-.theme-forest-green .font-size-button.selected,
-.theme-ocean-depth .display-mode-button.selected,
-.theme-ocean-depth .font-size-button.selected,
-.theme-modern-blue .display-mode-button.selected,
-.theme-modern-blue .font-size-button.selected,
-.theme-warm-sunset .display-mode-button.selected,
-.theme-warm-sunset .font-size-button.selected {
-  border: 4px solid var(--ion-border-color) !important;
-  background: var(--ion-color-primary) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Extremely Aggressive Border Overrides for Display Mode and Font Size Buttons */
-.theme-neutral-gray .display-mode-button,
-.theme-neutral-gray .font-size-button,
-.theme-forest-green .display-mode-button,
-.theme-forest-green .font-size-button,
-.theme-ocean-depth .display-mode-button,
-.theme-ocean-depth .font-size-button,
-.theme-modern-blue .display-mode-button,
-.theme-modern-blue .font-size-button,
-.theme-warm-sunset .display-mode-button,
-.theme-warm-sunset .font-size-button {
-  border: 4px solid var(--ion-border-color) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
-}
-
-.theme-neutral-gray .display-mode-button:not(.selected),
-.theme-neutral-gray .font-size-button:not(.selected),
-.theme-forest-green .display-mode-button:not(.selected),
-.theme-forest-green .font-size-button:not(.selected),
-.theme-ocean-depth .display-mode-button:not(.selected),
-.theme-ocean-depth .font-size-button:not(.selected),
-.theme-modern-blue .display-mode-button:not(.selected),
-.theme-modern-blue .font-size-button:not(.selected),
-.theme-warm-sunset .display-mode-button:not(.selected),
-.theme-warm-sunset .font-size-button:not(.selected) {
-  border: 4px solid var(--ion-border-color) !important;
-  background: var(--ion-color-light) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
-}
-
-.theme-neutral-gray .display-mode-button.selected,
-.theme-neutral-gray .font-size-button.selected,
-.theme-forest-green .display-mode-button.selected,
-.theme-forest-green .font-size-button.selected,
-.theme-ocean-depth .display-mode-button.selected,
-.theme-ocean-depth .font-size-button.selected,
-.theme-modern-blue .display-mode-button.selected,
-.theme-modern-blue .font-size-button.selected,
-.theme-warm-sunset .display-mode-button.selected,
-.theme-warm-sunset .font-size-button.selected {
-  border: 5px solid var(--ion-border-color) !important;
-  background: var(--ion-color-primary) !important;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Force all IonItem elements to have visible borders */
-.theme-neutral-gray ion-item,
-.theme-forest-green ion-item,
-.theme-ocean-depth ion-item,
-.theme-modern-blue ion-item,
-.theme-warm-sunset ion-item {
-  border: 3px solid var(--ion-border-color) !important;
-  border-radius: 8px !important;
-  margin-bottom: 0.5rem !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Force all IonButton elements to have visible borders */
-.theme-neutral-gray ion-button,
-.theme-forest-green ion-button,
-.theme-ocean-depth ion-button,
-.theme-modern-blue ion-button,
-.theme-warm-sunset ion-button {
-  border: 3px solid var(--ion-border-color) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Force all IonToggle elements to have visible borders */
-.theme-neutral-gray ion-toggle,
-.theme-forest-green ion-toggle,
-.theme-ocean-depth ion-toggle,
-.theme-modern-blue ion-toggle,
-.theme-warm-sunset ion-toggle {
-  border: 3px solid var(--ion-border-color) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Force all IonCard elements to have visible borders */
-.theme-neutral-gray ion-card,
-.theme-forest-green ion-card,
-.theme-ocean-depth ion-card,
-.theme-modern-blue ion-card,
-.theme-warm-sunset ion-card {
-  border: 4px solid var(--ion-border-color) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Manual Light/Dark Mode Override */
@@ -1673,15 +1600,6 @@ ion-toolbar {
   border: 3px solid var(--ion-border-color, #6b7280) !important;
 }
 
-/* Neutral Gray Theme - All Settings Panel Elements */
-.theme-neutral-gray ion-card,
-.theme-neutral-gray ion-item,
-.theme-neutral-gray ion-button,
-.theme-neutral-gray ion-toggle,
-.theme-neutral-gray ion-range {
-  border: 1px solid var(--ion-border-color, #6b7280) !important;
-}
-
 /* Forest Green Theme - Button Border Enhancement */
 .theme-forest-green .theme-selector-button,
 .theme-forest-green .display-mode-button,
@@ -1699,15 +1617,6 @@ ion-toolbar {
 .theme-forest-green .display-mode-button.selected,
 .theme-forest-green .font-size-button.selected {
   border: 3px solid var(--ion-border-color, #059669) !important;
-}
-
-/* Forest Green Theme - All Settings Panel Elements */
-.theme-forest-green ion-card,
-.theme-forest-green ion-item,
-.theme-forest-green ion-button,
-.theme-forest-green ion-toggle,
-.theme-forest-green ion-range {
-  border: 1px solid var(--ion-border-color, #059669) !important;
 }
 
 /* Ocean Depth Theme - Button Border Enhancement */
@@ -1729,15 +1638,6 @@ ion-toolbar {
   border: 3px solid var(--ion-border-color, #0891b2) !important;
 }
 
-/* Ocean Depth Theme - All Settings Panel Elements */
-.theme-ocean-depth ion-card,
-.theme-ocean-depth ion-item,
-.theme-ocean-depth ion-button,
-.theme-ocean-depth ion-toggle,
-.theme-ocean-depth ion-range {
-  border: 1px solid var(--ion-border-color, #0891b2) !important;
-}
-
 /* Modern Blue Theme - Button Border Enhancement */
 .theme-modern-blue .theme-selector-button,
 .theme-modern-blue .display-mode-button,
@@ -1755,15 +1655,6 @@ ion-toolbar {
 .theme-modern-blue .display-mode-button.selected,
 .theme-modern-blue .font-size-button.selected {
   border: 3px solid var(--ion-border-color, #2563eb) !important;
-}
-
-/* Modern Blue Theme - All Settings Panel Elements */
-.theme-modern-blue ion-card,
-.theme-modern-blue ion-item,
-.theme-modern-blue ion-button,
-.theme-modern-blue ion-toggle,
-.theme-modern-blue ion-range {
-  border: 1px solid var(--ion-border-color, #2563eb) !important;
 }
 
 /* Warm Sunset Theme - Button Border Enhancement */
@@ -1784,14 +1675,3 @@ ion-toolbar {
 .theme-warm-sunset .font-size-button.selected {
   border: 3px solid var(--ion-border-color, #f97316) !important;
 }
-
-/* Warm Sunset Theme - All Settings Panel Elements */
-.theme-warm-sunset ion-card,
-.theme-warm-sunset ion-item,
-.theme-warm-sunset ion-button,
-.theme-warm-sunset ion-toggle,
-.theme-warm-sunset ion-range {
-  border: 1px solid var(--ion-border-color, #f97316) !important;
-}
-
-/* High Contrast Theme - Display Mode and Font Size Buttons */ 

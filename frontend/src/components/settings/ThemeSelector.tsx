@@ -118,9 +118,19 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                   : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
                 borderRadius: '12px',
                 background: currentTheme === theme.id 
-                  ? 'var(--ion-color-primary-tint)' 
-                  : 'var(--ion-background-color)',
-                color: 'var(--ion-text-color)',
+                  ? (theme.id === 'high-contrast' 
+                      ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                      : 'var(--ion-color-primary-tint)')
+                  : (theme.id === 'high-contrast' 
+                      ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                      : 'var(--ion-background-color)'),
+                color: currentTheme === theme.id 
+                  ? (theme.id === 'high-contrast' 
+                      ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                      : 'var(--ion-color-primary-contrast)')
+                  : (theme.id === 'high-contrast' 
+                      ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                      : 'var(--ion-text-color)'),
                 textTransform: 'none',
                 fontWeight: '500',
                 boxSizing: 'border-box',
@@ -181,10 +191,12 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                     fontWeight: '600',
                     marginBottom: '0.25rem',
                     color: currentTheme === theme.id 
-                      ? (currentTheme === 'high-contrast' 
-                          ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                      ? (theme.id === 'high-contrast' 
+                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
                           : 'var(--ion-color-primary-contrast)')
-                      : 'var(--ion-text-color)'
+                      : (theme.id === 'high-contrast' 
+                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                          : 'var(--ion-text-color)')
                   }}>
                     {theme.name}
                   </div>
@@ -192,10 +204,12 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                     fontSize: '0.875rem',
                     opacity: 0.8,
                     color: currentTheme === theme.id 
-                      ? (currentTheme === 'high-contrast' 
-                          ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                      ? (theme.id === 'high-contrast' 
+                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
                           : 'var(--ion-color-primary-contrast)')
-                      : 'var(--ion-text-color)'
+                      : (theme.id === 'high-contrast' 
+                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
+                          : 'var(--ion-text-color)')
                   }}>
                     {theme.description}
                   </div>
