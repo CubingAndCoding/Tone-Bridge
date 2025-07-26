@@ -670,8 +670,8 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar style={{
-          background: 'var(--ion-background-color)',
-          '--background': 'var(--ion-background-color)',
+          background: 'var(--ion-modal-background)',
+          '--background': 'var(--ion-modal-background)',
           '--color': 'var(--ion-text-color)',
           ...(document.documentElement.classList.contains('theme-high-contrast') && 
                document.documentElement.classList.contains('dark-mode') && {

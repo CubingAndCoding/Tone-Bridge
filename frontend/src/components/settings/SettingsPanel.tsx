@@ -55,37 +55,14 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const [settings, setSettings] = useState<UserSettings>(StorageUtils.getSettings());
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   
-  // Monitor navbar color changes and revert them
+  // Set initial toolbar background
   useEffect(() => {
     const toolbar = document.querySelector('ion-toolbar');
     if (!toolbar) return;
     
-    console.log('Setting up navbar monitoring...');
-    console.log('Initial toolbar styles:', toolbar.getAttribute('style'));
-    console.log('Initial toolbar computed styles:', window.getComputedStyle(toolbar).background);
-    
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        console.log('Navbar mutation detected:', mutation);
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          console.log('Style change detected, reverting...');
-          console.log('New style:', toolbar.getAttribute('style'));
-          // Force the correct background color
-          toolbar.style.setProperty('--background', 'var(--ion-toolbar-background, var(--ion-color-dark))', 'important');
-          toolbar.style.setProperty('background', 'var(--ion-toolbar-background, var(--ion-color-dark))', 'important');
-          console.log('Reverted style:', toolbar.getAttribute('style'));
-        }
-      });
-    });
-    
-    observer.observe(toolbar, { 
-      attributes: true, 
-      attributeFilter: ['style', 'class'],
-      childList: true,
-      subtree: true
-    });
-    
-    return () => observer.disconnect();
+    // Set initial toolbar background
+    toolbar.style.setProperty('--background', 'var(--ion-toolbar-background, var(--ion-color-dark))', 'important');
+    toolbar.style.setProperty('background', 'var(--ion-toolbar-background, var(--ion-color-dark))', 'important');
   }, []);
 
   // Apply font size and accessibility settings on component mount
@@ -738,9 +715,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       className="reset-button"
                       style={{
                         color: 'var(--ion-text-color)',
-                        borderColor: 'var(--ion-color-warning)',
+                        borderColor: settings.theme === 'high-contrast' ? 'var(--ion-text-color)' : 'var(--ion-color-warning)',
                         '--ion-color-warning': 'var(--ion-text-color)',
-                        '--ion-color-warning-contrast': 'var(--ion-background-color)'
+                        '--ion-color-warning-contrast': 'var(--ion-background-color)',
+                        '--border-color': settings.theme === 'high-contrast' ? 'var(--ion-text-color)' : undefined,
+                        '--background': settings.theme === 'high-contrast' ? 'transparent' : undefined
                       }}
                     >
                       Reset to Defaults

@@ -1216,6 +1216,19 @@ ion-modal {
   }
 } 
 
+/* High Contrast Theme - Reset Button Override */
+.theme-high-contrast .reset-button {
+  --border-color: var(--ion-text-color) !important;
+  --color: var(--ion-text-color) !important;
+  background: transparent !important;
+}
+
+/* Force toolbar background to match modal background */
+ion-toolbar {
+  --background: var(--ion-background-color) !important;
+  background: var(--ion-background-color) !important;
+}
+
 /* High Contrast Theme - Display Mode and Font Size Buttons */
 .theme-high-contrast .display-mode-button,
 .theme-high-contrast .font-size-button {
