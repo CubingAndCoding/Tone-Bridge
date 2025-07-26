@@ -111,13 +111,12 @@ export interface ToastProps {
 
 // Settings Types
 export interface UserSettings {
-  theme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray';
+  theme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray' | 'high-contrast';
   fontSize: 'small' | 'medium' | 'large';
   showEmojis: boolean;
   showTags: boolean;
   autoSave: boolean;
   accessibility: {
-    highContrast: boolean;
     reducedMotion: boolean;
     dyslexiaFriendly: boolean;
   };

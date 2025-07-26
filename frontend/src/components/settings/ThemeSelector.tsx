@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { colorPaletteOutline } from 'ionicons/icons';
 
 export interface ThemeOption {
-  id: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray';
+  id: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray' | 'high-contrast';
   name: string;
   description: string;
   className: string;
@@ -46,12 +46,19 @@ const themeOptions: ThemeOption[] = [
     description: 'Minimal and sophisticated grays',
     className: 'theme-neutral-gray',
     previewColors: ['#6b7280', '#9ca3af', '#d1d5db', '#10b981']
+  },
+  {
+    id: 'high-contrast' as const,
+    name: 'High Contrast',
+    description: 'Maximum accessibility with pure black and white',
+    className: 'theme-high-contrast',
+    previewColors: ['#000000', '#ffffff', '#000000', '#ffffff']
   }
 ];
 
 interface ThemeSelectorProps {
-  currentTheme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray';
-  onThemeChange: (themeId: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray') => void;
+  currentTheme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray' | 'high-contrast';
+  onThemeChange: (themeId: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray' | 'high-contrast') => void;
 }
 
 const ThemeSelector: React.FC<ThemeSelectorProps> = ({ 
@@ -101,6 +108,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           >
             <IonButton
               fill="clear"
+              className={`theme-selector-button ${currentTheme === theme.id ? 'selected' : ''}`}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -136,7 +144,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
             >
               <div style={{ 
                 width: '100%',
-                textAlign: 'left'
+                textAlign: 'center'
               }}>
                 {/* Theme Preview */}
                 <div style={{ 
@@ -173,7 +181,9 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                     fontWeight: '600',
                     marginBottom: '0.25rem',
                     color: currentTheme === theme.id 
-                      ? 'var(--ion-color-primary-contrast)' 
+                      ? (currentTheme === 'high-contrast' 
+                          ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                          : 'var(--ion-color-primary-contrast)')
                       : 'var(--ion-text-color)'
                   }}>
                     {theme.name}
@@ -182,8 +192,10 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                     fontSize: '0.875rem',
                     opacity: 0.8,
                     color: currentTheme === theme.id 
-                      ? 'var(--ion-color-primary-contrast)' 
-                      : 'var(--ion-color-medium)'
+                      ? (currentTheme === 'high-contrast' 
+                          ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                          : 'var(--ion-color-primary-contrast)')
+                      : 'var(--ion-text-color)'
                   }}>
                     {theme.description}
                   </div>

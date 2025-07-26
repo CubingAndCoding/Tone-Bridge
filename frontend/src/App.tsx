@@ -34,7 +34,9 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './theme/color-palettes.css';
 
-setupIonicReact();
+setupIonicReact({
+  mode: 'md' // Force Material Design mode on all platforms
+});
 
 // Apply theme on app initialization
 const settings = StorageUtils.getSettings();

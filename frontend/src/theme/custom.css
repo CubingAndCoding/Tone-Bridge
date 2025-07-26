@@ -21,25 +21,374 @@
   }
 }
 
+
+
+/* Reduced Motion */
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+}
+
+.reduced-motion ion-button {
+  transition: none !important;
+}
+
+.reduced-motion ion-card {
+  transition: none !important;
+}
+
+.reduced-motion .motion-div {
+  animation: none !important;
+  transition: none !important;
+}
+
 /* Dyslexia-friendly Font */
 .dyslexia-friendly {
-  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif;
-  line-height: 1.6;
-  letter-spacing: 0.1em;
-  word-spacing: 0.2em;
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
+}
+
+.dyslexia-friendly * {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
+}
+
+.dyslexia-friendly ion-button {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
+}
+
+.dyslexia-friendly ion-card {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
+}
+
+.dyslexia-friendly p {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
 }
 
 /* Font Size Variations */
 .font-size-small {
-  font-size: 0.875rem;
+  --app-font-size: 0.875rem;
+  font-size: var(--app-font-size);
+}
+
+.font-size-small body,
+.font-size-small * {
+  font-size: var(--app-font-size);
 }
 
 .font-size-medium {
-  font-size: 1rem;
+  --app-font-size: 1rem;
+  font-size: var(--app-font-size);
+}
+
+.font-size-medium body,
+.font-size-medium * {
+  font-size: var(--app-font-size);
 }
 
 .font-size-large {
+  --app-font-size: 1.25rem;
+  font-size: var(--app-font-size);
+}
+
+.font-size-large body,
+.font-size-large * {
+  font-size: var(--app-font-size);
+}
+
+/* Apply font sizes to specific components */
+.font-size-small ion-card,
+.font-size-small ion-item,
+.font-size-small ion-button,
+.font-size-small p,
+.font-size-small div,
+.font-size-small span,
+.font-size-small h1,
+.font-size-small h2,
+.font-size-small h3,
+.font-size-small h4,
+.font-size-small h5,
+.font-size-small h6 {
+  font-size: var(--app-font-size);
+}
+
+.font-size-medium ion-card,
+.font-size-medium ion-item,
+.font-size-medium ion-button,
+.font-size-medium p,
+.font-size-medium div,
+.font-size-medium span,
+.font-size-medium h1,
+.font-size-medium h2,
+.font-size-medium h3,
+.font-size-medium h4,
+.font-size-medium h5,
+.font-size-medium h6 {
+  font-size: var(--app-font-size);
+}
+
+.font-size-large ion-card,
+.font-size-large ion-item,
+.font-size-large ion-button,
+.font-size-large p,
+.font-size-large div,
+.font-size-large span,
+.font-size-large h1,
+.font-size-large h2,
+.font-size-large h3,
+.font-size-large h4,
+.font-size-large h5,
+.font-size-large h6 {
+  font-size: var(--app-font-size);
+}
+
+/* Global font size application */
+body.font-size-small {
+  font-size: 0.875rem;
+}
+
+body.font-size-medium {
+  font-size: 1rem;
+}
+
+body.font-size-large {
   font-size: 1.25rem;
+}
+
+#root.font-size-small {
+  font-size: 0.875rem;
+}
+
+#root.font-size-medium {
+  font-size: 1rem;
+}
+
+#root.font-size-large {
+  font-size: 1.25rem;
+}
+
+/* Ensure font size changes are visible in key components */
+.font-size-small .transcription-segment,
+.font-size-small ion-card,
+.font-size-small ion-item,
+.font-size-small p,
+.font-size-small div {
+  font-size: 0.875rem !important;
+}
+
+.font-size-medium .transcription-segment,
+.font-size-medium ion-card,
+.font-size-medium ion-item,
+.font-size-medium p,
+.font-size-medium div {
+  font-size: 1rem !important;
+}
+
+.font-size-large .transcription-segment,
+.font-size-large ion-card,
+.font-size-large ion-item,
+.font-size-large p,
+.font-size-large div {
+  font-size: 1.25rem !important;
+}
+
+/* Simplified Font Size Application */
+.font-size-small {
+  --app-font-size: 0.875rem;
+}
+
+.font-size-medium {
+  --app-font-size: 1rem;
+}
+
+.font-size-large {
+  --app-font-size: 1.25rem;
+}
+
+/* Direct font size application */
+body.font-size-small {
+  font-size: 0.875rem !important;
+}
+
+body.font-size-medium {
+  font-size: 1rem !important;
+}
+
+body.font-size-large {
+  font-size: 1.25rem !important;
+}
+
+#root.font-size-small {
+  font-size: 0.875rem !important;
+}
+
+#root.font-size-medium {
+  font-size: 1rem !important;
+}
+
+#root.font-size-large {
+  font-size: 1.25rem !important;
+}
+
+/* Apply to all child elements */
+body.font-size-small *,
+#root.font-size-small * {
+  font-size: 0.875rem !important;
+}
+
+body.font-size-medium *,
+#root.font-size-medium * {
+  font-size: 1rem !important;
+}
+
+body.font-size-large *,
+#root.font-size-large * {
+  font-size: 1.25rem !important;
+}
+
+/* Override inline styles for specific components */
+body.font-size-small ion-card,
+body.font-size-small ion-card *,
+body.font-size-small ion-text,
+body.font-size-small ion-text *,
+body.font-size-small p,
+body.font-size-small div,
+body.font-size-small span {
+  font-size: 0.875rem !important;
+}
+
+body.font-size-medium ion-card,
+body.font-size-medium ion-card *,
+body.font-size-medium ion-text,
+body.font-size-medium ion-text *,
+body.font-size-medium p,
+body.font-size-medium div,
+body.font-size-medium span {
+  font-size: 1rem !important;
+}
+
+body.font-size-large ion-card,
+body.font-size-large ion-card *,
+body.font-size-large ion-text,
+body.font-size-large ion-text *,
+body.font-size-large p,
+body.font-size-large div,
+body.font-size-large span {
+  font-size: 1.25rem !important;
+}
+
+/* Specific component targeting */
+.font-size-small ion-card,
+.font-size-small ion-item,
+.font-size-small p,
+.font-size-small div,
+.font-size-small span {
+  font-size: var(--app-font-size) !important;
+}
+
+.font-size-medium ion-card,
+.font-size-medium ion-item,
+.font-size-medium p,
+.font-size-medium div,
+.font-size-medium span {
+  font-size: var(--app-font-size) !important;
+}
+
+.font-size-large ion-card,
+.font-size-large ion-item,
+.font-size-large p,
+.font-size-large div,
+.font-size-large span {
+  font-size: var(--app-font-size) !important;
+}
+
+
+
+/* Legacy font-size-button styles for backward compatibility */
+.font-size-button {
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  width: 90px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ion-border-color, var(--ion-color-light-shade));
+}
+
+.font-size-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.font-size-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.font-size-button .font-size-small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.font-size-button .font-size-medium {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.font-size-button .font-size-large {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Mobile Responsive Font Size Buttons */
+@media (max-width: 480px) {
+  .font-size-button {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.7rem;
+    width: 60px;
+    height: 36px;
+    min-width: 60px;
+    border-radius: 10px;
+  }
+  
+  .font-size-button .font-size-small {
+    font-size: 0.7rem;
+  }
+  
+  .font-size-button .font-size-medium {
+    font-size: 0.9rem;
+  }
+  
+  .font-size-button .font-size-large {
+    font-size: 1.1rem;
+  }
 }
 
 /* Audio Recorder Styles */
@@ -324,10 +673,105 @@ ion-toolbar *:active {
   box-shadow: none !important;
 }
 
-/* Debug: Add a distinctive color to see if toolbar is changing */
-ion-toolbar {
-  border: 2px solid red !important;
+/* Platform-specific header and toolbar styling to ensure consistency */
+ion-header {
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  border: none !important;
 }
+
+ion-toolbar {
+  /* Remove debug border */
+  border: none !important;
+}
+
+/* iOS-specific overrides */
+.ios ion-header {
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+}
+
+.ios ion-toolbar {
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+  --min-height: 44px !important;
+  --padding-top: 0 !important;
+  --padding-bottom: 0 !important;
+  --padding-start: 0 !important;
+  --padding-end: 0 !important;
+}
+
+.ios ion-title {
+  --color: var(--ion-text-color) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+}
+
+/* Android/Material Design overrides */
+.md ion-header {
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+}
+
+.md ion-toolbar {
+  --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+  --color: var(--ion-text-color) !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+  --min-height: 56px !important;
+  --padding-top: 0 !important;
+  --padding-bottom: 0 !important;
+  --padding-start: 0 !important;
+  --padding-end: 0 !important;
+}
+
+.md ion-title {
+  --color: var(--ion-text-color) !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+}
+
+/* Desktop overrides */
+@media (min-width: 768px) {
+  ion-header {
+    --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+    --color: var(--ion-text-color) !important;
+    --border-width: 0 !important;
+    --border-style: none !important;
+    --border-color: transparent !important;
+  }
+  
+  ion-toolbar {
+    --background: var(--ion-toolbar-background, var(--ion-color-dark)) !important;
+    --color: var(--ion-text-color) !important;
+    --border-width: 0 !important;
+    --border-style: none !important;
+    --border-color: transparent !important;
+    --min-height: 64px !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+  }
+  
+  ion-title {
+    --color: var(--ion-text-color) !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+  }
+}
+
+
 
 /* Global focus prevention - prevent ANY element from affecting navbar */
 *:focus,
@@ -709,3 +1153,632 @@ ion-modal {
 .gap-1 { gap: 0.5rem; }
 .gap-2 { gap: 1rem; }
 .gap-3 { gap: 1.5rem; } 
+
+/* High Contrast Theme - Selected Button States */
+.theme-high-contrast ion-button[color="primary"] {
+  --color: #ffffff !important;
+  --background: #000000 !important;
+  --border-color: #000000 !important;
+}
+
+.theme-high-contrast ion-button[color="primary"].button-selected,
+.theme-high-contrast ion-button[color="primary"].selected {
+  --color: #000000 !important;
+  --background: #ffffff !important;
+  --border-color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.theme-high-contrast ion-button[fill="outline"] {
+  --color: #000000 !important;
+  --background: transparent !important;
+  --border-color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.theme-high-contrast ion-button[fill="outline"].button-selected,
+.theme-high-contrast ion-button[fill="outline"].selected {
+  --color: #ffffff !important;
+  --background: #000000 !important;
+  --border-color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+/* High Contrast Theme - Dark Mode Button States */
+@media (prefers-color-scheme: dark) {
+  .theme-high-contrast ion-button[color="primary"] {
+    --color: #000000 !important;
+    --background: #ffffff !important;
+    --border-color: #ffffff !important;
+  }
+
+  .theme-high-contrast ion-button[color="primary"].button-selected,
+  .theme-high-contrast ion-button[color="primary"].selected {
+    --color: #ffffff !important;
+    --background: #000000 !important;
+    --border-color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+  }
+
+  .theme-high-contrast ion-button[fill="outline"] {
+    --color: #ffffff !important;
+    --background: transparent !important;
+    --border-color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+  }
+
+  .theme-high-contrast ion-button[fill="outline"].button-selected,
+  .theme-high-contrast ion-button[fill="outline"].selected {
+    --color: #000000 !important;
+    --background: #ffffff !important;
+    --border-color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+  }
+} 
+
+/* High Contrast Theme - Display Mode and Font Size Buttons */
+.theme-high-contrast .display-mode-button,
+.theme-high-contrast .font-size-button {
+  border: 2px solid #000000 !important;
+}
+
+.theme-high-contrast .display-mode-button.selected,
+.theme-high-contrast .font-size-button.selected {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #000000 !important;
+}
+
+.theme-high-contrast .display-mode-button:not(.selected),
+.theme-high-contrast .font-size-button:not(.selected) {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+/* Aggressive Border Overrides for Light Mode - All Themes */
+.theme-neutral-gray .display-mode-button,
+.theme-neutral-gray .font-size-button,
+.theme-forest-green .display-mode-button,
+.theme-forest-green .font-size-button,
+.theme-ocean-depth .display-mode-button,
+.theme-ocean-depth .font-size-button,
+.theme-modern-blue .display-mode-button,
+.theme-modern-blue .font-size-button,
+.theme-warm-sunset .display-mode-button,
+.theme-warm-sunset .font-size-button {
+  border: 3px solid var(--ion-border-color) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.theme-neutral-gray .display-mode-button:not(.selected),
+.theme-neutral-gray .font-size-button:not(.selected),
+.theme-forest-green .display-mode-button:not(.selected),
+.theme-forest-green .font-size-button:not(.selected),
+.theme-ocean-depth .display-mode-button:not(.selected),
+.theme-ocean-depth .font-size-button:not(.selected),
+.theme-modern-blue .display-mode-button:not(.selected),
+.theme-modern-blue .font-size-button:not(.selected),
+.theme-warm-sunset .display-mode-button:not(.selected),
+.theme-warm-sunset .font-size-button:not(.selected) {
+  border: 3px solid var(--ion-border-color) !important;
+  background: var(--ion-color-light) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.theme-neutral-gray .display-mode-button.selected,
+.theme-neutral-gray .font-size-button.selected,
+.theme-forest-green .display-mode-button.selected,
+.theme-forest-green .font-size-button.selected,
+.theme-ocean-depth .display-mode-button.selected,
+.theme-ocean-depth .font-size-button.selected,
+.theme-modern-blue .display-mode-button.selected,
+.theme-modern-blue .font-size-button.selected,
+.theme-warm-sunset .display-mode-button.selected,
+.theme-warm-sunset .font-size-button.selected {
+  border: 4px solid var(--ion-border-color) !important;
+  background: var(--ion-color-primary) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Extremely Aggressive Border Overrides for Display Mode and Font Size Buttons */
+.theme-neutral-gray .display-mode-button,
+.theme-neutral-gray .font-size-button,
+.theme-forest-green .display-mode-button,
+.theme-forest-green .font-size-button,
+.theme-ocean-depth .display-mode-button,
+.theme-ocean-depth .font-size-button,
+.theme-modern-blue .display-mode-button,
+.theme-modern-blue .font-size-button,
+.theme-warm-sunset .display-mode-button,
+.theme-warm-sunset .font-size-button {
+  border: 4px solid var(--ion-border-color) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.theme-neutral-gray .display-mode-button:not(.selected),
+.theme-neutral-gray .font-size-button:not(.selected),
+.theme-forest-green .display-mode-button:not(.selected),
+.theme-forest-green .font-size-button:not(.selected),
+.theme-ocean-depth .display-mode-button:not(.selected),
+.theme-ocean-depth .font-size-button:not(.selected),
+.theme-modern-blue .display-mode-button:not(.selected),
+.theme-modern-blue .font-size-button:not(.selected),
+.theme-warm-sunset .display-mode-button:not(.selected),
+.theme-warm-sunset .font-size-button:not(.selected) {
+  border: 4px solid var(--ion-border-color) !important;
+  background: var(--ion-color-light) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.theme-neutral-gray .display-mode-button.selected,
+.theme-neutral-gray .font-size-button.selected,
+.theme-forest-green .display-mode-button.selected,
+.theme-forest-green .font-size-button.selected,
+.theme-ocean-depth .display-mode-button.selected,
+.theme-ocean-depth .font-size-button.selected,
+.theme-modern-blue .display-mode-button.selected,
+.theme-modern-blue .font-size-button.selected,
+.theme-warm-sunset .display-mode-button.selected,
+.theme-warm-sunset .font-size-button.selected {
+  border: 5px solid var(--ion-border-color) !important;
+  background: var(--ion-color-primary) !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Force all IonItem elements to have visible borders */
+.theme-neutral-gray ion-item,
+.theme-forest-green ion-item,
+.theme-ocean-depth ion-item,
+.theme-modern-blue ion-item,
+.theme-warm-sunset ion-item {
+  border: 3px solid var(--ion-border-color) !important;
+  border-radius: 8px !important;
+  margin-bottom: 0.5rem !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Force all IonButton elements to have visible borders */
+.theme-neutral-gray ion-button,
+.theme-forest-green ion-button,
+.theme-ocean-depth ion-button,
+.theme-modern-blue ion-button,
+.theme-warm-sunset ion-button {
+  border: 3px solid var(--ion-border-color) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Force all IonToggle elements to have visible borders */
+.theme-neutral-gray ion-toggle,
+.theme-forest-green ion-toggle,
+.theme-ocean-depth ion-toggle,
+.theme-modern-blue ion-toggle,
+.theme-warm-sunset ion-toggle {
+  border: 3px solid var(--ion-border-color) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Force all IonCard elements to have visible borders */
+.theme-neutral-gray ion-card,
+.theme-forest-green ion-card,
+.theme-ocean-depth ion-card,
+.theme-modern-blue ion-card,
+.theme-warm-sunset ion-card {
+  border: 4px solid var(--ion-border-color) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Manual Light/Dark Mode Override */
+.light-mode {
+  color-scheme: light !important;
+}
+
+.dark-mode {
+  color-scheme: dark !important;
+}
+
+/* Force light mode for all themes - override media queries */
+.light-mode .theme-modern-blue,
+.light-mode .theme-warm-sunset,
+.light-mode .theme-forest-green,
+.light-mode .theme-ocean-depth,
+.light-mode .theme-neutral-gray,
+.light-mode .theme-high-contrast {
+  /* Force light mode variables */
+  --ion-background-color: var(--ion-background-color) !important;
+  --ion-text-color: var(--ion-text-color) !important;
+  --ion-toolbar-background: var(--ion-toolbar-background) !important;
+  --ion-card-background: var(--ion-card-background) !important;
+  --ion-modal-background: var(--ion-modal-background) !important;
+  --ion-item-background: var(--ion-item-background) !important;
+}
+
+/* Force dark mode for all themes - override media queries */
+.dark-mode .theme-modern-blue,
+.dark-mode .theme-warm-sunset,
+.dark-mode .theme-forest-green,
+.dark-mode .theme-ocean-depth,
+.dark-mode .theme-neutral-gray,
+.dark-mode .theme-high-contrast {
+  /* Force dark mode variables */
+  --ion-background-color: var(--ion-background-color) !important;
+  --ion-text-color: var(--ion-text-color) !important;
+  --ion-toolbar-background: var(--ion-toolbar-background) !important;
+  --ion-card-background: var(--ion-card-background) !important;
+  --ion-modal-background: var(--ion-modal-background) !important;
+  --ion-item-background: var(--ion-item-background) !important;
+}
+
+/* Aggressive Light Mode Override - Force Light Mode Variables */
+.light-mode .theme-modern-blue {
+  --ion-color-primary: #2563eb !important;
+  --ion-color-primary-rgb: 37, 99, 235 !important;
+  --ion-color-primary-contrast: #ffffff !important;
+  --ion-color-primary-shade: #1e40af !important;
+  --ion-color-primary-tint: #3b82f6 !important;
+  --ion-background-color: #f8fafc !important;
+  --ion-background-color-rgb: 248, 250, 252 !important;
+  --ion-text-color: #1e293b !important;
+  --ion-text-color-rgb: 30, 41, 59 !important;
+  --ion-toolbar-background: #ffffff !important;
+  --ion-card-background: #ffffff !important;
+  --ion-modal-background: #ffffff !important;
+  --ion-item-background: #f1f5f9 !important;
+  --ion-border-color: #2563eb !important;
+  --ion-outline-color: #1e40af !important;
+}
+
+.light-mode .theme-warm-sunset {
+  --ion-color-primary: #f97316 !important;
+  --ion-color-primary-rgb: 249, 115, 22 !important;
+  --ion-color-primary-contrast: #ffffff !important;
+  --ion-color-primary-shade: #ea580c !important;
+  --ion-color-primary-tint: #fb923c !important;
+  --ion-background-color: #fef7ed !important;
+  --ion-background-color-rgb: 254, 247, 237 !important;
+  --ion-text-color: #292524 !important;
+  --ion-text-color-rgb: 41, 37, 36 !important;
+  --ion-toolbar-background: #ffffff !important;
+  --ion-card-background: #ffffff !important;
+  --ion-modal-background: #ffffff !important;
+  --ion-item-background: #ffedd5 !important;
+  --ion-border-color: #f97316 !important;
+  --ion-outline-color: #ea580c !important;
+}
+
+.light-mode .theme-forest-green {
+  --ion-color-primary: #059669 !important;
+  --ion-color-primary-rgb: 5, 150, 105 !important;
+  --ion-color-primary-contrast: #ffffff !important;
+  --ion-color-primary-shade: #047857 !important;
+  --ion-color-primary-tint: #10b981 !important;
+  --ion-background-color: #f0fdf4 !important;
+  --ion-background-color-rgb: 240, 253, 244 !important;
+  --ion-text-color: #14532d !important;
+  --ion-text-color-rgb: 20, 83, 45 !important;
+  --ion-toolbar-background: #ffffff !important;
+  --ion-card-background: #ffffff !important;
+  --ion-modal-background: #ffffff !important;
+  --ion-item-background: #dcfce7 !important;
+  --ion-border-color: #059669 !important;
+  --ion-outline-color: #047857 !important;
+}
+
+.light-mode .theme-ocean-depth {
+  --ion-color-primary: #0891b2 !important;
+  --ion-color-primary-rgb: 8, 145, 178 !important;
+  --ion-color-primary-contrast: #ffffff !important;
+  --ion-color-primary-shade: #0e7490 !important;
+  --ion-color-primary-tint: #22d3ee !important;
+  --ion-background-color: #f0f9ff !important;
+  --ion-background-color-rgb: 240, 249, 255 !important;
+  --ion-text-color: #0c4a6e !important;
+  --ion-text-color-rgb: 12, 74, 110 !important;
+  --ion-toolbar-background: #ffffff !important;
+  --ion-card-background: #ffffff !important;
+  --ion-modal-background: #ffffff !important;
+  --ion-item-background: #e0f2fe !important;
+  --ion-border-color: #0891b2 !important;
+  --ion-outline-color: #0e7490 !important;
+}
+
+.light-mode .theme-neutral-gray {
+  --ion-color-primary: #6b7280 !important;
+  --ion-color-primary-rgb: 107, 114, 128 !important;
+  --ion-color-primary-contrast: #ffffff !important;
+  --ion-color-primary-shade: #4b5563 !important;
+  --ion-color-primary-tint: #9ca3af !important;
+  --ion-background-color: #f9fafb !important;
+  --ion-background-color-rgb: 249, 250, 251 !important;
+  --ion-text-color: #374151 !important;
+  --ion-text-color-rgb: 55, 65, 81 !important;
+  --ion-toolbar-background: #ffffff !important;
+  --ion-card-background: #ffffff !important;
+  --ion-modal-background: #ffffff !important;
+  --ion-item-background: #f3f4f6 !important;
+  --ion-border-color: #6b7280 !important;
+  --ion-outline-color: #4b5563 !important;
+}
+
+/* Aggressive Dark Mode Override - Force Dark Mode Variables */
+.dark-mode .theme-modern-blue {
+  --ion-color-primary: #3b82f6 !important;
+  --ion-color-primary-rgb: 59, 130, 246 !important;
+  --ion-color-primary-contrast: #ffffff !important;
+  --ion-color-primary-shade: #2563eb !important;
+  --ion-color-primary-tint: #60a5fa !important;
+  --ion-background-color: #0f172a !important;
+  --ion-background-color-rgb: 15, 23, 42 !important;
+  --ion-text-color: #f1f5f9 !important;
+  --ion-text-color-rgb: 241, 245, 249 !important;
+  --ion-toolbar-background: #1e293b !important;
+  --ion-card-background: #1e293b !important;
+  --ion-modal-background: #1e293b !important;
+  --ion-item-background: #334155 !important;
+  --ion-border-color: #3b82f6 !important;
+  --ion-outline-color: #60a5fa !important;
+}
+
+.dark-mode .theme-warm-sunset {
+  --ion-color-primary: #fb923c !important;
+  --ion-color-primary-rgb: 251, 146, 60 !important;
+  --ion-color-primary-contrast: #000000 !important;
+  --ion-color-primary-shade: #f97316 !important;
+  --ion-color-primary-tint: #fdba74 !important;
+  --ion-background-color: #1c1917 !important;
+  --ion-background-color-rgb: 28, 25, 23 !important;
+  --ion-text-color: #fef7ed !important;
+  --ion-text-color-rgb: 254, 247, 237 !important;
+  --ion-toolbar-background: #292524 !important;
+  --ion-card-background: #292524 !important;
+  --ion-modal-background: #292524 !important;
+  --ion-item-background: #57534e !important;
+  --ion-border-color: #fb923c !important;
+  --ion-outline-color: #fdba74 !important;
+}
+
+.dark-mode .theme-forest-green {
+  --ion-color-primary: #10b981 !important;
+  --ion-color-primary-rgb: 16, 185, 129 !important;
+  --ion-color-primary-contrast: #000000 !important;
+  --ion-color-primary-shade: #059669 !important;
+  --ion-color-primary-tint: #34d399 !important;
+  --ion-background-color: #052e16 !important;
+  --ion-background-color-rgb: 5, 46, 22 !important;
+  --ion-text-color: #f0fdf4 !important;
+  --ion-text-color-rgb: 240, 253, 244 !important;
+  --ion-toolbar-background: #14532d !important;
+  --ion-card-background: #14532d !important;
+  --ion-modal-background: #14532d !important;
+  --ion-item-background: #166534 !important;
+  --ion-border-color: #10b981 !important;
+  --ion-outline-color: #34d399 !important;
+}
+
+.dark-mode .theme-ocean-depth {
+  --ion-color-primary: #22d3ee !important;
+  --ion-color-primary-rgb: 34, 211, 238 !important;
+  --ion-color-primary-contrast: #000000 !important;
+  --ion-color-primary-shade: #0891b2 !important;
+  --ion-color-primary-tint: #67e8f9 !important;
+  --ion-background-color: #082f49 !important;
+  --ion-background-color-rgb: 8, 47, 73 !important;
+  --ion-text-color: #f0f9ff !important;
+  --ion-text-color-rgb: 240, 249, 255 !important;
+  --ion-toolbar-background: #0c4a6e !important;
+  --ion-card-background: #0c4a6e !important;
+  --ion-modal-background: #0c4a6e !important;
+  --ion-item-background: #0369a1 !important;
+  --ion-border-color: #22d3ee !important;
+  --ion-outline-color: #67e8f9 !important;
+}
+
+.dark-mode .theme-neutral-gray {
+  --ion-color-primary: #9ca3af !important;
+  --ion-color-primary-rgb: 156, 163, 175 !important;
+  --ion-color-primary-contrast: #000000 !important;
+  --ion-color-primary-shade: #6b7280 !important;
+  --ion-color-primary-tint: #d1d5db !important;
+  --ion-background-color: #1f2937 !important;
+  --ion-background-color-rgb: 31, 41, 55 !important;
+  --ion-text-color: #f9fafb !important;
+  --ion-text-color-rgb: 249, 250, 251 !important;
+  --ion-toolbar-background: #374151 !important;
+  --ion-card-background: #374151 !important;
+  --ion-modal-background: #374151 !important;
+  --ion-item-background: #6b7280 !important;
+  --ion-border-color: #9ca3af !important;
+  --ion-outline-color: #d1d5db !important;
+}
+
+/* High Contrast Theme - Theme Selector Buttons */
+.theme-high-contrast .theme-selector-button {
+  border: 2px solid #000000 !important;
+}
+
+.theme-high-contrast .theme-selector-button.selected {
+  background: #000000 !important;
+  color: #000000 !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #000000 !important;
+}
+
+.theme-high-contrast .theme-selector-button.selected * {
+  color: #000000 !important;
+}
+
+.theme-high-contrast .theme-selector-button:not(.selected) {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+/* High Contrast Theme - Dark Mode Theme Selector Buttons */
+@media (prefers-color-scheme: dark) {
+  .theme-high-contrast .theme-selector-button {
+    border: 2px solid #ffffff !important;
+  }
+
+  .theme-high-contrast .theme-selector-button.selected {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 4px solid #ffffff !important;
+    box-shadow: 0 0 0 2px #000000, 0 0 0 4px #ffffff !important;
+  }
+
+  .theme-high-contrast .theme-selector-button.selected * {
+    color: #000000 !important;
+  }
+
+  .theme-high-contrast .theme-selector-button:not(.selected) {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+  }
+} 
+
+/* Neutral Gray Theme - Button Border Enhancement */
+.theme-neutral-gray .theme-selector-button,
+.theme-neutral-gray .display-mode-button,
+.theme-neutral-gray .font-size-button {
+  border: 2px solid var(--ion-border-color, #6b7280) !important;
+}
+
+.theme-neutral-gray .theme-selector-button:not(.selected),
+.theme-neutral-gray .display-mode-button:not(.selected),
+.theme-neutral-gray .font-size-button:not(.selected) {
+  border: 2px solid var(--ion-border-color, #6b7280) !important;
+}
+
+.theme-neutral-gray .theme-selector-button.selected,
+.theme-neutral-gray .display-mode-button.selected,
+.theme-neutral-gray .font-size-button.selected {
+  border: 3px solid var(--ion-border-color, #6b7280) !important;
+}
+
+/* Neutral Gray Theme - All Settings Panel Elements */
+.theme-neutral-gray ion-card,
+.theme-neutral-gray ion-item,
+.theme-neutral-gray ion-button,
+.theme-neutral-gray ion-toggle,
+.theme-neutral-gray ion-range {
+  border: 1px solid var(--ion-border-color, #6b7280) !important;
+}
+
+/* Forest Green Theme - Button Border Enhancement */
+.theme-forest-green .theme-selector-button,
+.theme-forest-green .display-mode-button,
+.theme-forest-green .font-size-button {
+  border: 2px solid var(--ion-border-color, #059669) !important;
+}
+
+.theme-forest-green .theme-selector-button:not(.selected),
+.theme-forest-green .display-mode-button:not(.selected),
+.theme-forest-green .font-size-button:not(.selected) {
+  border: 2px solid var(--ion-border-color, #059669) !important;
+}
+
+.theme-forest-green .theme-selector-button.selected,
+.theme-forest-green .display-mode-button.selected,
+.theme-forest-green .font-size-button.selected {
+  border: 3px solid var(--ion-border-color, #059669) !important;
+}
+
+/* Forest Green Theme - All Settings Panel Elements */
+.theme-forest-green ion-card,
+.theme-forest-green ion-item,
+.theme-forest-green ion-button,
+.theme-forest-green ion-toggle,
+.theme-forest-green ion-range {
+  border: 1px solid var(--ion-border-color, #059669) !important;
+}
+
+/* Ocean Depth Theme - Button Border Enhancement */
+.theme-ocean-depth .theme-selector-button,
+.theme-ocean-depth .display-mode-button,
+.theme-ocean-depth .font-size-button {
+  border: 2px solid var(--ion-border-color, #0891b2) !important;
+}
+
+.theme-ocean-depth .theme-selector-button:not(.selected),
+.theme-ocean-depth .display-mode-button:not(.selected),
+.theme-ocean-depth .font-size-button:not(.selected) {
+  border: 2px solid var(--ion-border-color, #0891b2) !important;
+}
+
+.theme-ocean-depth .theme-selector-button.selected,
+.theme-ocean-depth .display-mode-button.selected,
+.theme-ocean-depth .font-size-button.selected {
+  border: 3px solid var(--ion-border-color, #0891b2) !important;
+}
+
+/* Ocean Depth Theme - All Settings Panel Elements */
+.theme-ocean-depth ion-card,
+.theme-ocean-depth ion-item,
+.theme-ocean-depth ion-button,
+.theme-ocean-depth ion-toggle,
+.theme-ocean-depth ion-range {
+  border: 1px solid var(--ion-border-color, #0891b2) !important;
+}
+
+/* Modern Blue Theme - Button Border Enhancement */
+.theme-modern-blue .theme-selector-button,
+.theme-modern-blue .display-mode-button,
+.theme-modern-blue .font-size-button {
+  border: 2px solid var(--ion-border-color, #2563eb) !important;
+}
+
+.theme-modern-blue .theme-selector-button:not(.selected),
+.theme-modern-blue .display-mode-button:not(.selected),
+.theme-modern-blue .font-size-button:not(.selected) {
+  border: 2px solid var(--ion-border-color, #2563eb) !important;
+}
+
+.theme-modern-blue .theme-selector-button.selected,
+.theme-modern-blue .display-mode-button.selected,
+.theme-modern-blue .font-size-button.selected {
+  border: 3px solid var(--ion-border-color, #2563eb) !important;
+}
+
+/* Modern Blue Theme - All Settings Panel Elements */
+.theme-modern-blue ion-card,
+.theme-modern-blue ion-item,
+.theme-modern-blue ion-button,
+.theme-modern-blue ion-toggle,
+.theme-modern-blue ion-range {
+  border: 1px solid var(--ion-border-color, #2563eb) !important;
+}
+
+/* Warm Sunset Theme - Button Border Enhancement */
+.theme-warm-sunset .theme-selector-button,
+.theme-warm-sunset .display-mode-button,
+.theme-warm-sunset .font-size-button {
+  border: 2px solid var(--ion-border-color, #f97316) !important;
+}
+
+.theme-warm-sunset .theme-selector-button:not(.selected),
+.theme-warm-sunset .display-mode-button:not(.selected),
+.theme-warm-sunset .font-size-button:not(.selected) {
+  border: 2px solid var(--ion-border-color, #f97316) !important;
+}
+
+.theme-warm-sunset .theme-selector-button.selected,
+.theme-warm-sunset .display-mode-button.selected,
+.theme-warm-sunset .font-size-button.selected {
+  border: 3px solid var(--ion-border-color, #f97316) !important;
+}
+
+/* Warm Sunset Theme - All Settings Panel Elements */
+.theme-warm-sunset ion-card,
+.theme-warm-sunset ion-item,
+.theme-warm-sunset ion-button,
+.theme-warm-sunset ion-toggle,
+.theme-warm-sunset ion-range {
+  border: 1px solid var(--ion-border-color, #f97316) !important;
+}
+
+/* High Contrast Theme - Display Mode and Font Size Buttons */ 

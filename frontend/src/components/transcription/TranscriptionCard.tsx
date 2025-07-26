@@ -1,0 +1,277 @@
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IonCard, IonCardContent, IonBadge, IonText, IonIcon } from '@ionic/react';
+import { timeOutline } from 'ionicons/icons';
+import { TranscriptionSegment, DisplayMode } from '../../types';
+import { FormatUtils } from '../../utils';
+
+interface TranscriptionCardProps {
+  segment: TranscriptionSegment;
+  displayMode: DisplayMode;
+  showTimestamps?: boolean;
+  showConfidence?: boolean;
+  highlightCurrent?: boolean;
+  onSegmentClick?: (segment: TranscriptionSegment) => void;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
+  segment,
+  displayMode,
+  showTimestamps = true,
+  showConfidence = true,
+  highlightCurrent = false,
+  onSegmentClick,
+  className = '',
+  style = {},
+}) => {
+  const renderEmotionDisplay = () => {
+    if (!segment.emotion) return null;
+
+    switch (displayMode.id) {
+      case 'emoji-only':
+        return segment.emoji ? (
+          <span style={{ fontSize: 'calc(var(--app-font-size, 1rem) * 1.5)' }}>
+            {segment.emoji}
+          </span>
+        ) : null;
+
+      case 'tag-only':
+        return segment.emotion ? (
+          <IonBadge 
+            color="secondary" 
+            style={{ 
+              fontSize: 'calc(var(--app-font-size, 1rem) * 0.8)',
+              fontWeight: 'bold',
+              padding: '0.25rem 0.5rem'
+            }}
+          >
+            {FormatUtils.capitalizeFirst(segment.emotion)}
+          </IonBadge>
+        ) : null;
+
+      case 'combined':
+        return (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {segment.emoji && (
+              <span style={{ fontSize: 'calc(var(--app-font-size, 1rem) * 1.5)' }}>
+                {segment.emoji}
+              </span>
+            )}
+            {segment.emotion && (
+              <IonBadge 
+                color="secondary"
+                style={{ 
+                  fontSize: 'calc(var(--app-font-size, 1rem) * 0.8)',
+                  fontWeight: 'bold',
+                  padding: '0.25rem 0.5rem'
+                }}
+              >
+                {FormatUtils.capitalizeFirst(segment.emotion)}
+              </IonBadge>
+            )}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const renderConfidence = () => {
+    if (!showConfidence) return null;
+
+    // Custom colors for better visibility in light mode
+    const getConfidenceStyle = () => {
+      // Check if we're in high contrast theme
+      const isHighContrast = document.documentElement.classList.contains('theme-high-contrast');
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+      
+      if (isHighContrast) {
+        // High contrast theme: use black/white
+        if (isDarkMode) {
+          return {
+            background: '#ffffff',
+            color: '#000000',
+            border: '1px solid #ffffff'
+          };
+        } else {
+          return {
+            background: '#000000',
+            color: '#ffffff',
+            border: '1px solid #000000'
+          };
+        }
+      } else {
+        // Regular themes: use color-coded confidence
+        if (segment.confidence > 0.8) {
+          return {
+            background: '#10b981',
+            color: '#ffffff',
+            border: '1px solid #059669'
+          };
+        } else if (segment.confidence > 0.6) {
+          return {
+            background: '#f59e0b',
+            color: '#ffffff',
+            border: '1px solid #d97706'
+          };
+        } else {
+          return {
+            background: '#ef4444',
+            color: '#ffffff',
+            border: '1px solid #dc2626'
+          };
+        }
+      }
+    };
+
+    return (
+      <div 
+        style={{ 
+          fontSize: 'calc(var(--app-font-size, 1rem) * 0.75)',
+          padding: '0.2rem 0.4rem',
+          fontWeight: 'bold',
+          borderRadius: '4px',
+          display: 'inline-block',
+          ...getConfidenceStyle()
+        }}
+      >
+        {FormatUtils.formatConfidence(segment.confidence)}
+      </div>
+    );
+  };
+
+  const renderTimestamp = () => {
+    if (!showTimestamps) return null;
+
+    return (
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '0.25rem',
+        fontSize: 'calc(var(--app-font-size, 1rem) * 0.75)',
+        color: 'var(--ion-color-medium)'
+      }}>
+        <IonIcon icon={timeOutline} style={{ fontSize: 'calc(var(--app-font-size, 1rem) * 0.8)' }} />
+        {FormatUtils.formatTimestamp(new Date(segment.timestamp))}
+      </div>
+    );
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.3 }}
+      style={style}
+    >
+      <IonCard
+        onClick={() => onSegmentClick?.(segment)}
+        style={{
+          margin: '0.5rem 0',
+          cursor: onSegmentClick ? 'pointer' : 'default',
+          transition: 'all 0.2s ease',
+          border: highlightCurrent ? '2px solid var(--ion-color-primary)' : '1px solid var(--ion-color-light-shade)',
+          borderRadius: '12px',
+          boxShadow: highlightCurrent
+            ? '0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2)'
+            : '0 2px 8px rgba(0, 0, 0, 0.1)',
+          background: 'var(--ion-card-background)',
+          ...style
+        }}
+        className={className}
+      >
+        <IonCardContent style={{ padding: '1rem' }}>
+          {/* Header: Emotion and Confidence */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '0.75rem',
+              paddingBottom: '0.75rem',
+              borderBottom: '1px solid var(--ion-color-light-shade)'
+            }}
+          >
+            {/* Left: Emotion Display */}
+            <motion.div 
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ 
+                delay: 0.2,
+                type: "spring",
+                stiffness: 400,
+                damping: 20
+              }}
+            >
+              {renderEmotionDisplay()}
+            </motion.div>
+            
+            {/* Right: Confidence and Timestamp */}
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.5rem',
+              flexWrap: 'wrap'
+            }}>
+              {renderConfidence()}
+              {renderTimestamp()}
+              
+              {/* Perfect Confidence Indicator */}
+              <AnimatePresence>
+                {segment.confidence === 1 && (
+                  <motion.span 
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30,
+                      delay: 0.5
+                    }}
+                    style={{ 
+                      color: 'white',
+                      fontSize: '1.2rem',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    ✓
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+          
+          {/* Main Text Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
+          >
+            <IonText>
+              <p style={{ 
+                margin: 0, 
+                fontSize: 'var(--app-font-size, 1rem)',
+                lineHeight: '1.5',
+                wordBreak: 'break-word',
+                color: 'var(--ion-text-color)',
+                fontWeight: '500'
+              }}>
+                {segment.text}
+              </p>
+            </IonText>
+          </motion.div>
+        </IonCardContent>
+      </IonCard>
+    </motion.div>
+  );
+};
+
+export default TranscriptionCard; 

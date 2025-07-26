@@ -163,7 +163,6 @@ export class StorageUtils {
       showTags: true,
       autoSave: true,
       accessibility: {
-        highContrast: false,
         reducedMotion: false,
         dyslexiaFriendly: false,
       },
@@ -205,7 +204,6 @@ export class FormatUtils {
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit',
     });
   }
 
@@ -321,14 +319,15 @@ export class ThemeUtils {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  static applyTheme(theme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray'): void {
+  static applyTheme(theme: 'light' | 'dark' | 'system' | 'modern-blue' | 'warm-sunset' | 'forest-green' | 'ocean-depth' | 'neutral-gray' | 'high-contrast'): void {
     // Remove all existing theme classes
     document.documentElement.classList.remove(
       'theme-modern-blue',
       'theme-warm-sunset', 
       'theme-forest-green',
       'theme-ocean-depth',
-      'theme-neutral-gray'
+      'theme-neutral-gray',
+      'theme-high-contrast'
     );
 
     // Handle legacy light/dark/system themes
@@ -342,9 +341,12 @@ export class ThemeUtils {
     const themeClass = `theme-${theme}`;
     document.documentElement.classList.add(themeClass);
     
-    // Set data-theme for compatibility
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Preserve current light/dark mode state instead of using system preference
+    const isDarkMode = document.documentElement.classList.contains('dark-mode');
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    
+    // Apply CSS variables immediately for instant theme change
+    this.applyThemeVariables(theme, isDarkMode);
     
     // Debug: Log the applied theme
     console.log('Theme applied:', {
@@ -358,19 +360,459 @@ export class ThemeUtils {
     });
   }
 
-  static applyFontSize(fontSize: 'small' | 'medium' | 'large'): void {
-    // Remove existing font size classes
-    document.documentElement.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+  private static applyThemeVariables(theme: string, isDarkMode: boolean): void {
+    // Define theme variables (same as in Home.tsx toggleColorScheme)
+    const themeVariables: Record<string, Record<string, Record<string, string>>> = {
+      'modern-blue': {
+        light: {
+          '--ion-color-primary': '#2563eb',
+          '--ion-color-primary-rgb': '37, 99, 235',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#1e40af',
+          '--ion-color-primary-tint': '#3b82f6',
+          '--ion-background-color': '#f8fafc',
+          '--ion-background-color-rgb': '248, 250, 252',
+          '--ion-text-color': '#1e293b',
+          '--ion-text-color-rgb': '30, 41, 59',
+          '--ion-toolbar-background': '#ffffff',
+          '--ion-card-background': '#ffffff',
+          '--ion-modal-background': '#ffffff',
+          '--ion-item-background': '#f1f5f9',
+          '--ion-border-color': '#2563eb',
+          '--ion-outline-color': '#1e40af',
+          '--ion-color-light': '#f8fafc',
+          '--ion-color-light-rgb': '248, 250, 252',
+          '--ion-color-light-contrast': '#000000',
+          '--ion-color-light-shade': '#e2e8f0',
+          '--ion-color-light-tint': '#f1f5f9',
+          '--ion-color-dark': '#1e293b',
+          '--ion-color-dark-rgb': '30, 41, 59',
+          '--ion-color-dark-contrast': '#ffffff',
+          '--ion-color-dark-shade': '#0f172a',
+          '--ion-color-dark-tint': '#334155',
+          '--ion-color-medium': '#64748b',
+          '--ion-color-medium-rgb': '100, 116, 139',
+          '--ion-color-medium-contrast': '#ffffff',
+          '--ion-color-medium-shade': '#475569',
+          '--ion-color-medium-tint': '#94a3b8'
+        },
+        dark: {
+          '--ion-color-primary': '#3b82f6',
+          '--ion-color-primary-rgb': '59, 130, 246',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#2563eb',
+          '--ion-color-primary-tint': '#60a5fa',
+          '--ion-background-color': '#0f172a',
+          '--ion-background-color-rgb': '15, 23, 42',
+          '--ion-text-color': '#f1f5f9',
+          '--ion-text-color-rgb': '241, 245, 249',
+          '--ion-toolbar-background': '#1e293b',
+          '--ion-card-background': '#1e293b',
+          '--ion-modal-background': '#1e293b',
+          '--ion-item-background': '#334155',
+          '--ion-border-color': '#3b82f6',
+          '--ion-outline-color': '#60a5fa',
+          '--ion-color-light': '#1e293b',
+          '--ion-color-light-rgb': '30, 41, 59',
+          '--ion-color-light-contrast': '#ffffff',
+          '--ion-color-light-shade': '#0f172a',
+          '--ion-color-light-tint': '#334155',
+          '--ion-color-dark': '#f1f5f9',
+          '--ion-color-dark-rgb': '241, 245, 249',
+          '--ion-color-dark-contrast': '#000000',
+          '--ion-color-dark-shade': '#e2e8f0',
+          '--ion-color-dark-tint': '#ffffff',
+          '--ion-color-medium': '#94a3b8',
+          '--ion-color-medium-rgb': '148, 163, 184',
+          '--ion-color-medium-contrast': '#000000',
+          '--ion-color-medium-shade': '#cbd5e1',
+          '--ion-color-medium-tint': '#e2e8f0'
+        }
+      },
+      'warm-sunset': {
+        light: {
+          '--ion-color-primary': '#f97316',
+          '--ion-color-primary-rgb': '249, 115, 22',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#ea580c',
+          '--ion-color-primary-tint': '#fb923c',
+          '--ion-background-color': '#fef7ed',
+          '--ion-background-color-rgb': '254, 247, 237',
+          '--ion-text-color': '#292524',
+          '--ion-text-color-rgb': '41, 37, 36',
+          '--ion-toolbar-background': '#ffffff',
+          '--ion-card-background': '#ffffff',
+          '--ion-modal-background': '#ffffff',
+          '--ion-item-background': '#ffedd5',
+          '--ion-border-color': '#f97316',
+          '--ion-outline-color': '#ea580c',
+          '--ion-color-light': '#fef7ed',
+          '--ion-color-light-rgb': '254, 247, 237',
+          '--ion-color-light-contrast': '#000000',
+          '--ion-color-light-shade': '#fed7aa',
+          '--ion-color-light-tint': '#ffedd5',
+          '--ion-color-dark': '#292524',
+          '--ion-color-dark-rgb': '41, 37, 36',
+          '--ion-color-dark-contrast': '#ffffff',
+          '--ion-color-dark-shade': '#1c1917',
+          '--ion-color-dark-tint': '#57534e',
+          '--ion-color-medium': '#78716c',
+          '--ion-color-medium-rgb': '120, 113, 108',
+          '--ion-color-medium-contrast': '#ffffff',
+          '--ion-color-medium-shade': '#57534e',
+          '--ion-color-medium-tint': '#a8a29e'
+        },
+        dark: {
+          '--ion-color-primary': '#fb923c',
+          '--ion-color-primary-rgb': '251, 146, 60',
+          '--ion-color-primary-contrast': '#000000',
+          '--ion-color-primary-shade': '#f97316',
+          '--ion-color-primary-tint': '#fdba74',
+          '--ion-background-color': '#292524',
+          '--ion-background-color-rgb': '41, 37, 36',
+          '--ion-text-color': '#fef7ed',
+          '--ion-text-color-rgb': '254, 247, 237',
+          '--ion-toolbar-background': '#1c1917',
+          '--ion-card-background': '#1c1917',
+          '--ion-modal-background': '#1c1917',
+          '--ion-item-background': '#57534e',
+          '--ion-border-color': '#fb923c',
+          '--ion-outline-color': '#fdba74',
+          '--ion-color-light': '#292524',
+          '--ion-color-light-rgb': '41, 37, 36',
+          '--ion-color-light-contrast': '#ffffff',
+          '--ion-color-light-shade': '#1c1917',
+          '--ion-color-light-tint': '#57534e',
+          '--ion-color-dark': '#fef7ed',
+          '--ion-color-dark-rgb': '254, 247, 237',
+          '--ion-color-dark-contrast': '#000000',
+          '--ion-color-dark-shade': '#fed7aa',
+          '--ion-color-dark-tint': '#ffffff',
+          '--ion-color-medium': '#a8a29e',
+          '--ion-color-medium-rgb': '168, 162, 158',
+          '--ion-color-medium-contrast': '#000000',
+          '--ion-color-medium-shade': '#d6d3d1',
+          '--ion-color-medium-tint': '#e7e5e4'
+        }
+      },
+      'forest-green': {
+        light: {
+          '--ion-color-primary': '#059669',
+          '--ion-color-primary-rgb': '5, 150, 105',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#047857',
+          '--ion-color-primary-tint': '#10b981',
+          '--ion-background-color': '#f0fdf4',
+          '--ion-background-color-rgb': '240, 253, 244',
+          '--ion-text-color': '#14532d',
+          '--ion-text-color-rgb': '20, 83, 45',
+          '--ion-toolbar-background': '#ffffff',
+          '--ion-card-background': '#ffffff',
+          '--ion-modal-background': '#ffffff',
+          '--ion-item-background': '#dcfce7',
+          '--ion-border-color': '#059669',
+          '--ion-outline-color': '#047857',
+          '--ion-color-light': '#f0fdf4',
+          '--ion-color-light-rgb': '240, 253, 244',
+          '--ion-color-light-contrast': '#000000',
+          '--ion-color-light-shade': '#dcfce7',
+          '--ion-color-light-tint': '#f7fee7',
+          '--ion-color-dark': '#14532d',
+          '--ion-color-dark-rgb': '20, 83, 45',
+          '--ion-color-dark-contrast': '#ffffff',
+          '--ion-color-dark-shade': '#052e16',
+          '--ion-color-dark-tint': '#166534',
+          '--ion-color-medium': '#6b7280',
+          '--ion-color-medium-rgb': '107, 114, 128',
+          '--ion-color-medium-contrast': '#ffffff',
+          '--ion-color-medium-shade': '#4b5563',
+          '--ion-color-medium-tint': '#9ca3af'
+        },
+        dark: {
+          '--ion-color-primary': '#10b981',
+          '--ion-color-primary-rgb': '16, 185, 129',
+          '--ion-color-primary-contrast': '#000000',
+          '--ion-color-primary-shade': '#059669',
+          '--ion-color-primary-tint': '#34d399',
+          '--ion-background-color': '#052e16',
+          '--ion-background-color-rgb': '5, 46, 22',
+          '--ion-text-color': '#f0fdf4',
+          '--ion-text-color-rgb': '240, 253, 244',
+          '--ion-toolbar-background': '#14532d',
+          '--ion-card-background': '#14532d',
+          '--ion-modal-background': '#14532d',
+          '--ion-item-background': '#166534',
+          '--ion-border-color': '#10b981',
+          '--ion-outline-color': '#34d399',
+          '--ion-color-light': '#14532d',
+          '--ion-color-light-rgb': '20, 83, 45',
+          '--ion-color-light-contrast': '#ffffff',
+          '--ion-color-light-shade': '#052e16',
+          '--ion-color-light-tint': '#166534',
+          '--ion-color-dark': '#f0fdf4',
+          '--ion-color-dark-rgb': '240, 253, 244',
+          '--ion-color-dark-contrast': '#000000',
+          '--ion-color-dark-shade': '#dcfce7',
+          '--ion-color-dark-tint': '#ffffff',
+          '--ion-color-medium': '#9ca3af',
+          '--ion-color-medium-rgb': '156, 163, 175',
+          '--ion-color-medium-contrast': '#000000',
+          '--ion-color-medium-shade': '#d1d5db',
+          '--ion-color-medium-tint': '#e5e7eb'
+        }
+      },
+      'ocean-depth': {
+        light: {
+          '--ion-color-primary': '#0891b2',
+          '--ion-color-primary-rgb': '8, 145, 178',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#0e7490',
+          '--ion-color-primary-tint': '#22d3ee',
+          '--ion-background-color': '#f0f9ff',
+          '--ion-background-color-rgb': '240, 249, 255',
+          '--ion-text-color': '#0c4a6e',
+          '--ion-text-color-rgb': '12, 74, 110',
+          '--ion-toolbar-background': '#ffffff',
+          '--ion-card-background': '#ffffff',
+          '--ion-modal-background': '#ffffff',
+          '--ion-item-background': '#e0f2fe',
+          '--ion-border-color': '#0891b2',
+          '--ion-outline-color': '#0e7490',
+          '--ion-color-light': '#f0f9ff',
+          '--ion-color-light-rgb': '240, 249, 255',
+          '--ion-color-light-contrast': '#000000',
+          '--ion-color-light-shade': '#e0f2fe',
+          '--ion-color-light-tint': '#f8fafc',
+          '--ion-color-dark': '#0c4a6e',
+          '--ion-color-dark-rgb': '12, 74, 110',
+          '--ion-color-dark-contrast': '#ffffff',
+          '--ion-color-dark-shade': '#082f49',
+          '--ion-color-dark-tint': '#0369a1',
+          '--ion-color-medium': '#64748b',
+          '--ion-color-medium-rgb': '100, 116, 139',
+          '--ion-color-medium-contrast': '#ffffff',
+          '--ion-color-medium-shade': '#475569',
+          '--ion-color-medium-tint': '#94a3b8'
+        },
+        dark: {
+          '--ion-color-primary': '#22d3ee',
+          '--ion-color-primary-rgb': '34, 211, 238',
+          '--ion-color-primary-contrast': '#000000',
+          '--ion-color-primary-shade': '#0891b2',
+          '--ion-color-primary-tint': '#67e8f9',
+          '--ion-background-color': '#082f49',
+          '--ion-background-color-rgb': '8, 47, 73',
+          '--ion-text-color': '#f0f9ff',
+          '--ion-text-color-rgb': '240, 249, 255',
+          '--ion-toolbar-background': '#0c4a6e',
+          '--ion-card-background': '#0c4a6e',
+          '--ion-modal-background': '#0c4a6e',
+          '--ion-item-background': '#0369a1',
+          '--ion-border-color': '#22d3ee',
+          '--ion-outline-color': '#67e8f9',
+          '--ion-color-light': '#0c4a6e',
+          '--ion-color-light-rgb': '12, 74, 110',
+          '--ion-color-light-contrast': '#ffffff',
+          '--ion-color-light-shade': '#082f49',
+          '--ion-color-light-tint': '#0369a1',
+          '--ion-color-dark': '#f0f9ff',
+          '--ion-color-dark-rgb': '240, 249, 255',
+          '--ion-color-dark-contrast': '#000000',
+          '--ion-color-dark-shade': '#e0f2fe',
+          '--ion-color-dark-tint': '#ffffff',
+          '--ion-color-medium': '#94a3b8',
+          '--ion-color-medium-rgb': '148, 163, 184',
+          '--ion-color-medium-contrast': '#000000',
+          '--ion-color-medium-shade': '#cbd5e1',
+          '--ion-color-medium-tint': '#e2e8f0'
+        }
+      },
+      'neutral-gray': {
+        light: {
+          '--ion-color-primary': '#6b7280',
+          '--ion-color-primary-rgb': '107, 114, 128',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#4b5563',
+          '--ion-color-primary-tint': '#9ca3af',
+          '--ion-background-color': '#f9fafb',
+          '--ion-background-color-rgb': '249, 250, 251',
+          '--ion-text-color': '#374151',
+          '--ion-text-color-rgb': '55, 65, 81',
+          '--ion-toolbar-background': '#ffffff',
+          '--ion-card-background': '#ffffff',
+          '--ion-modal-background': '#ffffff',
+          '--ion-item-background': '#f3f4f6',
+          '--ion-border-color': '#6b7280',
+          '--ion-outline-color': '#4b5563',
+          '--ion-color-light': '#f9fafb',
+          '--ion-color-light-rgb': '249, 250, 251',
+          '--ion-color-light-contrast': '#000000',
+          '--ion-color-light-shade': '#f3f4f6',
+          '--ion-color-light-tint': '#ffffff',
+          '--ion-color-dark': '#374151',
+          '--ion-color-dark-rgb': '55, 65, 81',
+          '--ion-color-dark-contrast': '#ffffff',
+          '--ion-color-dark-shade': '#1f2937',
+          '--ion-color-dark-tint': '#6b7280',
+          '--ion-color-medium': '#6b7280',
+          '--ion-color-medium-rgb': '107, 114, 128',
+          '--ion-color-medium-contrast': '#ffffff',
+          '--ion-color-medium-shade': '#4b5563',
+          '--ion-color-medium-tint': '#9ca3af'
+        },
+        dark: {
+          '--ion-color-primary': '#9ca3af',
+          '--ion-color-primary-rgb': '156, 163, 175',
+          '--ion-color-primary-contrast': '#000000',
+          '--ion-color-primary-shade': '#6b7280',
+          '--ion-color-primary-tint': '#d1d5db',
+          '--ion-background-color': '#1f2937',
+          '--ion-background-color-rgb': '31, 41, 55',
+          '--ion-text-color': '#f9fafb',
+          '--ion-text-color-rgb': '249, 250, 251',
+          '--ion-toolbar-background': '#374151',
+          '--ion-card-background': '#374151',
+          '--ion-modal-background': '#374151',
+          '--ion-item-background': '#6b7280',
+          '--ion-border-color': '#9ca3af',
+          '--ion-outline-color': '#d1d5db',
+          '--ion-color-light': '#374151',
+          '--ion-color-light-rgb': '55, 65, 81',
+          '--ion-color-light-contrast': '#ffffff',
+          '--ion-color-light-shade': '#1f2937',
+          '--ion-color-light-tint': '#6b7280',
+          '--ion-color-dark': '#f9fafb',
+          '--ion-color-dark-rgb': '249, 250, 251',
+          '--ion-color-dark-contrast': '#000000',
+          '--ion-color-dark-shade': '#f3f4f6',
+          '--ion-color-dark-tint': '#ffffff',
+          '--ion-color-medium': '#9ca3af',
+          '--ion-color-medium-rgb': '156, 163, 175',
+          '--ion-color-medium-contrast': '#000000',
+          '--ion-color-medium-shade': '#d1d5db',
+          '--ion-color-medium-tint': '#e5e7eb'
+        }
+      },
+      'high-contrast': {
+        light: {
+          '--ion-color-primary': '#000000',
+          '--ion-color-primary-rgb': '0, 0, 0',
+          '--ion-color-primary-contrast': '#ffffff',
+          '--ion-color-primary-shade': '#000000',
+          '--ion-color-primary-tint': '#333333',
+          '--ion-background-color': '#ffffff',
+          '--ion-background-color-rgb': '255, 255, 255',
+          '--ion-text-color': '#000000',
+          '--ion-text-color-rgb': '0, 0, 0',
+          '--ion-toolbar-background': '#ffffff',
+          '--ion-card-background': '#ffffff',
+          '--ion-modal-background': '#ffffff',
+          '--ion-item-background': '#ffffff',
+          '--ion-border-color': '#000000',
+          '--ion-outline-color': '#000000',
+          '--ion-color-light': '#ffffff',
+          '--ion-color-light-rgb': '255, 255, 255',
+          '--ion-color-light-contrast': '#000000',
+          '--ion-color-light-shade': '#f0f0f0',
+          '--ion-color-light-tint': '#ffffff',
+          '--ion-color-dark': '#000000',
+          '--ion-color-dark-rgb': '0, 0, 0',
+          '--ion-color-dark-contrast': '#ffffff',
+          '--ion-color-dark-shade': '#000000',
+          '--ion-color-dark-tint': '#333333',
+          '--ion-color-medium': '#000000',
+          '--ion-color-medium-rgb': '0, 0, 0',
+          '--ion-color-medium-contrast': '#ffffff',
+          '--ion-color-medium-shade': '#000000',
+          '--ion-color-medium-tint': '#333333'
+        },
+        dark: {
+          '--ion-color-primary': '#ffffff',
+          '--ion-color-primary-rgb': '255, 255, 255',
+          '--ion-color-primary-contrast': '#000000',
+          '--ion-color-primary-shade': '#ffffff',
+          '--ion-color-primary-tint': '#cccccc',
+          '--ion-background-color': '#000000',
+          '--ion-background-color-rgb': '0, 0, 0',
+          '--ion-text-color': '#ffffff',
+          '--ion-text-color-rgb': '255, 255, 255',
+          '--ion-toolbar-background': '#000000',
+          '--ion-card-background': '#000000',
+          '--ion-modal-background': '#000000',
+          '--ion-item-background': '#000000',
+          '--ion-border-color': '#ffffff',
+          '--ion-outline-color': '#ffffff',
+          '--ion-color-light': '#000000',
+          '--ion-color-light-rgb': '0, 0, 0',
+          '--ion-color-light-contrast': '#ffffff',
+          '--ion-color-light-shade': '#000000',
+          '--ion-color-light-tint': '#333333',
+          '--ion-color-dark': '#ffffff',
+          '--ion-color-dark-rgb': '255, 255, 255',
+          '--ion-color-dark-contrast': '#000000',
+          '--ion-color-dark-shade': '#ffffff',
+          '--ion-color-dark-tint': '#cccccc',
+          '--ion-color-medium': '#ffffff',
+          '--ion-color-medium-rgb': '255, 255, 255',
+          '--ion-color-medium-contrast': '#000000',
+          '--ion-color-medium-shade': '#ffffff',
+          '--ion-color-medium-tint': '#cccccc'
+        }
+      }
+    };
+
+    // Apply the theme variables
+    const mode = isDarkMode ? 'dark' : 'light';
+    const variables = themeVariables[theme]?.[mode];
     
-    // Apply new font size class
+    if (variables) {
+      Object.entries(variables).forEach(([property, value]) => {
+        document.documentElement.style.setProperty(property, value, 'important');
+      });
+    }
+  }
+
+  static applyFontSize(fontSize: 'small' | 'medium' | 'large'): void {
+    // Remove existing font size classes from both html and body
+    document.documentElement.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+    document.body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+    
+    // Apply new font size class to both html and body
     document.documentElement.classList.add(`font-size-${fontSize}`);
+    document.body.classList.add(`font-size-${fontSize}`);
+    
+    // Also apply to the root element
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+      rootElement.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+      rootElement.classList.add(`font-size-${fontSize}`);
+    }
+    
+    // Set CSS custom property on root for global access
+    const fontSizeValue = fontSize === 'small' ? '0.875rem' : fontSize === 'medium' ? '1rem' : '1.25rem';
+    document.documentElement.style.setProperty('--app-font-size', fontSizeValue);
+    document.body.style.setProperty('--app-font-size', fontSizeValue);
+    if (rootElement) {
+      rootElement.style.setProperty('--app-font-size', fontSizeValue);
+    }
+    
+    // Apply font size directly to body and root for immediate effect
+    document.body.style.fontSize = fontSizeValue;
+    if (rootElement) {
+      rootElement.style.fontSize = fontSizeValue;
+    }
     
     // Debug: Log the applied font size
     console.log('Font size applied:', {
       fontSize,
       class: `font-size-${fontSize}`,
-      element: document.documentElement,
-      classes: document.documentElement.className
+      fontSizeValue,
+      htmlClasses: document.documentElement.className,
+      bodyClasses: document.body.className,
+      rootClasses: rootElement?.className,
+      customProperty: getComputedStyle(document.documentElement).getPropertyValue('--app-font-size'),
+      bodyFontSize: getComputedStyle(document.body).fontSize,
+      rootFontSize: rootElement ? getComputedStyle(rootElement).fontSize : 'N/A'
     });
   }
 

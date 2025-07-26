@@ -25,10 +25,11 @@ import {
   speedometerOutline,
   closeOutline,
 } from 'ionicons/icons';
-import { UserSettings, DisplayMode } from '../../types';
+import { UserSettings, DisplayMode, TranscriptionSegment } from '../../types';
 import { StorageUtils, ThemeUtils } from '../../utils';
 import { Button } from '../common';
 import ThemeSelector from './ThemeSelector';
+import TranscriptionCard from '../transcription/TranscriptionCard';
 
 interface SettingsPanelProps {
   isOpen: boolean;
@@ -87,10 +88,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  // Apply font size on component mount
+  // Apply font size and accessibility settings on component mount
   React.useEffect(() => {
     ThemeUtils.applyFontSize(settings.fontSize);
-  }, [settings.fontSize]);
+    applyAccessibilitySettings(settings.accessibility);
+  }, [settings.fontSize, settings.accessibility]);
 
   // Display modes
   const displayModes: DisplayMode[] = [
@@ -114,6 +116,35 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     },
   ];
 
+  const applyAccessibilitySettings = (accessibility: UserSettings['accessibility']) => {
+    console.log('Applying accessibility settings:', accessibility);
+    
+    // Apply reduced motion
+    if (accessibility.reducedMotion) {
+      document.documentElement.classList.add('reduced-motion');
+      document.body.classList.add('reduced-motion');
+      console.log('Added reduced-motion class');
+    } else {
+      document.documentElement.classList.remove('reduced-motion');
+      document.body.classList.remove('reduced-motion');
+      console.log('Removed reduced-motion class');
+    }
+    
+    // Apply dyslexia-friendly font
+    if (accessibility.dyslexiaFriendly) {
+      document.documentElement.classList.add('dyslexia-friendly');
+      document.body.classList.add('dyslexia-friendly');
+      console.log('Added dyslexia-friendly class');
+    } else {
+      document.documentElement.classList.remove('dyslexia-friendly');
+      document.body.classList.remove('dyslexia-friendly');
+      console.log('Removed dyslexia-friendly class');
+    }
+    
+    console.log('Current document classes:', document.documentElement.className);
+    console.log('Current body classes:', document.body.className);
+  };
+
   const updateSettings = (newSettings: Partial<UserSettings>) => {
     const updatedSettings = { ...settings, ...newSettings };
     setSettings(updatedSettings);
@@ -123,6 +154,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     // Only apply theme changes immediately if theme actually changed
     if (newSettings.theme && newSettings.theme !== settings.theme) {
       ThemeUtils.applyTheme(newSettings.theme);
+    }
+    
+    // Apply accessibility settings immediately
+    if (newSettings.accessibility) {
+      applyAccessibilitySettings(newSettings.accessibility);
     }
   };
 
@@ -134,7 +170,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       showTags: true,
       autoSave: true,
       accessibility: {
-        highContrast: false,
         reducedMotion: false,
         dyslexiaFriendly: false,
       },
@@ -143,9 +178,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     StorageUtils.saveSettings(defaultSettings);
     onSettingsChange(defaultSettings);
     
-    // Apply the default theme immediately
+    // Apply the default theme and accessibility settings immediately
     ThemeUtils.applyTheme(defaultSettings.theme);
     ThemeUtils.applyFontSize(defaultSettings.fontSize);
+    applyAccessibilitySettings(defaultSettings.accessibility);
     
     setShowResetConfirm(false);
   };
@@ -186,7 +222,23 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0, 0, 0, 0.7)',
+            background: (() => {
+              // Check if we're in high contrast theme
+              const isHighContrast = document.documentElement.classList.contains('theme-high-contrast');
+              const isDarkMode = document.documentElement.classList.contains('dark-mode');
+              
+              if (isHighContrast) {
+                // High contrast theme: use opposite color for backdrop
+                if (isDarkMode) {
+                  return 'rgba(255, 255, 255, 0.3)'; // White overlay on black
+                } else {
+                  return 'rgba(0, 0, 0, 0.7)'; // Black overlay on white
+                }
+              } else {
+                // Regular themes: use standard dark overlay
+                return 'rgba(0, 0, 0, 0.7)';
+              }
+            })(),
             zIndex: 1000,
             display: 'flex',
             alignItems: 'center',
@@ -297,7 +349,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     <p style={{
                       margin: '0 0 1rem 0',
                       fontSize: '0.9rem',
-                      color: 'var(--ion-color-medium)'
+                      color: 'var(--ion-text-color)'
                     }}>
                       Choose how emotions appear in your transcriptions
                     </p>
@@ -306,6 +358,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       {displayModes.map((mode, index) => (
                         <motion.button
                           key={mode.id}
+                          className={`display-mode-button ${currentDisplayMode.id === mode.id ? 'selected' : ''}`}
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ 
@@ -327,13 +380,15 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             padding: '0.75rem 1rem',
                             borderRadius: '8px',
                             border: currentDisplayMode.id === mode.id 
-                              ? '2px solid var(--ion-color-primary)' 
-                              : '1px solid var(--ion-color-light-shade)',
+                              ? '1px solid var(--ion-color-primary)' 
+                              : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
                             background: currentDisplayMode.id === mode.id 
                               ? 'var(--ion-color-primary)' 
                               : 'var(--ion-color-light)',
                             color: currentDisplayMode.id === mode.id 
-                              ? 'white' 
+                              ? (settings.theme === 'high-contrast' 
+                                  ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                  : 'white')
                               : 'var(--ion-color-dark)',
                             fontSize: '0.9rem',
                             fontWeight: currentDisplayMode.id === mode.id ? '600' : '400',
@@ -368,8 +423,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             <div style={{ 
                               fontSize: '0.8rem', 
                               color: currentDisplayMode.id === mode.id 
-                                ? 'rgba(255, 255, 255, 0.8)' 
-                                : 'var(--ion-color-medium)',
+                                ? (settings.theme === 'high-contrast' 
+                                    ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                    : 'rgba(255, 255, 255, 0.8)')
+                                : 'var(--ion-text-color)',
                               lineHeight: '1.3'
                             }}>
                               {mode.description}
@@ -395,7 +452,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                     damping: 30
                                   }}
                                   style={{ 
-                                    color: 'white',
+                                    color: settings.theme === 'high-contrast' 
+                                      ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                      : 'white',
                                     fontSize: '1.2rem',
                                     fontWeight: 'bold'
                                   }}
@@ -450,49 +509,130 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       <IonLabel>Font Size</IonLabel>
                       <div slot="end" style={{ 
                         display: 'flex', 
-                        gap: '0.5rem'
+                        flexDirection: 'column', 
+                        gap: '0.5rem', 
+                        alignItems: 'center',
+                        width: '100%',
+                        marginBottom: '1rem'
                       }}>
                         {[
-                          { value: 'small', label: 'Small' },
-                          { value: 'medium', label: 'Medium' },
-                          { value: 'large', label: 'Large' }
+                          { value: 'small', name: 'Small Text', icon: 'Aa' },
+                          { value: 'medium', name: 'Medium Text', icon: 'Aa' },
+                          { value: 'large', name: 'Large Text', icon: 'Aa' }
                         ].map((option, index) => (
                           <motion.button
                             key={option.value}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            className={`font-size-button ${settings.fontSize === option.value ? 'selected' : ''}`}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
                             transition={{ 
                               delay: 0.05, 
-                              duration: 0.2,
+                              duration: 0.1,
                               type: "spring",
-                              stiffness: 400,
-                              damping: 20
+                              stiffness: 400
                             }}
                             whileHover={{ 
                               scale: 1.05,
-                              transition: { duration: 0.05 }
+                              transition: { duration: 0.15 }
                             }}
                             whileTap={{ 
                               scale: 0.95,
-                              transition: { duration: 0.05 }
+                              transition: { duration: 0.1 }
                             }}
-                            onClick={() => setFontSize(option.value as 'small' | 'medium' | 'large')}
+                            onClick={() => {
+                              setFontSize(option.value as 'small' | 'medium' | 'large');
+                              console.log('Font size button clicked:', option.value);
+                              console.log('Current document classes:', document.documentElement.className);
+                              console.log('Current body classes:', document.body.className);
+                              
+                              // Test if the font size is actually being applied
+                              setTimeout(() => {
+                                const testElement = document.querySelector('.font-size-test');
+                                if (testElement) {
+                                  const computedStyle = window.getComputedStyle(testElement);
+                                  console.log('Test element font size:', computedStyle.fontSize);
+                                }
+                              }, 100);
+                            }}
                             style={{
-                              padding: '0.5rem 0.75rem',
-                              fontSize: '0.8rem',
-                              fontWeight: '500',
-                              width: '80px',
-                              height: '32px',
-                              borderRadius: '6px',
-                              border: settings.fontSize === option.value ? '2px solid var(--ion-color-primary)' : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
-                              background: settings.fontSize === option.value ? 'var(--ion-color-primary)' : 'transparent',
-                              color: settings.fontSize === option.value ? 'var(--ion-color-primary-contrast)' : 'var(--ion-text-color)',
+                              padding: '0.75rem 1rem',
+                              borderRadius: '8px',
+                              border: settings.fontSize === option.value 
+                                ? '1px solid var(--ion-color-primary)' 
+                                : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
+                              background: settings.fontSize === option.value 
+                                ? 'var(--ion-color-primary)' 
+                                : 'var(--ion-color-light)',
+                              color: settings.fontSize === option.value 
+                                ? (settings.theme === 'high-contrast' 
+                                    ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                    : 'white')
+                                : 'var(--ion-color-dark)',
+                              fontSize: '0.9rem',
+                              fontWeight: settings.fontSize === option.value ? '600' : '400',
                               cursor: 'pointer',
-                              outline: 'none',
-                              fontFamily: 'inherit'
+                              transition: 'all 0.2s ease',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.75rem',
+                              width: '95%',
+                              textAlign: 'left',
+                              minHeight: '48px',
+                              position: 'relative'
                             }}
                           >
-                            {option.label}
+                            <motion.span 
+                              style={{ 
+                                fontSize: option.value === 'small' ? '1rem' : 
+                                         option.value === 'medium' ? '1.2rem' : '1.4rem',
+                                minWidth: '24px',
+                                textAlign: 'center',
+                                fontWeight: '600'
+                              }}
+                              animate={{ 
+                                scale: settings.fontSize === option.value ? 1.1 : 1 
+                              }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              {option.icon}
+                            </motion.span>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontWeight: '500', marginBottom: '0.25rem' }}>
+                                {option.name}
+                              </div>
+                            </div>
+                            <div style={{ 
+                              width: '24px', 
+                              height: '24px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0
+                            }}>
+                              <AnimatePresence>
+                                {settings.fontSize === option.value && (
+                                  <motion.span 
+                                    initial={{ scale: 0, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    exit={{ scale: 0, opacity: 0 }}
+                                    transition={{ 
+                                      type: "spring",
+                                      stiffness: 500,
+                                      damping: 30
+                                    }}
+                                    style={{ 
+                                      color: settings.theme === 'high-contrast' 
+                                        ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
+                                        : 'white',
+                                      fontSize: '1.2rem',
+                                      fontWeight: 'bold'
+                                    }}
+                                  >
+                                    ✓
+                                  </motion.span>
+                                )}
+                              </AnimatePresence>
+                            </div>
                           </motion.button>
                         ))}
                       </div>
@@ -532,16 +672,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       Accessibility
                     </h3>
 
-                    <IonItem style={{ '--background': 'transparent' }}>
-                      <IonLabel>High Contrast Mode</IonLabel>
-                      <IonToggle
-                        checked={settings.accessibility.highContrast}
-                        onIonChange={(e) => updateSettings({
-                          accessibility: { ...settings.accessibility, highContrast: e.detail.checked }
-                        })}
-                        slot="end"
-                      />
-                    </IonItem>
+
 
                     <IonItem style={{ '--background': 'transparent' }}>
                       <IonLabel>Reduced Motion</IonLabel>
@@ -564,6 +695,29 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         slot="end"
                       />
                     </IonItem>
+                    
+                    {/* Accessibility Test Section */}
+                    <div style={{ 
+                      marginTop: '1rem', 
+                      padding: '1rem', 
+                      background: 'var(--ion-color-light)', 
+                      borderRadius: '8px',
+                      border: '1px solid var(--ion-border-color, var(--ion-color-light-shade))'
+                    }}>
+                      <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: '600' }}>
+                        Accessibility Test
+                      </h4>
+
+                      <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.8rem' }}>
+                        <strong>Reduced Motion:</strong> {settings.accessibility.reducedMotion ? '✅ Active' : '❌ Inactive'}
+                      </p>
+                      <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.8rem' }}>
+                        <strong>Dyslexia Font:</strong> {settings.accessibility.dyslexiaFriendly ? '✅ Active' : '❌ Inactive'}
+                      </p>
+                      <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                        This text should change based on your accessibility settings.
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
 
@@ -576,16 +730,57 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   transition={{ delay: 0.4, duration: 0.2 }}
                 >
                   <div style={{ padding: '0 1rem', marginTop: '1rem' }}>
-                    <Button
+                    <IonButton
                       onClick={() => setShowResetConfirm(true)}
                       color="warning"
                       fill="outline"
                       expand="block"
+                      className="reset-button"
+                      style={{
+                        color: 'var(--ion-text-color)',
+                        borderColor: 'var(--ion-color-warning)',
+                        '--ion-color-warning': 'var(--ion-text-color)',
+                        '--ion-color-warning-contrast': 'var(--ion-background-color)'
+                      }}
                     >
                       Reset to Defaults
-                    </Button>
+                    </IonButton>
                   </div>
                 </motion.div>
+
+                {/* Live Preview Footer - Fixed Position */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 10,
+                    width: '95%',
+                    margin: '0 auto',
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                >
+                                        {/* Sample Transcript Card - Using Reusable Component */}
+                    <TranscriptionCard
+                      segment={{
+                        id: 'sample-1',
+                        text: "Hey! This is a sample transcript to test out how you like the settings. I hope you like what you're seeing!",
+                        emotion: 'happy',
+                        emoji: '😊',
+                        confidence: 0.9,
+                        timestamp: new Date()
+                      }}
+                      displayMode={currentDisplayMode}
+                      showTimestamps={true}
+                      showConfidence={true}
+                      highlightCurrent={true}
+                    />
+                  </motion.div>
 
                                 {/* Reset Confirmation Alert */}
                 <IonAlert
