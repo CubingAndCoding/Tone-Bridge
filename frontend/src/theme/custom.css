@@ -44,6 +44,46 @@
   transition: none !important;
 }
 
+/* Disable Framer Motion animations */
+.reduced-motion [data-framer-motion] {
+  animation: none !important;
+  transition: none !important;
+}
+
+.reduced-motion .motion {
+  animation: none !important;
+  transition: none !important;
+}
+
+.reduced-motion [style*="animation"] {
+  animation: none !important;
+}
+
+.reduced-motion [style*="transition"] {
+  transition: none !important;
+}
+
+/* Disable specific Framer Motion components */
+.reduced-motion .AnimatePresence {
+  animation: none !important;
+  transition: none !important;
+}
+
+.reduced-motion .motion-span {
+  animation: none !important;
+  transition: none !important;
+}
+
+.reduced-motion .motion-button {
+  animation: none !important;
+  transition: none !important;
+}
+
+.reduced-motion .motion-div {
+  animation: none !important;
+  transition: none !important;
+}
+
 /* Dyslexia-friendly Font */
 .dyslexia-friendly {
   font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial', sans-serif !important;
@@ -86,8 +126,7 @@
   font-size: var(--app-font-size);
 }
 
-.font-size-small body,
-.font-size-small * {
+.font-size-small body {
   font-size: var(--app-font-size);
 }
 
@@ -96,8 +135,7 @@
   font-size: var(--app-font-size);
 }
 
-.font-size-medium body,
-.font-size-medium * {
+.font-size-medium body {
   font-size: var(--app-font-size);
 }
 
@@ -106,8 +144,7 @@
   font-size: var(--app-font-size);
 }
 
-.font-size-large body,
-.font-size-large * {
+.font-size-large body {
   font-size: var(--app-font-size);
 }
 
@@ -118,7 +155,6 @@
 .font-size-small p,
 .font-size-small div,
 .font-size-small span,
-.font-size-small h1,
 .font-size-small h2,
 .font-size-small h3,
 .font-size-small h4,
@@ -133,7 +169,6 @@
 .font-size-medium p,
 .font-size-medium div,
 .font-size-medium span,
-.font-size-medium h1,
 .font-size-medium h2,
 .font-size-medium h3,
 .font-size-medium h4,
@@ -148,7 +183,6 @@
 .font-size-large p,
 .font-size-large div,
 .font-size-large span,
-.font-size-large h1,
 .font-size-large h2,
 .font-size-large h3,
 .font-size-large h4,
@@ -245,21 +279,6 @@ body.font-size-large {
   font-size: 1.25rem !important;
 }
 
-/* Apply to all child elements */
-body.font-size-small *,
-#root.font-size-small * {
-  font-size: 0.875rem !important;
-}
-
-body.font-size-medium *,
-#root.font-size-medium * {
-  font-size: 1rem !important;
-}
-
-body.font-size-large *,
-#root.font-size-large * {
-  font-size: 1.25rem !important;
-}
 
 /* Override inline styles for specific components */
 body.font-size-small ion-card,
@@ -283,9 +302,8 @@ body.font-size-medium span {
 }
 
 body.font-size-large ion-card,
-body.font-size-large ion-card *,
+body.font-size-large ion-card,
 body.font-size-large ion-text,
-body.font-size-large ion-text *,
 body.font-size-large p,
 body.font-size-large div,
 body.font-size-large span {

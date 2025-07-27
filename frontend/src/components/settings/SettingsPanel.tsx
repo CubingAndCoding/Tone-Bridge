@@ -94,32 +94,23 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   ];
 
   const applyAccessibilitySettings = (accessibility: UserSettings['accessibility']) => {
-    console.log('Applying accessibility settings:', accessibility);
-    
     // Apply reduced motion
     if (accessibility.reducedMotion) {
       document.documentElement.classList.add('reduced-motion');
       document.body.classList.add('reduced-motion');
-      console.log('Added reduced-motion class');
     } else {
       document.documentElement.classList.remove('reduced-motion');
       document.body.classList.remove('reduced-motion');
-      console.log('Removed reduced-motion class');
     }
     
     // Apply dyslexia-friendly font
     if (accessibility.dyslexiaFriendly) {
       document.documentElement.classList.add('dyslexia-friendly');
       document.body.classList.add('dyslexia-friendly');
-      console.log('Added dyslexia-friendly class');
     } else {
       document.documentElement.classList.remove('dyslexia-friendly');
       document.body.classList.remove('dyslexia-friendly');
-      console.log('Removed dyslexia-friendly class');
     }
-    
-    console.log('Current document classes:', document.documentElement.className);
-    console.log('Current body classes:', document.body.className);
   };
 
   const updateSettings = (newSettings: Partial<UserSettings>) => {
@@ -191,7 +182,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
+          transition={{ duration: settings.accessibility.reducedMotion ? 0.01 : 0.15 }}
           className="settings-modal-backdrop"
           style={{
             position: 'fixed',
@@ -305,7 +296,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.2 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.1, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                 >
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
@@ -339,16 +330,16 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ 
-                            delay: 0.05, 
-                            duration: 0.1,
-                            type: "spring",
-                            stiffness: 400
+                            delay: settings.accessibility.reducedMotion ? 0 : 0.05, 
+                            duration: settings.accessibility.reducedMotion ? 0.01 : 0.1,
+                            type: settings.accessibility.reducedMotion ? "tween" : "spring",
+                            stiffness: settings.accessibility.reducedMotion ? 0 : 400
                           }}
-                          whileHover={{ 
+                          whileHover={settings.accessibility.reducedMotion ? {} : { 
                             scale: 1.05,
                             transition: { duration: 0.15 }
                           }}
-                          whileTap={{ 
+                          whileTap={settings.accessibility.reducedMotion ? {} : { 
                             scale: 0.95,
                             transition: { duration: 0.1 }
                           }}
@@ -387,7 +378,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             animate={{ 
                               scale: currentDisplayMode.id === mode.id ? 1.1 : 1 
                             }}
-                            transition={{ duration: 0.2 }}
+                            transition={{ duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                           >
                             {mode.id === 'combined' ? '😊' : mode.id === 'emoji-only' ? '😄' : '🏷️'}
                           </motion.span>
@@ -426,9 +417,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                   animate={{ scale: 1, opacity: 1 }}
                                   exit={{ scale: 0, opacity: 0 }}
                                   transition={{ 
-                                    type: "spring",
-                                    stiffness: 500,
-                                    damping: 30
+                                    type: settings.accessibility.reducedMotion ? "tween" : "spring",
+                                    stiffness: settings.accessibility.reducedMotion ? 0 : 500,
+                                    damping: settings.accessibility.reducedMotion ? 0 : 30
                                   }}
                                   style={{ 
                                     color: 'var(--ion-color-primary-contrast)',
@@ -451,7 +442,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.2 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.2, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                 >
                   <ThemeSelector
                     currentTheme={settings.theme}
@@ -463,7 +454,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25, duration: 0.2 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.25, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                 >
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
@@ -505,33 +496,21 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ 
-                              delay: 0.05, 
-                              duration: 0.1,
-                              type: "spring",
-                              stiffness: 400
+                              delay: settings.accessibility.reducedMotion ? 0 : 0.05, 
+                              duration: settings.accessibility.reducedMotion ? 0.01 : 0.1,
+                              type: settings.accessibility.reducedMotion ? "tween" : "spring",
+                              stiffness: settings.accessibility.reducedMotion ? 0 : 400
                             }}
-                            whileHover={{ 
+                            whileHover={settings.accessibility.reducedMotion ? {} : { 
                               scale: 1.05,
                               transition: { duration: 0.15 }
                             }}
-                            whileTap={{ 
+                            whileTap={settings.accessibility.reducedMotion ? {} : { 
                               scale: 0.95,
                               transition: { duration: 0.1 }
                             }}
                             onClick={() => {
                               setFontSize(option.value as 'small' | 'medium' | 'large');
-                              console.log('Font size button clicked:', option.value);
-                              console.log('Current document classes:', document.documentElement.className);
-                              console.log('Current body classes:', document.body.className);
-                              
-                              // Test if the font size is actually being applied
-                              setTimeout(() => {
-                                const testElement = document.querySelector('.font-size-test');
-                                if (testElement) {
-                                  const computedStyle = window.getComputedStyle(testElement);
-                                  console.log('Test element font size:', computedStyle.fontSize);
-                                }
-                              }, 100);
                             }}
                             style={{
                               padding: '0.75rem 1rem',
@@ -572,7 +551,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                               animate={{ 
                                 scale: settings.fontSize === option.value ? 1.1 : 1 
                               }}
-                              transition={{ duration: 0.2 }}
+                              transition={{ duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                             >
                               {option.icon}
                             </motion.span>
@@ -602,9 +581,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
                                     transition={{ 
-                                      type: "spring",
-                                      stiffness: 500,
-                                      damping: 30
+                                      type: settings.accessibility.reducedMotion ? "tween" : "spring",
+                                      stiffness: settings.accessibility.reducedMotion ? 0 : 500,
+                                      damping: settings.accessibility.reducedMotion ? 0 : 30
                                     }}
                                     style={{ 
                                       color: 'var(--ion-color-primary-contrast)',
@@ -637,7 +616,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.2 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.3, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                 >
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
@@ -711,7 +690,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.2 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.4, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                 >
                   <div style={{ padding: '0 1rem', marginTop: '1rem' }}>
                     <IonButton
@@ -738,7 +717,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.3 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.5, duration: settings.accessibility.reducedMotion ? 0.01 : 0.3 }}
                   style={{
                     position: 'sticky',
                     bottom: 0,
@@ -765,6 +744,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       showTimestamps={true}
                       showConfidence={true}
                       highlightCurrent={true}
+                      reducedMotion={settings.accessibility.reducedMotion}
                     />
                   </motion.div>
 

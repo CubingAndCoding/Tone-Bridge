@@ -14,6 +14,7 @@ interface TranscriptionCardProps {
   onSegmentClick?: (segment: TranscriptionSegment) => void;
   className?: string;
   style?: React.CSSProperties;
+  reducedMotion?: boolean;
 }
 
 const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
@@ -25,6 +26,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
   onSegmentClick,
   className = '',
   style = {},
+  reducedMotion = false,
 }) => {
   const renderEmotionDisplay = () => {
     if (!segment.emotion) return null;
@@ -164,7 +166,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.3 }}
+      transition={{ delay: reducedMotion ? 0 : 0.2, duration: reducedMotion ? 0.01 : 0.3 }}
       style={style}
     >
       <IonCard
@@ -188,7 +190,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
+            transition={{ delay: reducedMotion ? 0 : 0.2, duration: reducedMotion ? 0.01 : 0.3 }}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -201,13 +203,11 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
             {/* Left: Emotion Display */}
             <motion.div 
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ 
-                delay: 0.2,
-                type: "spring",
-                stiffness: 400,
-                damping: 20
+                delay: reducedMotion ? 0 : 0.2,
+                duration: reducedMotion ? 0.01 : 0.3
               }}
             >
               {renderEmotionDisplay()}
@@ -218,10 +218,19 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
               display: 'flex', 
               alignItems: 'center', 
               gap: '0.5rem',
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end',
+              minWidth: 'fit-content'
             }}>
-              {renderConfidence()}
-              {renderTimestamp()}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                gap: '0.25rem'
+              }}>
+                {renderConfidence()}
+                {renderTimestamp()}
+              </div>
               
               {/* Perfect Confidence Indicator */}
               <AnimatePresence>
@@ -231,10 +240,10 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0, opacity: 0 }}
                     transition={{ 
-                      type: "spring",
-                      stiffness: 500,
-                      damping: 30,
-                      delay: 0.5
+                      type: reducedMotion ? "tween" : "spring",
+                      stiffness: reducedMotion ? 0 : 500,
+                      damping: reducedMotion ? 0 : 30,
+                      delay: reducedMotion ? 0 : 0.5
                     }}
                     style={{ 
                       color: 'white',
@@ -253,7 +262,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.3 }}
+            transition={{ delay: reducedMotion ? 0 : 0.3, duration: reducedMotion ? 0.01 : 0.3 }}
           >
             <IonText>
               <p style={{ 

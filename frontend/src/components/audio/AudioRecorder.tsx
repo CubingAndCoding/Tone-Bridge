@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IonButton, IonIcon, IonText } from '@ionic/react';
-import { mic, micOutline, stop } from 'ionicons/icons';
+import { mic, stop } from 'ionicons/icons';
 import { AudioRecording, RecordingState } from '../../types';
 import { AudioUtils } from '../../utils';
 
@@ -164,8 +164,8 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
               }}
             >
               <IonIcon 
-                icon={recordingState.isRecording ? stop : micOutline} 
-                style={{ fontSize: '2rem' }}
+                icon={recordingState.isRecording ? stop : mic}
+                size="large"
               />
             </motion.div>
           </IonButton>

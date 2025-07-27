@@ -10,6 +10,7 @@ interface TranscriptionDisplayProps {
   highlightCurrent?: boolean;
   onSegmentClick?: (segment: TranscriptionSegment) => void;
   className?: string;
+  reducedMotion?: boolean;
 }
 
 const TranscriptionDisplay: React.FC<TranscriptionDisplayProps> = ({
@@ -20,6 +21,7 @@ const TranscriptionDisplay: React.FC<TranscriptionDisplayProps> = ({
   highlightCurrent = false,
   onSegmentClick,
   className = '',
+  reducedMotion = false,
 }) => {
   if (segments.length === 0) {
     return (
@@ -40,6 +42,7 @@ const TranscriptionDisplay: React.FC<TranscriptionDisplayProps> = ({
           showConfidence={showConfidence}
           highlightCurrent={highlightCurrent && segment === segments[segments.length - 1]}
           onSegmentClick={onSegmentClick}
+          reducedMotion={reducedMotion}
         />
       ))}
     </div>

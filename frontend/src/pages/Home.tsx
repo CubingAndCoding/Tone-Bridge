@@ -13,7 +13,7 @@ import {
   settingsOutline,
   downloadOutline,
   shareOutline,
-  micOutline,
+  mic,
   heartOutline,
   trashOutline,
   sunnyOutline,
@@ -75,13 +75,26 @@ const Home: React.FC = () => {
     setSettings(savedSettings);
     ThemeUtils.applyTheme(savedSettings.theme);
     
-    // Detect current color scheme
+    // Detect current color scheme and apply it
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setIsDarkMode(mediaQuery.matches);
+    const initialDarkMode = mediaQuery.matches;
+    setIsDarkMode(initialDarkMode);
+    
+    // Apply the initial light/dark mode classes
+    document.documentElement.classList.remove('light-mode', 'dark-mode');
+    document.documentElement.classList.add(initialDarkMode ? 'dark-mode' : 'light-mode');
     
     // Listen for system theme changes
     const handleThemeChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
+      const newDarkMode = e.matches;
+      setIsDarkMode(newDarkMode);
+      
+      // Update classes when system preference changes
+      document.documentElement.classList.remove('light-mode', 'dark-mode');
+      document.documentElement.classList.add(newDarkMode ? 'dark-mode' : 'light-mode');
+      
+      // Re-apply current theme to ensure proper variables
+      ThemeUtils.applyTheme(savedSettings.theme);
     };
     
     mediaQuery.addEventListener('change', handleThemeChange);
@@ -300,15 +313,16 @@ const Home: React.FC = () => {
           marginBottom: '2rem',
           padding: '1.5rem 1rem'
         }}>
-          <h1 style={{ 
-            fontSize: '2.5rem', 
-            fontWeight: 'bold', 
-            marginBottom: '1rem',
-            background: 'linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+          <h1 
+            style={{ 
+              fontSize: '2rem', 
+              fontWeight: 'bold', 
+              marginBottom: '1rem',
+              background: 'linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
             Hear Beyond Words
           </h1>
           <p style={{ 
@@ -367,6 +381,7 @@ const Home: React.FC = () => {
               onSegmentClick={(segment) => {
                 showToast(`Clicked: ${segment.text}`, 'info');
               }}
+              reducedMotion={settings.accessibility.reducedMotion}
             />
           </div>
         )}
@@ -457,9 +472,9 @@ const Home: React.FC = () => {
             color: 'var(--ion-text-color)'
           }}>
             <IonIcon 
-              icon={micOutline} 
+              icon={mic} 
+              size="large"
               style={{ 
-                fontSize: '4rem', 
                 marginBottom: '1rem',
                 opacity: 0.5
               }} 
