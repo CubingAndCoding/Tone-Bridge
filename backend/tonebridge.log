@@ -2221,3 +2221,81 @@ If this is a private repository, make sure to pass a token having permission to 
 2025-07-27 09:11:55 - services.transcription_service - INFO - Model used: whisper
 2025-07-27 09:11:55 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
 2025-07-27 09:11:57 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)
+2025-07-27 10:27:39 - routes.api - INFO - Audio data decoded successfully: 15617 bytes, format: webm
+2025-07-27 10:27:39 - utils.audio_utils - INFO - Loading audio: 15617 bytes, format: webm
+2025-07-27 10:27:39 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 10:27:39 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp3u2uedl2.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp3u2uedl2.wav
+2025-07-27 10:27:39 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 10:27:39 - utils.audio_utils - INFO - Audio loaded successfully: 15360 samples, 16000Hz
+2025-07-27 10:27:39 - utils.audio_utils - INFO - Audio preprocessed: 15360 samples
+2025-07-27 10:27:39 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 10:27:41 - services.transcription_service - INFO - Transcription completed: 'Oh' (2 characters)
+2025-07-27 10:27:41 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-27 10:27:41 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 10:27:41 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 10:27:41 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.942)
+2025-07-27 10:30:04 - routes.api - INFO - Audio data decoded successfully: 15617 bytes, format: webm
+2025-07-27 10:30:04 - utils.audio_utils - INFO - Loading audio: 15617 bytes, format: webm
+2025-07-27 10:30:04 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 10:30:04 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpcitgc0wo.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpcitgc0wo.wav
+2025-07-27 10:30:04 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 10:30:04 - utils.audio_utils - INFO - Audio loaded successfully: 15360 samples, 16000Hz
+2025-07-27 10:30:04 - utils.audio_utils - INFO - Audio preprocessed: 15360 samples
+2025-07-27 10:30:04 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 10:30:05 - services.transcription_service - INFO - Transcription completed: 'Oh' (2 characters)
+2025-07-27 10:30:05 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-27 10:30:05 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 10:30:05 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 10:30:05 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.942)
+2025-07-27 10:33:00 - routes.api - INFO - Audio data decoded successfully: 15617 bytes, format: webm
+2025-07-27 10:33:00 - utils.audio_utils - INFO - Loading audio: 15617 bytes, format: webm
+2025-07-27 10:33:00 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 10:33:00 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpuwrtemb_.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpuwrtemb_.wav
+2025-07-27 10:33:01 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 10:33:01 - utils.audio_utils - INFO - Audio loaded successfully: 15360 samples, 16000Hz
+2025-07-27 10:33:01 - utils.audio_utils - INFO - Audio preprocessed: 15360 samples
+2025-07-27 10:33:01 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 10:33:02 - services.transcription_service - INFO - Transcription completed: 'Oh' (2 characters)
+2025-07-27 10:33:02 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-27 10:33:02 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 10:33:02 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 10:33:02 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.942)
+2025-07-27 10:33:04 - routes.api - INFO - Audio data decoded successfully: 12719 bytes, format: webm
+2025-07-27 10:33:04 - utils.audio_utils - INFO - Loading audio: 12719 bytes, format: webm
+2025-07-27 10:33:04 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 10:33:04 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp06yuucg8.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp06yuucg8.wav
+2025-07-27 10:33:04 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 10:33:04 - utils.audio_utils - INFO - Audio loaded successfully: 12480 samples, 16000Hz
+2025-07-27 10:33:04 - utils.audio_utils - INFO - Audio preprocessed: 12480 samples
+2025-07-27 10:33:04 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 10:33:06 - services.transcription_service - INFO - Transcription completed: 'BOOM!' (5 characters)
+2025-07-27 10:33:06 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-27 10:33:06 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 10:33:06 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 10:33:06 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)
+2025-07-27 10:33:50 - routes.api - INFO - Audio data decoded successfully: 16583 bytes, format: webm
+2025-07-27 10:33:50 - utils.audio_utils - INFO - Loading audio: 16583 bytes, format: webm
+2025-07-27 10:33:50 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 10:33:50 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpa5m2_5cn.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpa5m2_5cn.wav
+2025-07-27 10:33:50 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 10:33:50 - utils.audio_utils - INFO - Audio loaded successfully: 16320 samples, 16000Hz
+2025-07-27 10:33:50 - utils.audio_utils - INFO - Audio preprocessed: 16320 samples
+2025-07-27 10:33:50 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 10:33:52 - services.transcription_service - INFO - Transcription completed: 'BOOM!' (5 characters)
+2025-07-27 10:33:52 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-27 10:33:52 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 10:33:52 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 10:33:52 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)
+2025-07-27 10:34:41 - routes.api - INFO - Audio data decoded successfully: 12719 bytes, format: webm
+2025-07-27 10:34:41 - utils.audio_utils - INFO - Loading audio: 12719 bytes, format: webm
+2025-07-27 10:34:41 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 10:34:41 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpkwfco27_.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpkwfco27_.wav
+2025-07-27 10:34:42 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 10:34:42 - utils.audio_utils - INFO - Audio loaded successfully: 12480 samples, 16000Hz
+2025-07-27 10:34:42 - utils.audio_utils - INFO - Audio preprocessed: 12480 samples
+2025-07-27 10:34:42 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 10:34:42 - services.transcription_service - INFO - Transcription completed: 'BOOM!' (5 characters)
+2025-07-27 10:34:42 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-27 10:34:42 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 10:34:42 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 10:34:43 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)

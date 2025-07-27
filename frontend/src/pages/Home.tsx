@@ -300,6 +300,17 @@ const Home: React.FC = () => {
     showToast('Transcript cleared', 'info');
   };
 
+  // Delete individual transcript
+  const deleteTranscript = (segmentId: string) => {
+    const updatedSegments = transcriptionSegments.filter(segment => segment.id !== segmentId);
+    setTranscriptionSegments(updatedSegments);
+    TranscriptStorageManager.saveTranscripts(updatedSegments);
+    showToast('Transcript deleted', 'success');
+    AnalyticsUtils.trackEvent('transcript_deleted', {
+      segmentId,
+    });
+  };
+
   // Share transcript
   const shareTranscript = async () => {
     if (transcriptionSegments.length === 0) {
@@ -471,13 +482,15 @@ const Home: React.FC = () => {
             </div>
             <TranscriptionDisplay
               segments={transcriptionSegments}
-                                displayMode={settings.displayMode}
+              displayMode={settings.displayMode}
               showTimestamps={true}
               showConfidence={settings.showTags}
               highlightCurrent={true}
               onSegmentClick={(segment) => {
                 showToast(`Clicked: ${segment.text}`, 'info');
               }}
+              onDelete={deleteTranscript}
+              showDeleteButton={true}
               reducedMotion={settings.accessibility.reducedMotion}
             />
           </div>

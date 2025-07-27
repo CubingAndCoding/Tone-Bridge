@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IonCard, IonCardContent, IonBadge, IonText, IonIcon } from '@ionic/react';
-import { timeOutline } from 'ionicons/icons';
+import { timeOutline, trashOutline } from 'ionicons/icons';
 import { TranscriptionSegment, DisplayMode } from '../../types';
 import { FormatUtils } from '../../utils';
 
@@ -12,6 +12,8 @@ interface TranscriptionCardProps {
   showConfidence?: boolean;
   highlightCurrent?: boolean;
   onSegmentClick?: (segment: TranscriptionSegment) => void;
+  onDelete?: (segmentId: string) => void;
+  showDeleteButton?: boolean;
   className?: string;
   style?: React.CSSProperties;
   reducedMotion?: boolean;
@@ -24,10 +26,98 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
   showConfidence = true,
   highlightCurrent = false,
   onSegmentClick,
+  onDelete,
+  showDeleteButton = false,
   className = '',
   style = {},
   reducedMotion = false,
 }) => {
+  const [isSliding, setIsSliding] = useState(false);
+  const [slideOffset, setSlideOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const startX = useRef(0);
+  const currentX = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!showDeleteButton || !onDelete) return;
+    startX.current = e.touches[0].clientX;
+    currentX.current = startX.current;
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    currentX.current = e.touches[0].clientX;
+    const deltaX = currentX.current - startX.current;
+    
+    // Only allow sliding to the left (negative deltaX)
+    if (deltaX < 0) {
+      const newOffset = Math.max(deltaX, -80); // Max slide distance
+      setSlideOffset(newOffset);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    // If slid more than 60px, trigger delete
+    if (slideOffset < -60) {
+      setIsSliding(true);
+      setTimeout(() => {
+        onDelete?.(segment.id);
+        setIsSliding(false);
+        setSlideOffset(0);
+      }, 300);
+    } else {
+      // Snap back
+      setSlideOffset(0);
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!showDeleteButton || !onDelete) return;
+    startX.current = e.clientX;
+    currentX.current = startX.current;
+    setIsDragging(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    currentX.current = e.clientX;
+    const deltaX = currentX.current - startX.current;
+    
+    // Only allow sliding to the left (negative deltaX)
+    if (deltaX < 0) {
+      const newOffset = Math.max(deltaX, -80); // Max slide distance
+      setSlideOffset(newOffset);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    // If slid more than 60px, trigger delete
+    if (slideOffset < -60) {
+      setIsSliding(true);
+      setTimeout(() => {
+        onDelete?.(segment.id);
+        setIsSliding(false);
+        setSlideOffset(0);
+      }, 300);
+    } else {
+      // Snap back
+      setSlideOffset(0);
+    }
+  };
+
+  const handleClick = () => {
+    if (onSegmentClick && !isDragging) {
+      onSegmentClick(segment);
+    }
+  };
   const renderEmotionDisplay = () => {
     if (!segment.emotion) return null;
 
@@ -166,25 +256,80 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: isSliding ? -100 : 0 }}
       transition={{ delay: reducedMotion ? 0 : 0.2, duration: reducedMotion ? 0.01 : 0.3 }}
-      style={style}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        margin: '0.5rem 0',
+        borderRadius: '12px',
+        ...style
+      }}
+      ref={cardRef}
     >
-      <IonCard
-        onClick={() => onSegmentClick?.(segment)}
+      {/* Delete Background */}
+      {showDeleteButton && onDelete && (
+        <motion.div
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: '80px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1,
+            borderRadius: '0 12px 12px 0'
+          }}
+          animate={{
+            x: slideOffset > -60 ? 0 : 0
+          }}
+          transition={{ duration: reducedMotion ? 0.01 : 0.2 }}
+        >
+          <IonIcon 
+            icon={trashOutline} 
+            style={{ 
+              color: 'var(--ion-color-danger)',
+              fontSize: '1.5rem'
+            }} 
+          />
+        </motion.div>
+      )}
+
+      {/* Main Card */}
+      <motion.div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onClick={handleClick}
         style={{
-          margin: '0.5rem 0',
+          position: 'relative',
+          zIndex: 2,
           cursor: onSegmentClick ? 'pointer' : 'default',
-          transition: 'all 0.2s ease',
-          border: highlightCurrent ? '2px solid var(--ion-color-primary) !important' : 'none',
-          borderRadius: '12px',
-          boxShadow: highlightCurrent
-            ? '0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2)'
-            : '0 2px 8px rgba(0, 0, 0, 0.1)',
-          background: 'var(--ion-card-background)',
-          ...style
+          userSelect: 'none',
+          touchAction: 'pan-y'
         }}
-        className={'transcription-segment ' + className}
       >
+        <IonCard
+          style={{
+            margin: 0,
+            transition: 'all 0.2s ease',
+            border: highlightCurrent ? '2px solid var(--ion-color-primary) !important' : 'none',
+            borderRadius: '12px',
+            boxShadow: highlightCurrent
+              ? '0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2)'
+              : '0 2px 8px rgba(0, 0, 0, 0.1)',
+            background: 'var(--ion-card-background)',
+            transform: `translateX(${slideOffset}px)`,
+            ...style
+          }}
+          className={'transcription-segment ' + className}
+        >
         <IonCardContent style={{ padding: '1rem' }}>
           {/* Header: Emotion and Confidence */}
           <motion.div
@@ -250,6 +395,8 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
                   </motion.span>
                 )}
               </AnimatePresence>
+
+
             </div>
           </motion.div>
           
@@ -274,6 +421,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
           </motion.div>
         </IonCardContent>
       </IonCard>
+      </motion.div>
     </motion.div>
   );
 };

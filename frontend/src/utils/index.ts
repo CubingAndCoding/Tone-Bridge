@@ -792,7 +792,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#ffffff',
           '--ion-color-success-contrast-rgb': '255, 255, 255',
           '--ion-color-success-shade': '#059669',
-          '--ion-color-success-tint': '#34d399'
+          '--ion-color-success-tint': '#34d399',
+          '--ion-color-danger': '#ef4444',
+          '--ion-color-danger-rgb': '239, 68, 68',
+          '--ion-color-danger-contrast': '#ffffff',
+          '--ion-color-danger-contrast-rgb': '255, 255, 255',
+          '--ion-color-danger-shade': '#dc2626',
+          '--ion-color-danger-tint': '#f87171'
         },
         dark: {
           '--ion-color-primary': '#3b82f6',
@@ -836,7 +842,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#000000',
           '--ion-color-success-contrast-rgb': '0, 0, 0',
           '--ion-color-success-shade': '#10b981',
-          '--ion-color-success-tint': '#6ee7b7'
+          '--ion-color-success-tint': '#6ee7b7',
+          '--ion-color-danger': '#f87171',
+          '--ion-color-danger-rgb': '248, 113, 113',
+          '--ion-color-danger-contrast': '#000000',
+          '--ion-color-danger-contrast-rgb': '0, 0, 0',
+          '--ion-color-danger-shade': '#ef4444',
+          '--ion-color-danger-tint': '#fca5a5'
         }
       },
       'warm-sunset': {
@@ -882,7 +894,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#ffffff',
           '--ion-color-success-contrast-rgb': '255, 255, 255',
           '--ion-color-success-shade': '#059669',
-          '--ion-color-success-tint': '#34d399'
+          '--ion-color-success-tint': '#34d399',
+          '--ion-color-danger': '#ef4444',
+          '--ion-color-danger-rgb': '239, 68, 68',
+          '--ion-color-danger-contrast': '#ffffff',
+          '--ion-color-danger-contrast-rgb': '255, 255, 255',
+          '--ion-color-danger-shade': '#dc2626',
+          '--ion-color-danger-tint': '#f87171'
         },
         dark: {
           '--ion-color-primary': '#fb923c',
@@ -926,7 +944,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#000000',
           '--ion-color-success-contrast-rgb': '0, 0, 0',
           '--ion-color-success-shade': '#10b981',
-          '--ion-color-success-tint': '#6ee7b7'
+          '--ion-color-success-tint': '#6ee7b7',
+          '--ion-color-danger': '#f87171',
+          '--ion-color-danger-rgb': '248, 113, 113',
+          '--ion-color-danger-contrast': '#000000',
+          '--ion-color-danger-contrast-rgb': '0, 0, 0',
+          '--ion-color-danger-shade': '#ef4444',
+          '--ion-color-danger-tint': '#fca5a5'
         }
       },
       'forest-green': {
@@ -972,7 +996,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#ffffff',
           '--ion-color-success-contrast-rgb': '255, 255, 255',
           '--ion-color-success-shade': '#15803d',
-          '--ion-color-success-tint': '#4ade80'
+          '--ion-color-success-tint': '#4ade80',
+          '--ion-color-danger': '#ef4444',
+          '--ion-color-danger-rgb': '239, 68, 68',
+          '--ion-color-danger-contrast': '#ffffff',
+          '--ion-color-danger-contrast-rgb': '255, 255, 255',
+          '--ion-color-danger-shade': '#dc2626',
+          '--ion-color-danger-tint': '#f87171'
         },
         dark: {
           '--ion-color-primary': '#10b981',
@@ -1016,7 +1046,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#000000',
           '--ion-color-success-contrast-rgb': '0, 0, 0',
           '--ion-color-success-shade': '#16a34a',
-          '--ion-color-success-tint': '#86efac'
+          '--ion-color-success-tint': '#86efac',
+          '--ion-color-danger': '#f87171',
+          '--ion-color-danger-rgb': '248, 113, 113',
+          '--ion-color-danger-contrast': '#000000',
+          '--ion-color-danger-contrast-rgb': '0, 0, 0',
+          '--ion-color-danger-shade': '#ef4444',
+          '--ion-color-danger-tint': '#fca5a5'
         }
       },
       'ocean-depth': {
@@ -1062,7 +1098,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#ffffff',
           '--ion-color-success-contrast-rgb': '255, 255, 255',
           '--ion-color-success-shade': '#047857',
-          '--ion-color-success-tint': '#10b981'
+          '--ion-color-success-tint': '#10b981',
+          '--ion-color-danger': '#ef4444',
+          '--ion-color-danger-rgb': '239, 68, 68',
+          '--ion-color-danger-contrast': '#ffffff',
+          '--ion-color-danger-contrast-rgb': '255, 255, 255',
+          '--ion-color-danger-shade': '#dc2626',
+          '--ion-color-danger-tint': '#f87171'
         },
         dark: {
           '--ion-color-primary': '#06b6d4',
@@ -1106,7 +1148,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#000000',
           '--ion-color-success-contrast-rgb': '0, 0, 0',
           '--ion-color-success-shade': '#059669',
-          '--ion-color-success-tint': '#34d399'
+          '--ion-color-success-tint': '#34d399',
+          '--ion-color-danger': '#f87171',
+          '--ion-color-danger-rgb': '248, 113, 113',
+          '--ion-color-danger-contrast': '#000000',
+          '--ion-color-danger-contrast-rgb': '0, 0, 0',
+          '--ion-color-danger-shade': '#ef4444',
+          '--ion-color-danger-tint': '#fca5a5'
         }
       },
       'neutral-gray': {
@@ -1152,7 +1200,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#ffffff',
           '--ion-color-success-contrast-rgb': '255, 255, 255',
           '--ion-color-success-shade': '#059669',
-          '--ion-color-success-tint': '#34d399'
+          '--ion-color-success-tint': '#34d399',
+          '--ion-color-danger': '#ef4444',
+          '--ion-color-danger-rgb': '239, 68, 68',
+          '--ion-color-danger-contrast': '#ffffff',
+          '--ion-color-danger-contrast-rgb': '255, 255, 255',
+          '--ion-color-danger-shade': '#dc2626',
+          '--ion-color-danger-tint': '#f87171'
         },
         dark: {
           '--ion-color-primary': '#9ca3af',
@@ -1196,7 +1250,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#000000',
           '--ion-color-success-contrast-rgb': '0, 0, 0',
           '--ion-color-success-shade': '#10b981',
-          '--ion-color-success-tint': '#6ee7b7'
+          '--ion-color-success-tint': '#6ee7b7',
+          '--ion-color-danger': '#f87171',
+          '--ion-color-danger-rgb': '248, 113, 113',
+          '--ion-color-danger-contrast': '#000000',
+          '--ion-color-danger-contrast-rgb': '0, 0, 0',
+          '--ion-color-danger-shade': '#ef4444',
+          '--ion-color-danger-tint': '#fca5a5'
         }
       },
       'high-contrast': {
@@ -1247,7 +1307,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#ffffff',
           '--ion-color-success-contrast-rgb': '255, 255, 255',
           '--ion-color-success-shade': '#000000',
-          '--ion-color-success-tint': '#333333'
+          '--ion-color-success-tint': '#333333',
+          '--ion-color-danger': '#000000',
+          '--ion-color-danger-rgb': '0, 0, 0',
+          '--ion-color-danger-contrast': '#ffffff',
+          '--ion-color-danger-contrast-rgb': '255, 255, 255',
+          '--ion-color-danger-shade': '#000000',
+          '--ion-color-danger-tint': '#333333'
         },
         dark: {
           '--ion-color-primary': '#ffffff',
@@ -1296,7 +1362,13 @@ export class ThemeUtils {
           '--ion-color-success-contrast': '#000000',
           '--ion-color-success-contrast-rgb': '0, 0, 0',
           '--ion-color-success-shade': '#ffffff',
-          '--ion-color-success-tint': '#cccccc'
+          '--ion-color-success-tint': '#cccccc',
+          '--ion-color-danger': '#ffffff',
+          '--ion-color-danger-rgb': '255, 255, 255',
+          '--ion-color-danger-contrast': '#000000',
+          '--ion-color-danger-contrast-rgb': '0, 0, 0',
+          '--ion-color-danger-shade': '#ffffff',
+          '--ion-color-danger-tint': '#cccccc'
         }
       }
     };

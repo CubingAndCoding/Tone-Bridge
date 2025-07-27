@@ -9,6 +9,8 @@ interface TranscriptionDisplayProps {
   showConfidence?: boolean;
   highlightCurrent?: boolean;
   onSegmentClick?: (segment: TranscriptionSegment) => void;
+  onDelete?: (segmentId: string) => void;
+  showDeleteButton?: boolean;
   className?: string;
   reducedMotion?: boolean;
 }
@@ -20,6 +22,8 @@ const TranscriptionDisplay: React.FC<TranscriptionDisplayProps> = ({
   showConfidence = false,
   highlightCurrent = false,
   onSegmentClick,
+  onDelete,
+  showDeleteButton = false,
   className = '',
   reducedMotion = false,
 }) => {
@@ -42,6 +46,8 @@ const TranscriptionDisplay: React.FC<TranscriptionDisplayProps> = ({
           showConfidence={showConfidence}
           highlightCurrent={highlightCurrent && segment === segments[segments.length - 1]}
           onSegmentClick={onSegmentClick}
+          onDelete={onDelete}
+          showDeleteButton={showDeleteButton}
           reducedMotion={reducedMotion}
         />
       ))}

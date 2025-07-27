@@ -636,6 +636,7 @@ body.font-size-large span {
   border-radius: 8px;
   background: var(--ion-color-light);
   transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .transcription-segment:hover {
