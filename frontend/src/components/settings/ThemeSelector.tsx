@@ -114,23 +114,15 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                 height: 'auto',
                 padding: '0.5rem',
                 border: currentTheme === theme.id 
-                  ? '1px solid var(--ion-color-primary)' 
-                  : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
+                  ? '1px solid var(--ion-color-primary) !important' 
+                  : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
                 borderRadius: '12px',
                 background: currentTheme === theme.id 
-                  ? (theme.id === 'high-contrast' 
-                      ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                      : 'var(--ion-color-primary-tint)')
-                  : (theme.id === 'high-contrast' 
-                      ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                      : 'var(--ion-background-color)'),
+                  ? 'var(--ion-color-primary) !important' 
+                  : 'var(--ion-color-light-shade) !important',
                 color: currentTheme === theme.id 
-                  ? (theme.id === 'high-contrast' 
-                      ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                      : 'var(--ion-color-primary-contrast)')
-                  : (theme.id === 'high-contrast' 
-                      ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                      : 'var(--ion-text-color)'),
+                  ? 'var(--ion-color-light-shade)'
+                  : 'var(--ion-color-primary)',
                 textTransform: 'none',
                 fontWeight: '500',
                 boxSizing: 'border-box',
@@ -171,7 +163,9 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                         height: '24px',
                         borderRadius: '50%',
                         background: color,
-                        border: '2px solid var(--ion-border-color, var(--ion-color-light-shade))'
+                        border: '2px solid var(' + (currentTheme === theme.id 
+                          ? '--ion-color-light-shade'
+                          : '--ion-color-primary') + ', var(--ion-color-light-shade))'
                       }}
                       whileHover={{ scale: 1.5 }}
                       transition={{ type: "spring", stiffness: 200 }}
@@ -190,26 +184,18 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                     fontSize: '1rem',
                     fontWeight: '600',
                     marginBottom: '0.25rem',
-                    color: currentTheme === theme.id 
-                      ? (theme.id === 'high-contrast' 
-                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                          : 'var(--ion-color-primary-contrast)')
-                      : (theme.id === 'high-contrast' 
-                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                          : 'var(--ion-text-color)')
+                    color: (currentTheme === theme.id 
+                          ? 'var(--ion-color-primary-contrast)'
+                          : 'var(--ion-color-primary)')
                   }}>
                     {theme.name}
                   </div>
                   <div style={{ 
                     fontSize: '0.875rem',
                     opacity: 0.8,
-                    color: currentTheme === theme.id 
-                      ? (theme.id === 'high-contrast' 
-                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                          : 'var(--ion-color-primary-contrast)')
-                      : (theme.id === 'high-contrast' 
-                          ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                          : 'var(--ion-text-color)')
+                    color: (currentTheme === theme.id 
+                          ? 'var(--ion-color-primary-contrast)'
+                          : 'var(--ion-color-primary)')
                   }}>
                     {theme.description}
                   </div>
@@ -231,7 +217,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: 'var(--ion-color-primary)',
+                      color: 'var(--ion-color-primary) !important',
                       fontSize: '0.75rem',
                       fontWeight: 'bold'
                     }}

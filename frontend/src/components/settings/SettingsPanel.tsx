@@ -357,22 +357,14 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             padding: '0.75rem 1rem',
                             borderRadius: '8px',
                             border: currentDisplayMode.id === mode.id 
-                              ? '1px solid var(--ion-color-primary)' 
-                              : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
+                              ? '1px solid var(--ion-color-primary) !important' 
+                              : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
                             background: currentDisplayMode.id === mode.id 
-                              ? (settings.theme === 'high-contrast' 
-                                  ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                                  : 'var(--ion-color-primary)')
-                              : (settings.theme === 'high-contrast' 
-                                  ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                  : 'var(--ion-color-light)'),
+                              ? 'var(--ion-color-primary) !important' 
+                              : 'var(--ion-color-light-shade) !important',
                             color: currentDisplayMode.id === mode.id 
-                              ? (settings.theme === 'high-contrast' 
-                                  ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                  : 'white')
-                              : (settings.theme === 'high-contrast' 
-                                  ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                                  : 'var(--ion-color-dark)'),
+                              ? 'var(--ion-color-light-shade)'
+                              : 'var(--ion-color-primary)',
                             fontSize: '0.9rem',
                             fontWeight: currentDisplayMode.id === mode.id ? '600' : '400',
                             cursor: 'pointer',
@@ -400,18 +392,20 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             {mode.id === 'combined' ? '😊' : mode.id === 'emoji-only' ? '😄' : '🏷️'}
                           </motion.span>
                           <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: '500', marginBottom: '0.25rem' }}>
+                            <div style={{ 
+                                fontWeight: '500', 
+                                marginBottom: '0.25rem',
+                                color: currentDisplayMode.id === mode.id 
+                                  ? 'var(--ion-color-primary-contrast)'
+                                  : 'var(--ion-color-primary)'
+                              }}>
                               {mode.name}
                             </div>
                             <div style={{ 
                               fontSize: '0.8rem', 
                               color: currentDisplayMode.id === mode.id 
-                                ? (settings.theme === 'high-contrast' 
-                                    ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                    : 'rgba(255, 255, 255, 0.8)')
-                                : (settings.theme === 'high-contrast' 
-                                    ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                                    : 'var(--ion-text-color)'),
+                                ? 'var(--ion-color-primary-contrast)'
+                                : 'var(--ion-color-primary)',
                               lineHeight: '1.3'
                             }}>
                               {mode.description}
@@ -437,9 +431,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                     damping: 30
                                   }}
                                   style={{ 
-                                    color: settings.theme === 'high-contrast' 
-                                      ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                      : 'white',
+                                    color: 'var(--ion-color-primary-contrast)',
                                     fontSize: '1.2rem',
                                     fontWeight: 'bold'
                                   }}
@@ -491,6 +483,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </h3>
 
                     <IonItem style={{ '--background': 'transparent' }}>
+                      <div>ncbr;</div>
                       <IonLabel>Font Size</IonLabel>
                       <div slot="end" style={{ 
                         display: 'flex', 
@@ -498,6 +491,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         gap: '0.5rem', 
                         alignItems: 'center',
                         width: '100%',
+                        marginTop: '1rem',
                         marginBottom: '1rem'
                       }}>
                         {[
@@ -542,21 +536,15 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             style={{
                               padding: '0.75rem 1rem',
                               borderRadius: '8px',
-                              border: settings.fontSize === option.value 
-                                ? '1px solid var(--ion-color-primary)' 
-                                : '1px solid var(--ion-border-color, var(--ion-color-light-shade))',
-                              background: settings.fontSize === option.value 
-                                ? (settings.theme === 'high-contrast' 
-                                    ? (document.documentElement.classList.contains('dark-mode') ? '#ffffff' : '#000000')
-                                    : 'var(--ion-color-primary)')
-                                : (settings.theme === 'high-contrast' 
-                                    ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                    : 'var(--ion-color-light)'),
-                              color: settings.fontSize === option.value 
-                                ? (settings.theme === 'high-contrast' 
-                                    ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                    : 'white')
-                                : 'var(--ion-color-dark)',
+                                                            border: settings.fontSize === option.value 
+                                ? '1px solid var(--ion-color-primary) !important' 
+                                : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
+                            background: settings.fontSize === option.value 
+                              ? 'var(--ion-color-primary) !important' 
+                              : 'var(--ion-color-light-shade) !important',
+                            color: settings.fontSize === option.value 
+                              ? 'var(--ion-color-light-shade)'
+                              : 'var(--ion-color-primary)',
                               fontSize: '0.9rem',
                               fontWeight: settings.fontSize === option.value ? '600' : '400',
                               cursor: 'pointer',
@@ -576,7 +564,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                          option.value === 'medium' ? '1.2rem' : '1.4rem',
                                 minWidth: '24px',
                                 textAlign: 'center',
-                                fontWeight: '600'
+                                fontWeight: '600',
+                                color: settings.fontSize === option.value 
+                                  ? 'var(--ion-color-light-shade)'
+                                  : 'var(--ion-color-primary)'
                               }}
                               animate={{ 
                                 scale: settings.fontSize === option.value ? 1.1 : 1 
@@ -586,7 +577,13 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                               {option.icon}
                             </motion.span>
                             <div style={{ flex: 1 }}>
-                              <div style={{ fontWeight: '500', marginBottom: '0.25rem' }}>
+                              <div style={{ 
+                                  fontWeight: '500', 
+                                  marginBottom: '0.25rem',
+                                  color: settings.fontSize === option.value 
+                                    ? 'var(--ion-color-light-shade)'
+                                    : 'var(--ion-color-primary)'
+                                }}>
                                 {option.name}
                               </div>
                             </div>
@@ -610,9 +607,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                       damping: 30
                                     }}
                                     style={{ 
-                                      color: settings.theme === 'high-contrast' 
-                                        ? (document.documentElement.classList.contains('dark-mode') ? '#000000' : '#ffffff')
-                                        : 'white',
+                                      color: 'var(--ion-color-primary-contrast)',
                                       fontSize: '1.2rem',
                                       fontWeight: 'bold'
                                     }}
