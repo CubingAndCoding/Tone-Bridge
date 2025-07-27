@@ -156,17 +156,46 @@ export class StorageUtils {
   }
 
   static getSettings(): UserSettings {
-    return this.get<UserSettings>('settings') || {
-      theme: 'modern-blue',
-      fontSize: 'medium',
-      showEmojis: true,
-      showTags: true,
-      autoSave: true,
-      accessibility: {
-        reducedMotion: false,
-        dyslexiaFriendly: false,
-      },
-    };
+    const savedSettings = this.get<UserSettings>('settings');
+    
+    // If no saved settings, return defaults
+    if (!savedSettings) {
+      return {
+        theme: 'modern-blue',
+        fontSize: 'medium',
+        showEmojis: true,
+        showTags: true,
+        autoSave: true,
+        displayMode: {
+          id: 'combined',
+          name: 'Combined',
+          description: 'Show both emojis and tags',
+          icon: 'heartOutline',
+        },
+        accessibility: {
+          reducedMotion: false,
+          dyslexiaFriendly: false,
+        },
+      };
+    }
+
+    // Migration: Add displayMode if it doesn't exist
+    if (!savedSettings.displayMode) {
+      const migratedSettings: UserSettings = {
+        ...savedSettings,
+        displayMode: {
+          id: 'combined',
+          name: 'Combined',
+          description: 'Show both emojis and tags',
+          icon: 'heartOutline',
+        },
+      };
+      // Save the migrated settings
+      this.saveSettings(migratedSettings);
+      return migratedSettings;
+    }
+
+    return savedSettings;
   }
 
   static saveSettings(settings: UserSettings): void {
@@ -215,6 +244,26 @@ export class DailyStorageManager {
       return newData;
     }
 
+    // Migration: Add displayMode if it doesn't exist in stored settings
+    if (stored.settings && !stored.settings.displayMode) {
+      const migratedData: DailyStorageData = {
+        ...stored,
+        settings: {
+          ...stored.settings,
+          displayMode: {
+            id: 'combined',
+            name: 'Combined',
+            description: 'Show both emojis and tags',
+            icon: 'heartOutline',
+          },
+        },
+      };
+      
+      // Save the migrated data
+      this.saveData(migratedData);
+      return migratedData;
+    }
+
     return stored;
   }
 
@@ -236,6 +285,12 @@ export class DailyStorageManager {
       showEmojis: true,
       showTags: true,
       autoSave: true,
+      displayMode: {
+        id: 'combined',
+        name: 'Combined',
+        description: 'Show both emojis and tags',
+        icon: 'heartOutline',
+      },
       accessibility: {
         reducedMotion: false,
         dyslexiaFriendly: false,
@@ -380,6 +435,127 @@ export class ThemeStorageManager {
       // Migrate legacy settings to daily storage
       this.saveSettings(legacySettings);
       console.log('Migrated legacy settings to daily storage');
+    }
+  }
+}
+
+// Transcript Storage Manager
+export class TranscriptStorageManager {
+  private static readonly TRANSCRIPTS_KEY = 'transcripts';
+  private static readonly MAX_TRANSCRIPTS = 1000; // Maximum number of transcripts to store
+  private static readonly MAX_STORAGE_SIZE = 5 * 1024 * 1024; // 5MB limit
+
+  // Get all transcripts from storage
+  static getTranscripts(): TranscriptionSegment[] {
+    try {
+      const stored = StorageUtils.get<TranscriptionSegment[]>(this.TRANSCRIPTS_KEY);
+      if (!stored) return [];
+      
+      // Convert timestamp strings back to Date objects
+      return stored.map(segment => ({
+        ...segment,
+        timestamp: new Date(segment.timestamp)
+      }));
+    } catch (error) {
+      console.error('Error loading transcripts from storage:', error);
+      return [];
+    }
+  }
+
+  // Save transcripts to storage
+  static saveTranscripts(transcripts: TranscriptionSegment[]): void {
+    try {
+      // Limit the number of transcripts to prevent storage overflow
+      const limitedTranscripts = transcripts.slice(-this.MAX_TRANSCRIPTS);
+      
+      // Check storage size
+      const storageSize = new Blob([JSON.stringify(limitedTranscripts)]).size;
+      if (storageSize > this.MAX_STORAGE_SIZE) {
+        // Remove oldest transcripts to fit within storage limit
+        const reducedTranscripts = this.reduceTranscriptsToFit(limitedTranscripts);
+        StorageUtils.set(this.TRANSCRIPTS_KEY, reducedTranscripts);
+      } else {
+        StorageUtils.set(this.TRANSCRIPTS_KEY, limitedTranscripts);
+      }
+    } catch (error) {
+      console.error('Error saving transcripts to storage:', error);
+    }
+  }
+
+  // Add a single transcript
+  static addTranscript(transcript: TranscriptionSegment): void {
+    const transcripts = this.getTranscripts();
+    transcripts.push(transcript);
+    this.saveTranscripts(transcripts);
+  }
+
+  // Add multiple transcripts
+  static addTranscripts(newTranscripts: TranscriptionSegment[]): void {
+    const transcripts = this.getTranscripts();
+    transcripts.push(...newTranscripts);
+    this.saveTranscripts(transcripts);
+  }
+
+  // Clear all transcripts
+  static clearTranscripts(): void {
+    StorageUtils.remove(this.TRANSCRIPTS_KEY);
+  }
+
+  // Get storage info
+  static getStorageInfo(): { count: number; size: number; limit: number } {
+    const transcripts = this.getTranscripts();
+    const size = new Blob([JSON.stringify(transcripts)]).size;
+    return {
+      count: transcripts.length,
+      size,
+      limit: this.MAX_STORAGE_SIZE
+    };
+  }
+
+  // Reduce transcripts to fit within storage limit
+  private static reduceTranscriptsToFit(transcripts: TranscriptionSegment[]): TranscriptionSegment[] {
+    let reduced = [...transcripts];
+    while (reduced.length > 0) {
+      const size = new Blob([JSON.stringify(reduced)]).size;
+      if (size <= this.MAX_STORAGE_SIZE) break;
+      reduced = reduced.slice(1); // Remove oldest transcript
+    }
+    return reduced;
+  }
+
+  // Check if storage is near limit
+  static isStorageNearLimit(): boolean {
+    const info = this.getStorageInfo();
+    return info.size > this.MAX_STORAGE_SIZE * 0.8; // 80% of limit
+  }
+
+  // Export transcripts as JSON
+  static exportTranscripts(): string {
+    const transcripts = this.getTranscripts();
+    return JSON.stringify(transcripts, null, 2);
+  }
+
+  // Import transcripts from JSON
+  static importTranscripts(jsonData: string): boolean {
+    try {
+      const imported = JSON.parse(jsonData) as TranscriptionSegment[];
+      
+      // Validate the imported data
+      if (!Array.isArray(imported)) {
+        throw new Error('Invalid data format: expected array');
+      }
+      
+      // Convert timestamp strings to Date objects
+      const validatedTranscripts = imported.map(segment => ({
+        ...segment,
+        timestamp: new Date(segment.timestamp)
+      }));
+      
+      this.saveTranscripts(validatedTranscripts);
+      return true;
+    } catch (error) {
+      console.error('Error importing transcripts:', error);
+      return false;
     }
   }
 }
@@ -610,7 +786,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#d97706',
-          '--ion-color-warning-tint': '#fbbf24'
+          '--ion-color-warning-tint': '#fbbf24',
+          '--ion-color-success': '#10b981',
+          '--ion-color-success-rgb': '16, 185, 129',
+          '--ion-color-success-contrast': '#ffffff',
+          '--ion-color-success-contrast-rgb': '255, 255, 255',
+          '--ion-color-success-shade': '#059669',
+          '--ion-color-success-tint': '#34d399'
         },
         dark: {
           '--ion-color-primary': '#3b82f6',
@@ -648,7 +830,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#f59e0b',
-          '--ion-color-warning-tint': '#fcd34d'
+          '--ion-color-warning-tint': '#fcd34d',
+          '--ion-color-success': '#34d399',
+          '--ion-color-success-rgb': '52, 211, 153',
+          '--ion-color-success-contrast': '#000000',
+          '--ion-color-success-contrast-rgb': '0, 0, 0',
+          '--ion-color-success-shade': '#10b981',
+          '--ion-color-success-tint': '#6ee7b7'
         }
       },
       'warm-sunset': {
@@ -688,7 +876,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#d97706',
-          '--ion-color-warning-tint': '#fbbf24'
+          '--ion-color-warning-tint': '#fbbf24',
+          '--ion-color-success': '#10b981',
+          '--ion-color-success-rgb': '16, 185, 129',
+          '--ion-color-success-contrast': '#ffffff',
+          '--ion-color-success-contrast-rgb': '255, 255, 255',
+          '--ion-color-success-shade': '#059669',
+          '--ion-color-success-tint': '#34d399'
         },
         dark: {
           '--ion-color-primary': '#fb923c',
@@ -726,7 +920,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#f59e0b',
-          '--ion-color-warning-tint': '#fcd34d'
+          '--ion-color-warning-tint': '#fcd34d',
+          '--ion-color-success': '#34d399',
+          '--ion-color-success-rgb': '52, 211, 153',
+          '--ion-color-success-contrast': '#000000',
+          '--ion-color-success-contrast-rgb': '0, 0, 0',
+          '--ion-color-success-shade': '#10b981',
+          '--ion-color-success-tint': '#6ee7b7'
         }
       },
       'forest-green': {
@@ -766,7 +966,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#d97706',
-          '--ion-color-warning-tint': '#fbbf24'
+          '--ion-color-warning-tint': '#fbbf24',
+          '--ion-color-success': '#16a34a',
+          '--ion-color-success-rgb': '22, 163, 74',
+          '--ion-color-success-contrast': '#ffffff',
+          '--ion-color-success-contrast-rgb': '255, 255, 255',
+          '--ion-color-success-shade': '#15803d',
+          '--ion-color-success-tint': '#4ade80'
         },
         dark: {
           '--ion-color-primary': '#10b981',
@@ -804,7 +1010,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#f59e0b',
-          '--ion-color-warning-tint': '#fcd34d'
+          '--ion-color-warning-tint': '#fcd34d',
+          '--ion-color-success': '#4ade80',
+          '--ion-color-success-rgb': '74, 222, 128',
+          '--ion-color-success-contrast': '#000000',
+          '--ion-color-success-contrast-rgb': '0, 0, 0',
+          '--ion-color-success-shade': '#16a34a',
+          '--ion-color-success-tint': '#86efac'
         }
       },
       'ocean-depth': {
@@ -844,7 +1056,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#d97706',
-          '--ion-color-warning-tint': '#fbbf24'
+          '--ion-color-warning-tint': '#fbbf24',
+          '--ion-color-success': '#059669',
+          '--ion-color-success-rgb': '5, 150, 105',
+          '--ion-color-success-contrast': '#ffffff',
+          '--ion-color-success-contrast-rgb': '255, 255, 255',
+          '--ion-color-success-shade': '#047857',
+          '--ion-color-success-tint': '#10b981'
         },
         dark: {
           '--ion-color-primary': '#06b6d4',
@@ -882,7 +1100,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#f59e0b',
-          '--ion-color-warning-tint': '#fcd34d'
+          '--ion-color-warning-tint': '#fcd34d',
+          '--ion-color-success': '#10b981',
+          '--ion-color-success-rgb': '16, 185, 129',
+          '--ion-color-success-contrast': '#000000',
+          '--ion-color-success-contrast-rgb': '0, 0, 0',
+          '--ion-color-success-shade': '#059669',
+          '--ion-color-success-tint': '#34d399'
         }
       },
       'neutral-gray': {
@@ -922,7 +1146,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#d97706',
-          '--ion-color-warning-tint': '#fbbf24'
+          '--ion-color-warning-tint': '#fbbf24',
+          '--ion-color-success': '#10b981',
+          '--ion-color-success-rgb': '16, 185, 129',
+          '--ion-color-success-contrast': '#ffffff',
+          '--ion-color-success-contrast-rgb': '255, 255, 255',
+          '--ion-color-success-shade': '#059669',
+          '--ion-color-success-tint': '#34d399'
         },
         dark: {
           '--ion-color-primary': '#9ca3af',
@@ -960,7 +1190,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#f59e0b',
-          '--ion-color-warning-tint': '#fcd34d'
+          '--ion-color-warning-tint': '#fcd34d',
+          '--ion-color-success': '#34d399',
+          '--ion-color-success-rgb': '52, 211, 153',
+          '--ion-color-success-contrast': '#000000',
+          '--ion-color-success-contrast-rgb': '0, 0, 0',
+          '--ion-color-success-shade': '#10b981',
+          '--ion-color-success-tint': '#6ee7b7'
         }
       },
       'high-contrast': {
@@ -1005,7 +1241,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#ffffff',
           '--ion-color-warning-contrast-rgb': '255, 255, 255',
           '--ion-color-warning-shade': '#000000',
-          '--ion-color-warning-tint': '#333333'
+          '--ion-color-warning-tint': '#333333',
+          '--ion-color-success': '#000000',
+          '--ion-color-success-rgb': '0, 0, 0',
+          '--ion-color-success-contrast': '#ffffff',
+          '--ion-color-success-contrast-rgb': '255, 255, 255',
+          '--ion-color-success-shade': '#000000',
+          '--ion-color-success-tint': '#333333'
         },
         dark: {
           '--ion-color-primary': '#ffffff',
@@ -1048,7 +1290,13 @@ export class ThemeUtils {
           '--ion-color-warning-contrast': '#000000',
           '--ion-color-warning-contrast-rgb': '0, 0, 0',
           '--ion-color-warning-shade': '#ffffff',
-          '--ion-color-warning-tint': '#cccccc'
+          '--ion-color-warning-tint': '#cccccc',
+          '--ion-color-success': '#ffffff',
+          '--ion-color-success-rgb': '255, 255, 255',
+          '--ion-color-success-contrast': '#000000',
+          '--ion-color-success-contrast-rgb': '0, 0, 0',
+          '--ion-color-success-shade': '#ffffff',
+          '--ion-color-success-tint': '#cccccc'
         }
       }
     };

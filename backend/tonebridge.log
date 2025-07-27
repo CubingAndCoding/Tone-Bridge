@@ -2208,3 +2208,16 @@ If this is a private repository, make sure to pass a token having permission to 
 2025-07-27 08:45:01 - services.emotion_service - INFO - Emotion detection models initialized successfully
 2025-07-27 08:45:01 - services.emotion_service - INFO - Emotion pipeline created: True
 2025-07-27 08:45:01 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-27 09:11:48 - routes.api - INFO - Audio data decoded successfully: 8855 bytes, format: webm
+2025-07-27 09:11:48 - utils.audio_utils - INFO - Loading audio: 8855 bytes, format: webm
+2025-07-27 09:11:48 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-27 09:11:48 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp9b6lled7.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp9b6lled7.wav
+2025-07-27 09:11:48 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-27 09:11:53 - utils.audio_utils - INFO - Audio loaded successfully: 8640 samples, 16000Hz
+2025-07-27 09:11:54 - utils.audio_utils - INFO - Audio preprocessed: 8640 samples
+2025-07-27 09:11:54 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-27 09:11:55 - services.transcription_service - INFO - Transcription completed: 'BOOM!' (5 characters)
+2025-07-27 09:11:55 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-27 09:11:55 - services.transcription_service - INFO - Model used: whisper
+2025-07-27 09:11:55 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-27 09:11:57 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)

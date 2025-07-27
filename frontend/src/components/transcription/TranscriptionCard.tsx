@@ -222,12 +222,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
               justifyContent: 'flex-end',
               minWidth: 'fit-content'
             }}>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-                gap: '0.25rem'
-              }}>
+              <div className="confidence-timestamp-container">
                 {renderConfidence()}
                 {renderTimestamp()}
               </div>

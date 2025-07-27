@@ -20,7 +20,7 @@ import {
   moonOutline,
 } from 'ionicons/icons';
 import { AudioRecording, TranscriptionSegment, DisplayMode, UserSettings } from '../types';
-import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils, ThemeUtils, DailyStorageManager, ThemeStorageManager } from '../utils';
+import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils, ThemeUtils, DailyStorageManager, ThemeStorageManager, TranscriptStorageManager } from '../utils';
 import { DebugUtils } from '../utils/debug';
 import { Loading, Toast } from '../components/common';
 import AudioRecorder from '../components/audio/AudioRecorder';
@@ -32,12 +32,7 @@ const Home: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcriptionSegments, setTranscriptionSegments] = useState<TranscriptionSegment[]>([]);
-  const [currentDisplayMode, setCurrentDisplayMode] = useState<DisplayMode>({
-    id: 'combined',
-    name: 'Combined',
-    description: 'Show both emojis and tags',
-    icon: 'heartOutline',
-  });
+
   const [settings, setSettings] = useState<UserSettings>(StorageUtils.getSettings());
   const [showSettings, setShowSettings] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -79,6 +74,13 @@ const Home: React.FC = () => {
     setSettings(savedSettings);
     ThemeUtils.applyTheme(savedSettings.theme);
     
+    // Load transcripts from storage
+    const savedTranscripts = TranscriptStorageManager.getTranscripts();
+    if (savedTranscripts.length > 0) {
+      setTranscriptionSegments(savedTranscripts);
+      showToast(`Loaded ${savedTranscripts.length} saved transcripts`, 'info');
+    }
+    
     // Detect current color scheme and apply it
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const initialDarkMode = mediaQuery.matches;
@@ -104,6 +106,19 @@ const Home: React.FC = () => {
     mediaQuery.addEventListener('change', handleThemeChange);
     return () => mediaQuery.removeEventListener('change', handleThemeChange);
   }, []);
+
+  // Save transcripts to storage whenever they change
+  useEffect(() => {
+    if (transcriptionSegments.length > 0) {
+      TranscriptStorageManager.saveTranscripts(transcriptionSegments);
+      
+      // Check if storage is near limit
+      if (TranscriptStorageManager.isStorageNearLimit()) {
+        const storageInfo = TranscriptStorageManager.getStorageInfo();
+        showToast(`Storage warning: ${storageInfo.count} transcripts (${Math.round(storageInfo.size / 1024)}KB)`, 'warning');
+      }
+    }
+  }, [transcriptionSegments]);
 
   // Toggle light/dark mode
   const toggleColorScheme = () => {
@@ -147,7 +162,12 @@ const Home: React.FC = () => {
           timestamp: new Date(),
         };
 
-        setTranscriptionSegments(prev => [...prev, newSegment]);
+        setTranscriptionSegments(prev => {
+          const updatedSegments = [...prev, newSegment];
+          // Save to storage
+          TranscriptStorageManager.saveTranscripts(updatedSegments);
+          return updatedSegments;
+        });
         
         // Track analytics
         AnalyticsUtils.trackTranscription(newSegment);
@@ -222,9 +242,61 @@ const Home: React.FC = () => {
     });
   };
 
+  // Copy transcripts to clipboard
+  const copyTranscripts = async () => {
+    if (transcriptionSegments.length === 0) {
+      showToast('No transcripts to copy', 'warning');
+      return;
+    }
+
+    try {
+      const transcriptText = transcriptionSegments
+        .map(segment => {
+          const timestamp = segment.timestamp.toLocaleTimeString();
+          const emotion = segment.emotion ? ` [${segment.emotion}]` : '';
+          return `[${timestamp}]${emotion}: ${segment.text}`;
+        })
+        .join('\n\n');
+
+      await navigator.clipboard.writeText(transcriptText);
+      showToast('Transcripts copied to clipboard!', 'success');
+      AnalyticsUtils.trackEvent('transcripts_copied', {
+        segmentCount: transcriptionSegments.length,
+      });
+    } catch (error) {
+      showToast('Failed to copy to clipboard', 'error');
+      console.error('Copy to clipboard failed:', error);
+    }
+  };
+
+  // Export transcripts as JSON
+  const exportTranscripts = () => {
+    if (transcriptionSegments.length === 0) {
+      showToast('No transcripts to export', 'warning');
+      return;
+    }
+
+    const jsonData = TranscriptStorageManager.exportTranscripts();
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tonebridge-transcripts-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast('Transcripts exported as JSON successfully!', 'success');
+    AnalyticsUtils.trackEvent('transcripts_exported', {
+      segmentCount: transcriptionSegments.length,
+    });
+  };
+
   // Clear transcript
   const clearTranscript = () => {
     setTranscriptionSegments([]);
+    TranscriptStorageManager.clearTranscripts();
     showToast('Transcript cleared', 'info');
   };
 
@@ -382,10 +454,24 @@ const Home: React.FC = () => {
                   {transcriptionSegments.length}
                 </IonBadge>
               </h3>
+              <div style={{ 
+                fontSize: '0.8rem',
+                color: 'var(--ion-color-medium)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                <span>Storage: {Math.round(TranscriptStorageManager.getStorageInfo().size / 1024)}KB</span>
+                {TranscriptStorageManager.isStorageNearLimit() && (
+                  <IonBadge color="warning" style={{ fontSize: '0.7rem' }}>
+                    Near Limit
+                  </IonBadge>
+                )}
+              </div>
             </div>
             <TranscriptionDisplay
               segments={transcriptionSegments}
-              displayMode={currentDisplayMode}
+                                displayMode={settings.displayMode}
               showTimestamps={true}
               showConfidence={settings.showTags}
               highlightCurrent={true}
@@ -416,9 +502,11 @@ const Home: React.FC = () => {
             }}
           >
 
+
+            
             <IonButton
-              onClick={downloadTranscript}
-              color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'success'}
+              onClick={copyTranscripts}
+              color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'primary'}
               fill="outline"
               size="default"
               style={{
@@ -431,9 +519,9 @@ const Home: React.FC = () => {
               }}
             >
               <IonIcon icon={downloadOutline} />
-              <span style={{ marginLeft: '0.5rem' }}>Download</span>
+              <span style={{ marginLeft: '0.5rem' }}>Copy</span>
             </IonButton>
-            
+
             <IonButton
               onClick={shareTranscript}
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'warning'}
@@ -499,8 +587,12 @@ const Home: React.FC = () => {
           isOpen={showSettings}
           onClose={() => setShowSettings(false)}
           onSettingsChange={handleSettingsChange}
-          currentDisplayMode={currentDisplayMode}
-          onDisplayModeChange={setCurrentDisplayMode}
+                          currentDisplayMode={settings.displayMode}
+                onDisplayModeChange={(mode) => {
+                  const newSettings = { ...settings, displayMode: mode };
+                  setSettings(newSettings);
+                  StorageUtils.saveSettings(newSettings);
+                }}
         />
 
         {/* Loading overlay */}

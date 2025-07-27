@@ -26,7 +26,7 @@ import {
   closeOutline,
 } from 'ionicons/icons';
 import { UserSettings, DisplayMode, TranscriptionSegment } from '../../types';
-import { StorageUtils, ThemeUtils } from '../../utils';
+import { StorageUtils, ThemeUtils, TranscriptStorageManager } from '../../utils';
 import { Button } from '../common';
 import ThemeSelector from './ThemeSelector';
 import TranscriptionCard from '../transcription/TranscriptionCard';
@@ -53,9 +53,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   className = '',
 }) => {
   const [settings, setSettings] = useState<UserSettings>(StorageUtils.getSettings());
+  const [supportsHover, setSupportsHover] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   
-  // Set initial toolbar background
+  // Set initial toolbar background and detect hover support
   useEffect(() => {
     const toolbar = document.querySelector('ion-toolbar');
     if (!toolbar) return;
@@ -63,6 +64,17 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     // Set initial toolbar background
     toolbar.style.setProperty('--background', 'var(--ion-toolbar-background, var(--ion-color-dark))', 'important');
     toolbar.style.setProperty('background', 'var(--ion-toolbar-background, var(--ion-color-dark))', 'important');
+    
+    // Check if device supports hover
+    const mediaQuery = window.matchMedia('(hover: hover)');
+    setSupportsHover(mediaQuery.matches);
+    
+    const handleHoverChange = (e: MediaQueryListEvent) => {
+      setSupportsHover(e.matches);
+    };
+    
+    mediaQuery.addEventListener('change', handleHoverChange);
+    return () => mediaQuery.removeEventListener('change', handleHoverChange);
   }, []);
 
   // Apply font size and accessibility settings on component mount
@@ -137,6 +149,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       showEmojis: true,
       showTags: true,
       autoSave: true,
+      displayMode: {
+        id: 'combined',
+        name: 'Combined',
+        description: 'Show both emojis and tags',
+        icon: 'heartOutline',
+      },
       accessibility: {
         reducedMotion: false,
         dyslexiaFriendly: false,
@@ -173,6 +191,33 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     const updatedSettings = { ...settings, fontSize };
     StorageUtils.saveSettings(updatedSettings);
     setSettings(updatedSettings);
+  };
+
+  // Download transcripts function
+  const downloadTranscripts = () => {
+    const transcripts = TranscriptStorageManager.getTranscripts();
+    if (transcripts.length === 0) {
+      // Show alert or toast that there are no transcripts
+      return;
+    }
+
+    const transcriptText = transcripts
+      .map((segment: TranscriptionSegment) => {
+        const timestamp = segment.timestamp.toLocaleTimeString();
+        const emotion = segment.emotion ? ` [${segment.emotion}]` : '';
+        return `[${timestamp}]${emotion}: ${segment.text}`;
+      })
+      .join('\n\n');
+
+    const blob = new Blob([transcriptText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tonebridge-transcript-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -329,23 +374,23 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           className={`display-mode-button ${currentDisplayMode.id === mode.id ? 'selected' : ''}`}
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
+                          whileHover={supportsHover ? {
+                            scale: 1.03,
+                          } : {}}
+                          whileTap={{
+                            scale: 0.85,
+                            transition: { delay: 0, duration: 0.1 },
+                          }}
                           transition={{ 
-                            delay: settings.accessibility.reducedMotion ? 0 : 0.05, 
-                            duration: settings.accessibility.reducedMotion ? 0.01 : 0.1,
-                            type: settings.accessibility.reducedMotion ? "tween" : "spring",
-                            stiffness: settings.accessibility.reducedMotion ? 0 : 400
-                          }}
-                          whileHover={settings.accessibility.reducedMotion ? {} : { 
-                            scale: 1.05,
-                            transition: { duration: 0.15 }
-                          }}
-                          whileTap={settings.accessibility.reducedMotion ? {} : { 
-                            scale: 0.95,
-                            transition: { duration: 0.1 }
+                            delay: 0,
+                            duration: 0.2,
+                            type: 'spring',
+                            stiffness: 200,
+                            damping: 20
                           }}
                           onClick={() => onDisplayModeChange(mode)}
                           style={{
-                            padding: '0.75rem 1rem',
+                            padding: '0.5rem .4rem',
                             borderRadius: '8px',
                             border: currentDisplayMode.id === mode.id 
                               ? '1px solid var(--ion-color-primary) !important' 
@@ -370,15 +415,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           }}
                         >
                           <motion.span 
+                            key={`${mode.id}`}
                             style={{ 
                               fontSize: '1.2rem',
                               minWidth: '24px',
                               textAlign: 'center'
                             }}
-                            animate={{ 
-                              scale: currentDisplayMode.id === mode.id ? 1.1 : 1 
-                            }}
-                            transition={{ duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                           >
                             {mode.id === 'combined' ? '😊' : mode.id === 'emoji-only' ? '😄' : '🏷️'}
                           </motion.span>
@@ -474,7 +516,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </h3>
 
                     <IonItem style={{ '--background': 'transparent' }}>
-                      <div>ncbr;</div>
                       <IonLabel>Font Size</IonLabel>
                       <div slot="end" style={{ 
                         display: 'flex', 
@@ -663,6 +704,27 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
 
 
+                {/* Download Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.35, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
+                >
+                  <div style={{ padding: '0 1rem', marginTop: '1rem' }}>
+                    <IonButton
+                      onClick={downloadTranscripts}
+                      fill="outline"
+                      expand="block"
+                      style={{
+                        color: 'var(--ion-color-success) !important',
+                        '--border-color': 'var(--ion-color-success)',
+                      }}
+                    >
+                      Download Transcripts
+                    </IonButton>
+                  </div>
+                </motion.div>
+
                 {/* Reset Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -686,6 +748,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
                 {/* Live Preview Footer - Fixed Position */}
                 <motion.div
+                  className="preview-transcript"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.5, duration: settings.accessibility.reducedMotion ? 0.01 : 0.3 }}

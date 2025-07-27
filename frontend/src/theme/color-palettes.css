@@ -961,30 +961,6 @@
   --ion-outline-color: #000000;
 }
 
-/* High Contrast Theme - Selected Button States */
-.theme-high-contrast ion-button[color="primary"] {
-  --color: #ffffff !important;
-  --background: #000000 !important;
-  --border-color: #000000 !important;
-}
-
-.theme-high-contrast ion-button[color="primary"].button-selected,
-.theme-high-contrast ion-button[color="primary"].selected {
-  --color: #000000 !important;
-  --background: #ffffff !important;
-}
-
-.theme-high-contrast ion-button[fill="outline"] {
-  --color: #000000 !important;
-  --background: transparent !important;
-}
-
-.theme-high-contrast ion-button[fill="outline"].button-selected,
-.theme-high-contrast ion-button[fill="outline"].selected {
-  --color: #ffffff !important;
-  --background: #000000 !important;
-}
-
 /* Dark Mode for High Contrast - Pure White on Black */
 @media (prefers-color-scheme: dark) {
   .theme-high-contrast {

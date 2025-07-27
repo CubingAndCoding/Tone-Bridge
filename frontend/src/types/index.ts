@@ -116,6 +116,7 @@ export interface UserSettings {
   showEmojis: boolean;
   showTags: boolean;
   autoSave: boolean;
+  displayMode: DisplayMode;
   accessibility: {
     reducedMotion: boolean;
     dyslexiaFriendly: boolean;
