@@ -1181,7 +1181,7 @@ ion-modal {
 
 /* Settings modal specific styling */
 .settings-modal-content {
-  background: var(--ion-modal-background) !important;
+  background: var(--ion-toolbar-background) !important;
   color: var(--ion-text-color) !important;
   overflow: hidden !important;
 }
