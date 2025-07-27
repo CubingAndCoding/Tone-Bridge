@@ -3,7 +3,7 @@
  * Following DRY principles by providing reusable utilities
  */
 
-import { AppError, ApiResponse, UserSettings, TranscriptionSegment } from '../types';
+import { AppError, ApiResponse, UserSettings, TranscriptionSegment, DailyStorageData, StorageInfo } from '../types';
 
 // API Utilities
 export class ApiUtils {
@@ -171,6 +171,216 @@ export class StorageUtils {
 
   static saveSettings(settings: UserSettings): void {
     this.set('settings', settings);
+  }
+}
+
+// Daily Storage Manager for scalable local storage
+export class DailyStorageManager {
+  private static readonly STORAGE_KEY = 'daily_data';
+  private static readonly MAX_STORAGE_SIZE = 4.5 * 1024 * 1024; // 4.5MB safe limit
+
+  // Get current date in YYYY-MM-DD format
+  private static getCurrentDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  // Check if stored data is from today
+  static isNewDay(): boolean {
+    const stored = StorageUtils.get<DailyStorageData>(this.STORAGE_KEY);
+    const today = this.getCurrentDate();
+    return !stored || stored.date !== today;
+  }
+
+  // Get current day's data, create new if needed
+  static getCurrentData(): DailyStorageData {
+    const stored = StorageUtils.get<DailyStorageData>(this.STORAGE_KEY);
+    const today = this.getCurrentDate();
+
+    if (!stored || stored.date !== today) {
+      // Create new daily data
+      const newData: DailyStorageData = {
+        date: today,
+        settings: this.getDefaultSettings(),
+        transcripts: [],
+        metadata: {
+          lastUpdated: Date.now(),
+          storageSize: 0,
+          transcriptCount: 0,
+          themeLastChanged: Date.now()
+        }
+      };
+      
+      // Save the new data
+      this.saveData(newData);
+      return newData;
+    }
+
+    return stored;
+  }
+
+  // Save current day's data
+  static saveData(data: DailyStorageData): void {
+    // Update metadata
+    data.metadata.lastUpdated = Date.now();
+    data.metadata.storageSize = this.calculateStorageSize(data);
+    
+    // Save to localStorage
+    StorageUtils.set(this.STORAGE_KEY, data);
+  }
+
+  // Get default settings
+  private static getDefaultSettings(): UserSettings {
+    return {
+      theme: 'modern-blue',
+      fontSize: 'medium',
+      showEmojis: true,
+      showTags: true,
+      autoSave: true,
+      accessibility: {
+        reducedMotion: false,
+        dyslexiaFriendly: false,
+      },
+    };
+  }
+
+  // Calculate approximate storage size
+  private static calculateStorageSize(data: DailyStorageData): number {
+    try {
+      return new Blob([JSON.stringify(data)]).size;
+    } catch {
+      return 0;
+    }
+  }
+
+  // Check if storage is approaching limit
+  static isStorageNearLimit(): boolean {
+    const data = this.getCurrentData();
+    return data.metadata.storageSize > this.MAX_STORAGE_SIZE * 0.8; // 80% of limit
+  }
+
+  // Get storage usage info
+  static getStorageInfo(): StorageInfo {
+    const data = this.getCurrentData();
+    return {
+      used: data.metadata.storageSize,
+      limit: this.MAX_STORAGE_SIZE,
+      percentage: (data.metadata.storageSize / this.MAX_STORAGE_SIZE) * 100,
+      transcriptCount: data.metadata.transcriptCount,
+      date: data.date
+    };
+  }
+
+  // Clear current day's data (for testing or manual reset)
+  static clearCurrentData(): void {
+    StorageUtils.remove(this.STORAGE_KEY);
+  }
+
+  // Initialize daily storage system
+  static initialize(): void {
+    // Check if it's a new day and create fresh data if needed
+    this.getCurrentData();
+    
+    // Set up midnight reset
+    this.scheduleMidnightReset();
+  }
+
+  // Schedule automatic reset at midnight
+  private static scheduleMidnightReset(): void {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    
+    const timeUntilMidnight = tomorrow.getTime() - now.getTime();
+    
+    setTimeout(() => {
+      this.resetDailyData();
+      this.scheduleMidnightReset(); // Schedule next day
+    }, timeUntilMidnight);
+  }
+
+  // Reset daily data (keeps settings, clears transcripts)
+  private static resetDailyData(): void {
+    const data = this.getCurrentData();
+    const newData: DailyStorageData = {
+      ...data,
+      date: this.getCurrentDate(),
+      transcripts: [],
+      metadata: {
+        ...data.metadata,
+        transcriptCount: 0,
+        storageSize: 0,
+        lastUpdated: Date.now()
+      }
+    };
+    
+    this.saveData(newData);
+    
+    // Notify user (optional)
+    this.notifyDailyReset();
+  }
+
+  // Notify user of daily reset
+  private static notifyDailyReset(): void {
+    // This could trigger a toast notification
+    console.log('Daily storage reset completed');
+  }
+}
+
+// Theme Storage Manager - handles theme persistence with daily storage
+export class ThemeStorageManager {
+  // Get current theme from daily storage
+  static getCurrentTheme(): UserSettings['theme'] {
+    const data = DailyStorageManager.getCurrentData();
+    return data.settings.theme;
+  }
+
+  // Save theme to daily storage
+  static saveTheme(theme: UserSettings['theme']): void {
+    const data = DailyStorageManager.getCurrentData();
+    
+    // Update theme and metadata
+    data.settings.theme = theme;
+    data.metadata.themeLastChanged = Date.now();
+    
+    // Save to daily storage
+    DailyStorageManager.saveData(data);
+    
+    // Also save to legacy storage for backward compatibility
+    StorageUtils.saveSettings(data.settings);
+  }
+
+  // Get all settings from daily storage
+  static getSettings(): UserSettings {
+    const data = DailyStorageManager.getCurrentData();
+    return data.settings;
+  }
+
+  // Save all settings to daily storage
+  static saveSettings(settings: UserSettings): void {
+    const data = DailyStorageManager.getCurrentData();
+    
+    // Update settings and metadata
+    data.settings = settings;
+    data.metadata.themeLastChanged = Date.now();
+    
+    // Save to daily storage
+    DailyStorageManager.saveData(data);
+    
+    // Also save to legacy storage for backward compatibility
+    StorageUtils.saveSettings(settings);
+  }
+
+  // Initialize theme storage (migrate from legacy if needed)
+  static initialize(): void {
+    // Check if we have legacy settings to migrate
+    const legacySettings = StorageUtils.get<UserSettings>('settings');
+    
+    if (legacySettings) {
+      // Migrate legacy settings to daily storage
+      this.saveSettings(legacySettings);
+      console.log('Migrated legacy settings to daily storage');
+    }
   }
 }
 
@@ -394,7 +604,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '100, 116, 139',
           '--ion-color-medium-contrast': '#ffffff',
           '--ion-color-medium-shade': '#475569',
-          '--ion-color-medium-tint': '#94a3b8'
+          '--ion-color-medium-tint': '#94a3b8',
+          '--ion-color-warning': '#f59e0b',
+          '--ion-color-warning-rgb': '245, 158, 11',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#d97706',
+          '--ion-color-warning-tint': '#fbbf24'
         },
         dark: {
           '--ion-color-primary': '#3b82f6',
@@ -426,7 +642,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '148, 163, 184',
           '--ion-color-medium-contrast': '#000000',
           '--ion-color-medium-shade': '#cbd5e1',
-          '--ion-color-medium-tint': '#e2e8f0'
+          '--ion-color-medium-tint': '#e2e8f0',
+          '--ion-color-warning': '#fbbf24',
+          '--ion-color-warning-rgb': '251, 191, 36',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#f59e0b',
+          '--ion-color-warning-tint': '#fcd34d'
         }
       },
       'warm-sunset': {
@@ -460,7 +682,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '120, 113, 108',
           '--ion-color-medium-contrast': '#ffffff',
           '--ion-color-medium-shade': '#57534e',
-          '--ion-color-medium-tint': '#a8a29e'
+          '--ion-color-medium-tint': '#a8a29e',
+          '--ion-color-warning': '#f59e0b',
+          '--ion-color-warning-rgb': '245, 158, 11',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#d97706',
+          '--ion-color-warning-tint': '#fbbf24'
         },
         dark: {
           '--ion-color-primary': '#fb923c',
@@ -492,7 +720,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '168, 162, 158',
           '--ion-color-medium-contrast': '#000000',
           '--ion-color-medium-shade': '#d6d3d1',
-          '--ion-color-medium-tint': '#e7e5e4'
+          '--ion-color-medium-tint': '#e7e5e4',
+          '--ion-color-warning': '#fbbf24',
+          '--ion-color-warning-rgb': '251, 191, 36',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#f59e0b',
+          '--ion-color-warning-tint': '#fcd34d'
         }
       },
       'forest-green': {
@@ -526,7 +760,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '4, 120, 87',
           '--ion-color-medium-contrast': '#ffffff',
           '--ion-color-medium-shade': '#065f46',
-          '--ion-color-medium-tint': '#10b981'
+          '--ion-color-medium-tint': '#10b981',
+          '--ion-color-warning': '#f59e0b',
+          '--ion-color-warning-rgb': '245, 158, 11',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#d97706',
+          '--ion-color-warning-tint': '#fbbf24'
         },
         dark: {
           '--ion-color-primary': '#10b981',
@@ -558,7 +798,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '52, 211, 153',
           '--ion-color-medium-contrast': '#000000',
           '--ion-color-medium-shade': '#6ee7b7',
-          '--ion-color-medium-tint': '#a7f3d0'
+          '--ion-color-medium-tint': '#a7f3d0',
+          '--ion-color-warning': '#fbbf24',
+          '--ion-color-warning-rgb': '251, 191, 36',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#f59e0b',
+          '--ion-color-warning-tint': '#fcd34d'
         }
       },
       'ocean-depth': {
@@ -592,7 +838,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '14, 116, 144',
           '--ion-color-medium-contrast': '#ffffff',
           '--ion-color-medium-shade': '#155e75',
-          '--ion-color-medium-tint': '#06b6d4'
+          '--ion-color-medium-tint': '#06b6d4',
+          '--ion-color-warning': '#f59e0b',
+          '--ion-color-warning-rgb': '245, 158, 11',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#d97706',
+          '--ion-color-warning-tint': '#fbbf24'
         },
         dark: {
           '--ion-color-primary': '#06b6d4',
@@ -624,7 +876,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '34, 211, 238',
           '--ion-color-medium-contrast': '#000000',
           '--ion-color-medium-shade': '#67e8f9',
-          '--ion-color-medium-tint': '#a5f3fc'
+          '--ion-color-medium-tint': '#a5f3fc',
+          '--ion-color-warning': '#fbbf24',
+          '--ion-color-warning-rgb': '251, 191, 36',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#f59e0b',
+          '--ion-color-warning-tint': '#fcd34d'
         }
       },
       'neutral-gray': {
@@ -658,7 +916,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '75, 85, 99',
           '--ion-color-medium-contrast': '#ffffff',
           '--ion-color-medium-shade': '#374151',
-          '--ion-color-medium-tint': '#6b7280'
+          '--ion-color-medium-tint': '#6b7280',
+          '--ion-color-warning': '#f59e0b',
+          '--ion-color-warning-rgb': '245, 158, 11',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#d97706',
+          '--ion-color-warning-tint': '#fbbf24'
         },
         dark: {
           '--ion-color-primary': '#9ca3af',
@@ -690,7 +954,13 @@ export class ThemeUtils {
           '--ion-color-medium-rgb': '209, 213, 219',
           '--ion-color-medium-contrast': '#000000',
           '--ion-color-medium-shade': '#9ca3af',
-          '--ion-color-medium-tint': '#e5e7eb'
+          '--ion-color-medium-tint': '#e5e7eb',
+          '--ion-color-warning': '#fbbf24',
+          '--ion-color-warning-rgb': '251, 191, 36',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#f59e0b',
+          '--ion-color-warning-tint': '#fcd34d'
         }
       },
       'high-contrast': {
@@ -729,7 +999,13 @@ export class ThemeUtils {
           '--ion-color-secondary-rgb': '0, 0, 0',
           '--ion-color-secondary-contrast': '#ffffff',
           '--ion-color-secondary-shade': '#000000',
-          '--ion-color-secondary-tint': '#333333'
+          '--ion-color-secondary-tint': '#333333',
+          '--ion-color-warning': '#000000',
+          '--ion-color-warning-rgb': '0, 0, 0',
+          '--ion-color-warning-contrast': '#ffffff',
+          '--ion-color-warning-contrast-rgb': '255, 255, 255',
+          '--ion-color-warning-shade': '#000000',
+          '--ion-color-warning-tint': '#333333'
         },
         dark: {
           '--ion-color-primary': '#ffffff',
@@ -766,7 +1042,13 @@ export class ThemeUtils {
           '--ion-color-secondary-rgb': '255, 255, 255',
           '--ion-color-secondary-contrast': '#000000',
           '--ion-color-secondary-shade': '#ffffff',
-          '--ion-color-secondary-tint': '#cccccc'
+          '--ion-color-secondary-tint': '#cccccc',
+          '--ion-color-warning': '#ffffff',
+          '--ion-color-warning-rgb': '255, 255, 255',
+          '--ion-color-warning-contrast': '#000000',
+          '--ion-color-warning-contrast-rgb': '0, 0, 0',
+          '--ion-color-warning-shade': '#ffffff',
+          '--ion-color-warning-tint': '#cccccc'
         }
       }
     };

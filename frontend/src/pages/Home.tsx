@@ -20,7 +20,7 @@ import {
   moonOutline,
 } from 'ionicons/icons';
 import { AudioRecording, TranscriptionSegment, DisplayMode, UserSettings } from '../types';
-import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils, ThemeUtils } from '../utils';
+import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils, ThemeUtils, DailyStorageManager, ThemeStorageManager } from '../utils';
 import { DebugUtils } from '../utils/debug';
 import { Loading, Toast } from '../components/common';
 import AudioRecorder from '../components/audio/AudioRecorder';
@@ -70,8 +70,12 @@ const Home: React.FC = () => {
   useEffect(() => {
     AnalyticsUtils.trackEvent('page_view', { page: 'home' });
     
-    // Apply saved theme
-    const savedSettings = StorageUtils.getSettings();
+    // Initialize daily storage system
+    DailyStorageManager.initialize();
+    ThemeStorageManager.initialize();
+    
+    // Get settings from daily storage
+    const savedSettings = ThemeStorageManager.getSettings();
     setSettings(savedSettings);
     ThemeUtils.applyTheme(savedSettings.theme);
     
@@ -171,6 +175,13 @@ const Home: React.FC = () => {
   // Handle settings change
   const handleSettingsChange = (newSettings: UserSettings) => {
     setSettings(newSettings);
+    
+    // Save settings to daily storage
+    ThemeStorageManager.saveSettings(newSettings);
+    
+    // Apply theme changes immediately
+    ThemeUtils.applyTheme(newSettings.theme);
+    
     showToast('Settings updated', 'success');
   };
 
@@ -410,7 +421,6 @@ const Home: React.FC = () => {
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'success'}
               fill="outline"
               size="default"
-              className="action-button"
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -429,7 +439,6 @@ const Home: React.FC = () => {
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'warning'}
               fill="outline"
               size="default"
-              className="action-button"
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -448,7 +457,6 @@ const Home: React.FC = () => {
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'danger'}
               fill="outline"
               size="default"
-              className="action-button"
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',

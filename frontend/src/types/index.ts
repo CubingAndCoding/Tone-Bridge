@@ -198,4 +198,25 @@ export interface StorageItem {
   value: any;
   timestamp: Date;
   expiresAt?: Date;
+}
+
+// Daily Storage Types
+export interface DailyStorageData {
+  date: string; // YYYY-MM-DD format
+  settings: UserSettings;
+  transcripts: TranscriptionSegment[];
+  metadata: {
+    lastUpdated: number;
+    storageSize: number;
+    transcriptCount: number;
+    themeLastChanged: number;
+  };
+}
+
+export interface StorageInfo {
+  used: number;
+  limit: number;
+  percentage: number;
+  transcriptCount: number;
+  date: string;
 } 

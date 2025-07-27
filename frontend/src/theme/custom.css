@@ -1681,3 +1681,27 @@ ion-toolbar {
 .theme-warm-sunset .font-size-button.selected {
   border: 3px solid var(--ion-border-color, #f97316) !important;
 }
+
+/* High Contrast Dark Mode - Navbar Border */
+.dark-mode.theme-high-contrast ion-header {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+/* High Contrast Dark Mode - Inactive Transcript Borders */
+.theme-high-contrast .transcription-segment:not(.highlighted) {
+  border: 1px solid rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark-mode.theme-high-contrast .transcription-segment:not(.highlighted) {
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* High Contrast - Action Buttons Container Border */
+.theme-high-contrast .action-buttons-container {
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* High Contrast Light Mode - Action Buttons Container Border */
+.light-mode.theme-high-contrast .action-buttons-container {
+  border: 1px solid rgba(0, 0, 0, 0.4) !important;
+}

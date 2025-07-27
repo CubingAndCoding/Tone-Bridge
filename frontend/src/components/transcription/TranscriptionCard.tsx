@@ -175,7 +175,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
           margin: '0.5rem 0',
           cursor: onSegmentClick ? 'pointer' : 'default',
           transition: 'all 0.2s ease',
-          border: highlightCurrent ? '2px solid var(--ion-color-primary)' : '1px solid var(--ion-color-light-shade)',
+          border: highlightCurrent ? '2px solid var(--ion-color-primary) !important' : 'none',
           borderRadius: '12px',
           boxShadow: highlightCurrent
             ? '0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2)'
@@ -183,7 +183,7 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
           background: 'var(--ion-card-background)',
           ...style
         }}
-        className={className}
+        className={'transcription-segment ' + className}
       >
         <IonCardContent style={{ padding: '1rem' }}>
           {/* Header: Emotion and Confidence */}

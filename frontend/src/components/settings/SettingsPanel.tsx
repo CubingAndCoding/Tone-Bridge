@@ -695,17 +695,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   <div style={{ padding: '0 1rem', marginTop: '1rem' }}>
                     <IonButton
                       onClick={() => setShowResetConfirm(true)}
-                      color="warning"
                       fill="outline"
                       expand="block"
-                      className="reset-button action-button"
                       style={{
-                        color: 'var(--ion-text-color)',
-                        borderColor: settings.theme === 'high-contrast' ? 'var(--ion-text-color)' : 'var(--ion-color-warning)',
-                        '--ion-color-warning': 'var(--ion-text-color)',
-                        '--ion-color-warning-contrast': 'var(--ion-background-color)',
-                        '--border-color': settings.theme === 'high-contrast' ? 'var(--ion-text-color)' : undefined,
-                        '--background': settings.theme === 'high-contrast' ? 'transparent' : undefined
+                        color: 'var(--ion-color-warning)',
+                        '--border-color': 'var(--ion-color-warning)',
                       }}
                     >
                       Reset to Defaults
@@ -734,7 +728,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     <TranscriptionCard
                       segment={{
                         id: 'sample-1',
-                        text: "Hey! This is a sample transcript to test out how you like the settings. I hope you like what you're seeing!",
+                        text: "Hey! I hope you like the look!",
                         emotion: 'happy',
                         emoji: '😊',
                         confidence: 0.9,
