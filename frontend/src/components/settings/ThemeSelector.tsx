@@ -92,142 +92,124 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
         alignItems: 'center'
       }}>
         {themeOptions.map((theme, index) => (
-          <motion.div
+          <motion.button
             key={theme.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.9 }}
             transition={{ 
-              delay: index * 0.1,
+              delay: 0,
               duration: 0.3
             }}
+            className={`theme-selector-button ${currentTheme === theme.id ? 'selected' : ''}`}
             style={{
               width: '95%',
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              height: 'auto',
+              padding: '0.5rem',
+              border: currentTheme === theme.id 
+                ? '1px solid var(--ion-color-primary) !important' 
+                : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
+              borderRadius: '12px',
+              background: currentTheme === theme.id 
+                ? 'var(--ion-color-primary) !important' 
+                : 'var(--ion-color-light-shade) !important',
+              color: currentTheme === theme.id 
+                ? 'var(--ion-color-light-shade)'
+                : 'var(--ion-color-primary)',
+              textTransform: 'none',
+              fontWeight: '500',
+              boxSizing: 'border-box',
+              overflow: 'hidden',
+              margin: '0 auto',
             }}
+            onClick={() => onThemeChange(theme.id)}
           >
-            <IonButton
-              fill="clear"
-              className={`theme-selector-button ${currentTheme === theme.id ? 'selected' : ''}`}
-              style={{
-                width: '100%',
-                height: 'auto',
-                padding: '0.5rem',
-                border: currentTheme === theme.id 
-                  ? '1px solid var(--ion-color-primary) !important' 
-                  : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
-                borderRadius: '12px',
-                background: currentTheme === theme.id 
-                  ? 'var(--ion-color-primary) !important' 
-                  : 'var(--ion-color-light-shade) !important',
-                color: currentTheme === theme.id 
-                  ? 'var(--ion-color-light-shade)'
-                  : 'var(--ion-color-primary)',
-                textTransform: 'none',
-                fontWeight: '500',
-                boxSizing: 'border-box',
-                overflow: 'hidden',
-                margin: '0 auto',
-                transition: 'transform 0.2s ease'
-              }}
-              onClick={() => onThemeChange(theme.id)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.02)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
-              onMouseDown={(e) => {
-                e.currentTarget.style.transform = 'scale(0.95)';
-              }}
-              onMouseUp={(e) => {
-                e.currentTarget.style.transform = 'scale(1.02)';
-              }}
-            >
+            <div style={{ 
+              width: '100%',
+              textAlign: 'center'
+            }}>
+              {/* Theme Preview */}
               <div style={{ 
-                width: '100%',
-                textAlign: 'center'
+                display: 'flex', 
+                gap: '0.5rem',
+                marginBottom: '0.75rem',
+                justifyContent: 'center'
               }}>
-                {/* Theme Preview */}
-                <div style={{ 
-                  display: 'flex', 
-                  gap: '0.5rem',
-                  marginBottom: '0.75rem',
-                  justifyContent: 'center'
-                }}>
-                  {theme.previewColors.map((color, colorIndex) => (
-                    <motion.div
-                      key={colorIndex}
-                      style={{
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        background: color,
-                        border: '2px solid var(' + (currentTheme === theme.id 
-                          ? '--ion-color-light-shade'
-                          : '--ion-color-primary') + ', var(--ion-color-light-shade))'
-                      }}
-                      whileHover={{ scale: 1.5 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                    />
-                  ))}
-                </div>
-                
-                {/* Theme Info */}
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.25rem',
-                  alignItems: 'center'
-                }}>
-                  <div style={{ 
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    marginBottom: '0.25rem',
-                    color: (currentTheme === theme.id 
-                          ? 'var(--ion-color-primary-contrast)'
-                          : 'var(--ion-color-primary)')
-                  }}>
-                    {theme.name}
-                  </div>
-                  <div style={{ 
-                    fontSize: '0.875rem',
-                    opacity: 0.8,
-                    color: (currentTheme === theme.id 
-                          ? 'var(--ion-color-primary-contrast)'
-                          : 'var(--ion-color-primary)')
-                  }}>
-                    {theme.description}
-                  </div>
-                </div>
-                
-                {/* Selection Indicator */}
-                {currentTheme === theme.id && (
+                {theme.previewColors.map((color, colorIndex) => (
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
+                    key={colorIndex}
                     style={{
-                      position: 'absolute',
-                      top: '0.5rem',
-                      right: '0.5rem',
-                      width: '20px',
-                      height: '20px',
+                      width: '24px',
+                      height: '24px',
                       borderRadius: '50%',
-                      background: 'var(--ion-color-primary-contrast)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--ion-color-primary) !important',
-                      fontSize: '0.75rem',
-                      fontWeight: 'bold'
+                      background: color,
+                      border: '2px solid var(' + (currentTheme === theme.id 
+                        ? '--ion-color-light-shade'
+                        : '--ion-color-primary') + ', var(--ion-color-light-shade))'
                     }}
-                  >
-                    ✓
-                  </motion.div>
-                )}
+                    whileHover={{ scale: 1.5 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  />
+                ))}
               </div>
-            </IonButton>
-          </motion.div>
+              
+              {/* Theme Info */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem',
+                alignItems: 'center'
+              }}>
+                <div style={{ 
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  marginBottom: '0.25rem',
+                  color: (currentTheme === theme.id 
+                        ? 'var(--ion-color-primary-contrast)'
+                        : 'var(--ion-color-primary)')
+                }}>
+                  {theme.name}
+                </div>
+                <div style={{ 
+                  fontSize: '0.875rem',
+                  opacity: 0.8,
+                  color: (currentTheme === theme.id 
+                        ? 'var(--ion-color-primary-contrast)'
+                        : 'var(--ion-color-primary)')
+                }}>
+                  {theme.description}
+                </div>
+              </div>
+              
+              {/* Selection Indicator */}
+              {currentTheme === theme.id && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    right: '0.5rem',
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '50%',
+                    background: 'var(--ion-color-primary-contrast)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--ion-color-primary) !important',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  ✓
+                </motion.div>
+              )}
+            </div>
+          </motion.button>
         ))}
       </div>
     </div>

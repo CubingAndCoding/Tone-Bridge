@@ -131,7 +131,7 @@
 }
 
 .font-size-medium {
-  --app-font-size: 1rem;
+  --app-font-size: 0.95rem;
   font-size: var(--app-font-size);
 }
 
@@ -140,7 +140,7 @@
 }
 
 .font-size-large {
-  --app-font-size: 1.25rem;
+  --app-font-size: 1.125rem;
   font-size: var(--app-font-size);
 }
 
@@ -197,11 +197,11 @@ body.font-size-small {
 }
 
 body.font-size-medium {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 body.font-size-large {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 #root.font-size-small {
@@ -209,11 +209,11 @@ body.font-size-large {
 }
 
 #root.font-size-medium {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 #root.font-size-large {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 /* Ensure font size changes are visible in key components */
@@ -230,7 +230,7 @@ body.font-size-large {
 .font-size-medium ion-item,
 .font-size-medium p,
 .font-size-medium div {
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 .font-size-large .transcription-segment,
@@ -238,7 +238,7 @@ body.font-size-large {
 .font-size-large ion-item,
 .font-size-large p,
 .font-size-large div {
-  font-size: 1.25rem !important;
+  font-size: 1.125rem !important;
 }
 
 /* Simplified Font Size Application */
@@ -247,11 +247,11 @@ body.font-size-large {
 }
 
 .font-size-medium {
-  --app-font-size: 1rem;
+  --app-font-size: 0.95rem;
 }
 
 .font-size-large {
-  --app-font-size: 1.25rem;
+  --app-font-size: 1.125rem;
 }
 
 /* Direct font size application */
@@ -260,11 +260,11 @@ body.font-size-small {
 }
 
 body.font-size-medium {
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 body.font-size-large {
-  font-size: 1.25rem !important;
+  font-size: 1.125rem !important;
 }
 
 #root.font-size-small {
@@ -272,11 +272,11 @@ body.font-size-large {
 }
 
 #root.font-size-medium {
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 #root.font-size-large {
-  font-size: 1.25rem !important;
+  font-size: 1.125rem !important;
 }
 
 
@@ -298,7 +298,7 @@ body.font-size-medium ion-text *,
 body.font-size-medium p,
 body.font-size-medium div,
 body.font-size-medium span {
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 body.font-size-large ion-card,
@@ -307,7 +307,7 @@ body.font-size-large ion-text,
 body.font-size-large p,
 body.font-size-large div,
 body.font-size-large span {
-  font-size: 1.25rem !important;
+  font-size: 1.125rem !important;
 }
 
 /* Specific component targeting */
@@ -374,13 +374,13 @@ body.font-size-large span {
 }
 
 .font-size-button .font-size-medium {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   line-height: 1;
 }
 
 .font-size-button .font-size-large {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   line-height: 1;
 }
@@ -405,7 +405,7 @@ body.font-size-large span {
   }
   
   .font-size-button .font-size-large {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 

@@ -658,29 +658,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         slot="end"
                       />
                     </IonItem>
-                    
-                    {/* Accessibility Test Section */}
-                    <div style={{ 
-                      marginTop: '1rem', 
-                      padding: '1rem', 
-                      background: 'var(--ion-color-light)', 
-                      borderRadius: '8px',
-                      border: '1px solid var(--ion-border-color, var(--ion-color-light-shade))'
-                    }}>
-                      <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: '600' }}>
-                        Accessibility Test
-                      </h4>
-
-                      <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.8rem' }}>
-                        <strong>Reduced Motion:</strong> {settings.accessibility.reducedMotion ? '✅ Active' : '❌ Inactive'}
-                      </p>
-                      <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.8rem' }}>
-                        <strong>Dyslexia Font:</strong> {settings.accessibility.dyslexiaFriendly ? '✅ Active' : '❌ Inactive'}
-                      </p>
-                      <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', fontStyle: 'italic' }}>
-                        This text should change based on your accessibility settings.
-                      </p>
-                    </div>
                   </div>
                 </motion.div>
 
