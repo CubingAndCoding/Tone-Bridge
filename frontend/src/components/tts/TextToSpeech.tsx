@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   IonButton,
   IonIcon,
@@ -7,10 +8,6 @@ import {
   IonLabel,
   IonItem,
   IonFabButton,
-  IonModal,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
   IonCardContent,
@@ -275,70 +272,131 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
   };
 
       return (
-    <IonModal
-      ref={modal}
-      isOpen={isOpen}
-      onDidDismiss={onClose}
-      presentingElement={presentingElement!}
-      canDismiss={true}
-      style={{
-        '--height': '90vh',
-        '--border-radius': '16px',
-        '--box-shadow': '0 8px 32px rgba(0, 0, 0, 0.5)',
-        '--backdrop-opacity': '0.7'
-      }}
-    >
-      {/* Header */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '1.5rem 1.5rem 1rem 1.5rem',
-        borderBottom: '1px solid var(--ion-color-light-shade)',
-        position: 'relative'
-      }}>
-        <h2 style={{ 
-          margin: 0, 
-          fontSize: '1.5rem', 
-          fontWeight: '600',
-          color: 'var(--ion-text-color)'
-        }}>
-          Text to Speech (Beta)
-        </h2>
-        
-        {/* Close button positioned absolutely */}
-        <IonButton
-          fill="clear"
-          size="small"
-          onClick={onClose}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
           style={{
-            position: 'absolute',
-            top: '1rem',
-            right: '1rem',
-            '--padding-start': '8px',
-            '--padding-end': '8px',
-            minWidth: 'auto',
-            height: '40px',
-            width: '40px',
-            borderRadius: '50%',
-            background: 'var(--ion-color-light)',
-            color: 'var(--ion-color-medium)',
-            zIndex: 1000
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
+            paddingTop: '4rem'
           }}
+          onClick={onClose} // Close when clicking backdrop
         >
-          <IonIcon icon={closeOutline} size="small" />
-        </IonButton>
-      </div>
-      <IonContent>
-        <div style={{ 
-          padding: '1rem 1.5rem', 
-          paddingLeft: '2rem', 
-          paddingRight: '2rem',
-          maxWidth: '500px',
-          margin: '0 auto'
-        }}>
-              {/* Note for deaf users */}
-                        <div
+          <motion.div
+            initial={{ 
+              opacity: 0, 
+              scale: 0.85, 
+              y: 30,
+              rotateX: -15
+            }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              y: 0,
+              rotateX: 0
+            }}
+            exit={{ 
+              opacity: 0, 
+              scale: 0.85, 
+              y: 30,
+              rotateX: 15
+            }}
+            transition={{ 
+              type: "spring",
+              damping: 20,
+              stiffness: 400,
+              duration: 0.25
+            }}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking modal content
+            style={{
+              background: 'var(--ion-background-color)',
+              borderRadius: '16px',
+              maxWidth: '500px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflow: 'hidden',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              border: '1px solid var(--ion-color-light-shade)',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+          >
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05, duration: 0.2 }}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '1.5rem 1.5rem 1rem 1.5rem',
+                borderBottom: '1px solid var(--ion-color-light-shade)',
+                position: 'relative'
+              }}
+            >
+              <h2 style={{ 
+                margin: 0, 
+                fontSize: '1.5rem', 
+                fontWeight: '600',
+                color: 'var(--ion-text-color)'
+              }}>
+                Text to Speech (Beta)
+              </h2>
+              
+              {/* Close button positioned absolutely */}
+              <IonButton
+                fill="clear"
+                size="small"
+                onClick={onClose}
+                style={{
+                  position: 'absolute',
+                  top: '1rem',
+                  right: '1rem',
+                  '--padding-start': '8px',
+                  '--padding-end': '8px',
+                  minWidth: 'auto',
+                  height: '40px',
+                  width: '40px',
+                  borderRadius: '50%',
+                  background: 'var(--ion-color-light)',
+                  color: 'var(--ion-color-medium)',
+                  zIndex: 1000
+                }}
+              >
+                <IonIcon icon={closeOutline} size="small" />
+              </IonButton>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.2 }}
+              style={{
+                flex: 1,
+                overflow: 'auto',
+                padding: '1rem 1.5rem',
+                paddingLeft: '2rem', 
+                paddingRight: '2rem',
+                maxWidth: '500px',
+                margin: '0 auto'
+              }}
+            >
+              {/* Beta Testing Notice */}
+              <div
                 style={{
                   background: 'var(--ion-color-primary-tint)',
                   color: 'var(--ion-color-primary-contrast)',
@@ -347,27 +405,25 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
                   marginBottom: '24px',
                   fontSize: '0.9rem',
                   border: '1px solid var(--ion-color-primary-shade)',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  textAlign: 'center'
                 }}
               >
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'flex-start', 
-                  gap: '12px'
-                }}>
-                  <IonIcon 
-                    icon={volumeHighOutline} 
-                    style={{ 
-                      fontSize: '1.2rem',
-                      marginTop: '2px',
-                      flexShrink: 0
-                    }} 
-                  />
-                  <div>
-                    <strong style={{ display: 'block', marginBottom: '4px' }}>
-                      Beta Testing Notice
-                    </strong>
-                    This feature is in beta testing. Voice options and quality may vary by device. For deaf users, you may need assistance from a friend or family member to choose the best voice for your needs. Click the play button on each voice option to preview how it sounds. Voice gender labels are automatically detected and may not always be accurate.
+                <IonIcon 
+                  icon={volumeHighOutline} 
+                  style={{ 
+                    fontSize: '1.5rem',
+                    marginBottom: '8px',
+                    display: 'block',
+                    margin: '0 auto 8px auto'
+                  }} 
+                />
+                <div>
+                  <strong style={{ display: 'block', marginBottom: '6px', fontSize: '1rem' }}>
+                    Beta Testing
+                  </strong>
+                  <div style={{ fontSize: '0.85rem', lineHeight: '1.4' }}>
+                    Voice options may vary by device. Deaf users may need family/friends to help choose a suitable voice.
                   </div>
                 </div>
               </div>
@@ -553,50 +609,37 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
                   </IonButton>
                   
                                       {/* Preview button - positioned as a floating action button */}
-                    <IonButton
-                      fill="solid"
-                      color="success"
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        previewVoice(voice.id);
-                      }}
+                    <div
                       style={{
                         position: 'absolute',
-                        top: '-8px',
-                        right: '-8px',
-                        width: 'clamp(28px, 4vw, 36px)',
-                        height: 'clamp(28px, 4vw, 36px)',
-                        minWidth: '28px',
-                        minHeight: '28px',
-                        maxWidth: '36px',
-                        maxHeight: '36px',
+                        top: '-2px',
+                        right: '-2px',
+                        width: '32px',
+                        height: '32px',
                         borderRadius: '50%',
-                        border: '2px solid var(--ion-background-color)',
                         boxShadow: '0 3px 8px rgba(0, 0, 0, 0.3)',
                         zIndex: 10,
                         transition: 'all 0.2s ease',
-                        '--padding-start': '0',
-                        '--padding-end': '0',
-                        '--padding-top': '0',
-                        '--padding-bottom': '0',
-                        '--border-radius': '50%',
-                        '--min-width': '28px',
-                        '--min-height': '28px',
-                        '--max-width': '36px',
-                        '--max-height': '36px'
+                        background: 'var(--ion-color-success)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer'
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        previewVoice(voice.id);
                       }}
                       title="Preview this voice"
                     >
                       <IonIcon 
                         icon={playOutline} 
                         style={{ 
-                          fontSize: 'clamp(12px, 2vw, 16px)',
-                          minFontSize: '12px',
-                          maxFontSize: '16px'
+                          fontSize: '14px',
+                          color: 'var(--ion-color-success-contrast)'
                         }} 
                       />
-                    </IonButton>
+                    </div>
                 </div>
               ))}
             </div>
@@ -741,9 +784,11 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
               </IonButton>
             </div>
           )}
-        </div>
-      </IonContent>
-    </IonModal>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
