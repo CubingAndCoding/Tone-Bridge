@@ -1607,119 +1607,6 @@ ion-toolbar {
   border: 2px solid #000000 !important;
 }
 
-/* High Contrast Theme - Dark Mode Theme Selector Buttons */
-@media (prefers-color-scheme: dark) {
-  .theme-high-contrast .theme-selector-button {
-    border: 2px solid #ffffff !important;
-  }
-
-  .theme-high-contrast .theme-selector-button.selected {
-    background: #ffffff !important;
-    border: 4px solid #ffffff !important;
-    box-shadow: 0 0 0 2px #000000, 0 0 0 4px #ffffff !important;
-  }
-
-  .theme-high-contrast .theme-selector-button:not(.selected) {
-    background: #000000 !important;
-    border: 2px solid #ffffff !important;
-  }
-} 
-
-/* Neutral Gray Theme - Button Border Enhancement */
-.theme-neutral-gray .theme-selector-button,
-.theme-neutral-gray .display-mode-button,
-.theme-neutral-gray .font-size-button {
-  border: 2px solid var(--ion-border-color, #6b7280) !important;
-}
-
-.theme-neutral-gray .theme-selector-button:not(.selected),
-.theme-neutral-gray .display-mode-button:not(.selected),
-.theme-neutral-gray .font-size-button:not(.selected) {
-  border: 2px solid var(--ion-border-color, #6b7280) !important;
-}
-
-.theme-neutral-gray .theme-selector-button.selected,
-.theme-neutral-gray .display-mode-button.selected,
-.theme-neutral-gray .font-size-button.selected {
-  border: 3px solid var(--ion-border-color, #6b7280) !important;
-}
-
-/* Forest Green Theme - Button Border Enhancement */
-.theme-forest-green .theme-selector-button,
-.theme-forest-green .display-mode-button,
-.theme-forest-green .font-size-button {
-  border: 2px solid var(--ion-border-color, #059669) !important;
-}
-
-.theme-forest-green .theme-selector-button:not(.selected),
-.theme-forest-green .display-mode-button:not(.selected),
-.theme-forest-green .font-size-button:not(.selected) {
-  border: 2px solid var(--ion-border-color, #059669) !important;
-}
-
-.theme-forest-green .theme-selector-button.selected,
-.theme-forest-green .display-mode-button.selected,
-.theme-forest-green .font-size-button.selected {
-  border: 3px solid var(--ion-border-color, #059669) !important;
-}
-
-/* Ocean Depth Theme - Button Border Enhancement */
-.theme-ocean-depth .theme-selector-button,
-.theme-ocean-depth .display-mode-button,
-.theme-ocean-depth .font-size-button {
-  border: 2px solid var(--ion-border-color, #0891b2) !important;
-}
-
-.theme-ocean-depth .theme-selector-button:not(.selected),
-.theme-ocean-depth .display-mode-button:not(.selected),
-.theme-ocean-depth .font-size-button:not(.selected) {
-  border: 2px solid var(--ion-border-color, #0891b2) !important;
-}
-
-.theme-ocean-depth .theme-selector-button.selected,
-.theme-ocean-depth .display-mode-button.selected,
-.theme-ocean-depth .font-size-button.selected {
-  border: 3px solid var(--ion-border-color, #0891b2) !important;
-}
-
-/* Modern Blue Theme - Button Border Enhancement */
-.theme-modern-blue .theme-selector-button,
-.theme-modern-blue .display-mode-button,
-.theme-modern-blue .font-size-button {
-  border: 2px solid var(--ion-border-color, #2563eb) !important;
-}
-
-.theme-modern-blue .theme-selector-button:not(.selected),
-.theme-modern-blue .display-mode-button:not(.selected),
-.theme-modern-blue .font-size-button:not(.selected) {
-  border: 2px solid var(--ion-border-color, #2563eb) !important;
-}
-
-.theme-modern-blue .theme-selector-button.selected,
-.theme-modern-blue .display-mode-button.selected,
-.theme-modern-blue .font-size-button.selected {
-  border: 3px solid var(--ion-border-color, #2563eb) !important;
-}
-
-/* Warm Sunset Theme - Button Border Enhancement */
-.theme-warm-sunset .theme-selector-button,
-.theme-warm-sunset .display-mode-button,
-.theme-warm-sunset .font-size-button {
-  border: 2px solid var(--ion-border-color, #f97316) !important;
-}
-
-.theme-warm-sunset .theme-selector-button:not(.selected),
-.theme-warm-sunset .display-mode-button:not(.selected),
-.theme-warm-sunset .font-size-button:not(.selected) {
-  border: 2px solid var(--ion-border-color, #f97316) !important;
-}
-
-.theme-warm-sunset .theme-selector-button.selected,
-.theme-warm-sunset .display-mode-button.selected,
-.theme-warm-sunset .font-size-button.selected {
-  border: 3px solid var(--ion-border-color, #f97316) !important;
-}
-
 /* High Contrast Dark Mode - Navbar Border */
 .dark-mode.theme-high-contrast ion-header {
   border-bottom: 2px solid rgba(255, 255, 255, 0.8) !important;
@@ -1768,4 +1655,137 @@ ion-toolbar {
 /* Preview transcript always stacks */
 .preview-transcript .confidence-timestamp-container {
   flex-direction: column;
+}
+
+/* TTS Modal Styling */
+.tts-overlay {
+  --backdrop-opacity: 0.5;
+}
+
+.tts-overlay ion-card {
+  margin: 20px !important;
+  max-height: 90vh !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid var(--ion-border-color) !important;
+  background: var(--ion-card-background) !important;
+  color: var(--ion-text-color) !important;
+}
+
+.tts-overlay ion-button {
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  font-weight: 500;
+}
+
+.tts-overlay ion-range {
+  --bar-background: var(--ion-color-light-shade);
+  --bar-active-background: var(--ion-color-primary);
+  --knob-background: var(--ion-color-primary);
+  --pin-background: var(--ion-color-primary);
+  --pin-color: var(--ion-color-primary-contrast);
+}
+
+.tts-overlay ion-textarea {
+  --border-radius: 8px;
+  --border-color: var(--ion-color-medium);
+  --border-style: solid;
+  --border-width: 1px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+.tts-overlay ion-label {
+  color: var(--ion-text-color) !important;
+  font-weight: 500;
+}
+
+.tts-overlay ion-item {
+  --background: transparent;
+  --border-color: var(--ion-color-light-shade);
+  --border-radius: 8px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.tts-overlay ion-badge {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  font-weight: 500;
+}
+
+.tts-overlay ion-fab-button {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  --border-radius: 50%;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Voice selector buttons - styled exactly like theme selector buttons */
+.voice-selector-button {
+  border: 1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important;
+  border-radius: 12px !important;
+  background: var(--ion-color-light-shade) !important;
+  color: var(--ion-color-primary) !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+  transition: all 0.2s ease !important;
+}
+
+.voice-selector-button:hover {
+  outline-color: var(--ion-outline-color, var(--ion-color-primary)) !important;
+}
+
+.voice-selector-button:focus {
+  outline-color: var(--ion-outline-color, var(--ion-color-primary)) !important;
+}
+
+/* High contrast theme support */
+@media (prefers-contrast: high) {
+  .voice-selector-button {
+    border-width: 2px !important;
+  }
+}
+
+/* Theme-specific voice button enhancements */
+[data-theme="dark"] .voice-selector-button {
+  border-color: var(--ion-color-medium) !important;
+  background: var(--ion-color-dark-shade) !important;
+}
+
+[data-theme="light"] .voice-selector-button {
+  border-color: var(--ion-color-light-shade) !important;
+  background: var(--ion-color-light) !important;
+}
+
+/* Remove border from clear-filled buttons in TTS overlay */
+.tts-overlay ion-button[fill="clear"] {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+}
+
+/* Scrollable content for TTS modal */
+.tts-overlay ion-card > div:last-child {
+  overflow: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.tts-overlay ion-card > div:last-child::-webkit-scrollbar {
+  display: none !important;
+}
+
+.tts-overlay ion-card > div:last-child > div {
+  min-height: 100% !important;
 }

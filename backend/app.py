@@ -26,12 +26,54 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
     
-    # Initialize CORS
+    # Initialize CORS with dynamic origins for local development
+    allowed_origins = [
+        "http://localhost:3000", 
+        "http://localhost:8100", 
+        "https://localhost:8100",
+        "https://tonebridge.vercel.app"
+    ]
+    
+    # Add environment variable origins if specified
+    env_origins = os.getenv('ALLOWED_ORIGINS', '')
+    if env_origins:
+        allowed_origins.extend([origin.strip() for origin in env_origins.split(',')])
+    
+    # Add specific IP addresses for common local development
+    specific_ips = [
+        "192.168.1.210",  # Common local network IP
+        "192.168.1.100",  # Another common local network IP
+        "10.0.0.1",       # Common router IP
+    ]
+    
+    for ip in specific_ips:
+        allowed_origins.extend([
+            f"http://{ip}:3000",
+            f"http://{ip}:8100", 
+            f"https://{ip}:3000",
+            f"https://{ip}:8100"
+        ])
+    
+    # Add local IP addresses dynamically
+    import socket
+    try:
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+        allowed_origins.extend([
+            f"http://{local_ip}:3000",
+            f"http://{local_ip}:8100", 
+            f"https://{local_ip}:3000",
+            f"https://{local_ip}:8100"
+        ])
+    except:
+        pass  # Fallback if IP detection fails
+    
     CORS(app, resources={
-        r"/api/*": {
-            "origins": ["http://localhost:3000", "http://localhost:8100", "https://tonebridge.vercel.app"],
+        r"/*": {
+            "origins": allowed_origins,
             "methods": ["GET", "POST", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"]
+            "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
+            "supports_credentials": True
         }
     })
     
@@ -63,6 +105,7 @@ def create_app(config_class=Config):
         })
     
     logger.info("ToneBridge Backend initialized successfully")
+    logger.info(f"CORS allowed origins: {allowed_origins}")
     return app
 
 if __name__ == '__main__':

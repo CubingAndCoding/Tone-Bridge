@@ -183,31 +183,6 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                   {theme.description}
                 </div>
               </div>
-              
-              {/* Selection Indicator */}
-              {currentTheme === theme.id && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  style={{
-                    position: 'absolute',
-                    top: '0.5rem',
-                    right: '0.5rem',
-                    width: '20px',
-                    height: '20px',
-                    borderRadius: '50%',
-                    background: 'var(--ion-color-primary-contrast)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'var(--ion-color-primary) !important',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  ✓
-                </motion.div>
-              )}
             </div>
           </motion.button>
         ))}

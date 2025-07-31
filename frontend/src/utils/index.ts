@@ -7,8 +7,21 @@ import { AppError, ApiResponse, UserSettings, TranscriptionSegment, DailyStorage
 
 // API Utilities
 export class ApiUtils {
-  private static baseUrl = (window as any).__ENV__?.REACT_APP_API_URL || 'http://localhost:5000';
+  private static baseUrl = import.meta.env.VITE_REACT_APP_API_URL || 'https://localhost:5000';
   private static timeout = 30000;
+  private static maxRetries = 3;
+  private static retryDelay = 1000;
+
+  // Detect iOS Safari
+  private static isIOSSafari(): boolean {
+    const ua = navigator.userAgent;
+    return /iPad|iPhone|iPod/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|mercury/.test(ua);
+  }
+
+  // Detect mobile device
+  private static isMobile(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
 
   static async request<T>(
     endpoint: string,
@@ -18,28 +31,100 @@ export class ApiUtils {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
-    try {
-      const response = await fetch(url, {
-        ...options,
-        signal: controller.signal,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
-      });
+    // Add mobile-specific headers
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'User-Agent': navigator.userAgent,
+    };
 
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      clearTimeout(timeoutId);
-      throw new Error(`API request failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    // Add iOS-specific headers
+    if (this.isIOSSafari()) {
+      headers['X-Requested-With'] = 'XMLHttpRequest';
     }
+
+    // Merge with existing headers
+    if (options.headers) {
+      Object.entries(options.headers).forEach(([key, value]) => {
+        headers[key] = String(value);
+      });
+    }
+
+    const requestOptions: RequestInit = {
+      ...options,
+      signal: controller.signal,
+      headers,
+    };
+
+    let lastError: Error | null = null;
+
+    for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+      try {
+        console.log(`API request attempt ${attempt}/${this.maxRetries}: ${url}`);
+        
+        const response = await fetch(url, requestOptions);
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`HTTP ${response.status}: ${errorText}`);
+          
+          // Handle specific HTTP errors
+          if (response.status === 0) {
+            throw new Error('Network error - check your connection and try again');
+          } else if (response.status === 404) {
+            throw new Error('API endpoint not found - please check the server configuration');
+          } else if (response.status === 413) {
+            throw new Error('Audio file too large - please record a shorter message');
+          } else if (response.status === 500) {
+            throw new Error('Server error - please try again later');
+          } else if (response.status === 503) {
+            throw new Error('Service temporarily unavailable - please try again later');
+          } else {
+            throw new Error(`Server error (${response.status}): ${errorText || response.statusText}`);
+          }
+        }
+
+        const data = await response.json();
+        console.log(`API request successful: ${url}`);
+        return data;
+        
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error(String(error));
+        console.error(`API request attempt ${attempt} failed:`, lastError.message);
+        
+        // Don't retry on certain errors
+        if (lastError.message.includes('abort') || 
+            lastError.message.includes('Network error') ||
+            lastError.message.includes('API endpoint not found')) {
+          break;
+        }
+        
+        // Wait before retrying (except on last attempt)
+        if (attempt < this.maxRetries) {
+          const delay = this.retryDelay * attempt; // Exponential backoff
+          console.log(`Retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+
+    clearTimeout(timeoutId);
+    
+    // Provide user-friendly error messages
+    let errorMessage = 'API request failed';
+    if (lastError) {
+      if (lastError.message.includes('Failed to fetch')) {
+        errorMessage = 'Cannot connect to server. Please check your internet connection and try again.';
+      } else if (lastError.message.includes('abort')) {
+        errorMessage = 'Request timed out. Please try again.';
+      } else if (lastError.message.includes('Network error')) {
+        errorMessage = 'Network connection issue. Please check your connection and try again.';
+      } else {
+        errorMessage = lastError.message;
+      }
+    }
+    
+    throw new Error(errorMessage);
   }
 
   static async get<T>(endpoint: string): Promise<ApiResponse<T>> {
@@ -47,6 +132,16 @@ export class ApiUtils {
   }
 
   static async post<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
+    // For mobile devices, add additional logging
+    if (this.isMobile()) {
+      console.log('Mobile API request:', {
+        endpoint,
+        dataSize: JSON.stringify(data).length,
+        userAgent: navigator.userAgent,
+        isIOS: this.isIOSSafari()
+      });
+    }
+
     return this.request<T>(endpoint, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -63,11 +158,56 @@ export class ApiUtils {
       });
     }
 
+    // Add mobile-specific headers for file uploads
+    const headers: Record<string, string> = {};
+    if (this.isIOSSafari()) {
+      headers['X-Requested-With'] = 'XMLHttpRequest';
+    }
+
     return this.request<T>(endpoint, {
       method: 'POST',
       body: formData,
-      headers: {}, // Let browser set Content-Type for FormData
+      headers, // Let browser set Content-Type for FormData
     });
+  }
+
+  // Test API connectivity
+  static async testConnection(): Promise<boolean> {
+    try {
+      const response = await this.get('/health');
+      return response.success;
+    } catch (error) {
+      console.error('API connection test failed:', error);
+      return false;
+    }
+  }
+
+  // Get API status with detailed info
+  static async getApiStatus(): Promise<{
+    connected: boolean;
+    url: string;
+    error?: string;
+    responseTime?: number;
+  }> {
+    const startTime = Date.now();
+    
+    try {
+      const response = await this.get('/health');
+      const responseTime = Date.now() - startTime;
+      
+      return {
+        connected: true,
+        url: this.baseUrl,
+        responseTime
+      };
+    } catch (error) {
+      return {
+        connected: false,
+        url: this.baseUrl,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        responseTime: Date.now() - startTime
+      };
+    }
   }
 }
 

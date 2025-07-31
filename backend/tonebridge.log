@@ -2299,3 +2299,828 @@ If this is a private repository, make sure to pass a token having permission to 
 2025-07-27 10:34:42 - services.transcription_service - INFO - Model used: whisper
 2025-07-27 10:34:42 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
 2025-07-27 10:34:43 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)
+2025-07-29 12:17:33 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:17:33 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:17:33 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:17:33 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:17:33 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:17:37 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:17:37 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:17:37 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:17:37 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:17:37 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:17:39 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:17:39 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:17:39 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:17:44 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:17:44 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:17:44 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:17:44 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:17:44 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:17:47 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:17:47 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:17:47 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:17:47 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:17:47 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:17:48 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:17:48 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:17:48 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:17:59 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:17:59 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:17:59 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:17:59 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:17:59 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:18:02 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:18:02 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:18:02 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:18:02 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:18:02 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:18:03 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:18:03 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:18:03 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:18:10 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:18:10 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:18:10 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:18:10 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:18:10 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:18:13 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:18:13 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:18:13 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:18:13 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:18:13 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:18:14 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:18:14 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:18:14 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:21:55 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:21:55 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:21:55 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:21:55 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:21:55 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:21:58 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:21:58 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:21:58 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:21:58 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:21:58 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:21:59 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:21:59 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:21:59 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:28:07 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:28:07 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:28:07 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:28:07 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:28:07 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:28:10 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:28:10 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:28:10 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:28:10 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:28:10 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:28:11 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:28:11 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:28:11 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:29:27 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:29:27 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:29:27 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:29:27 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:29:27 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:29:30 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:29:30 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:29:30 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:29:30 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:29:30 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:29:32 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:29:32 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:29:32 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:30:00 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:30:00 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:30:00 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:30:00 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:30:00 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:30:03 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:30:03 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:30:03 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:30:03 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:30:03 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:30:04 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:30:04 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:30:04 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:30:09 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:30:09 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:30:09 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:30:09 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:30:09 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:30:12 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:30:12 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:30:12 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:30:12 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:30:12 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:30:13 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:30:13 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:30:13 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:30:15 - routes.api - INFO - Audio data decoded successfully: 37835 bytes, format: webm
+2025-07-29 12:30:15 - utils.audio_utils - INFO - Loading audio: 37835 bytes, format: webm
+2025-07-29 12:30:15 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-29 12:30:15 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpvgka9g7l.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpvgka9g7l.wav
+2025-07-29 12:30:15 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-29 12:30:20 - utils.audio_utils - INFO - Audio loaded successfully: 37440 samples, 16000Hz
+2025-07-29 12:30:21 - utils.audio_utils - INFO - Audio preprocessed: 6656 samples
+2025-07-29 12:30:21 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-29 12:30:22 - services.transcription_service - INFO - Transcription completed: 'Thank you.' (10 characters)
+2025-07-29 12:30:22 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-29 12:30:22 - services.transcription_service - INFO - Model used: whisper
+2025-07-29 12:30:22 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-29 12:30:24 - services.emotion_service - INFO - Text emotion detected: happy (confidence: 0.990)
+2025-07-29 12:43:32 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:43:32 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:43:32 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:43:32 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:43:32 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:43:34 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:43:34 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:43:34 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:43:34 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:43:34 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:43:36 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:43:36 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:43:36 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:43:41 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:43:41 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:43:41 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:43:41 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:43:41 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:43:43 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:43:43 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:43:43 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:43:43 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:43:43 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:43:45 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:43:45 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:43:45 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:45:33 - utils.error_handlers - ERROR - Unexpected Error: cannot access local variable 'time' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone-Bridge\backend\routes\api.py", line 332, in text_to_speech
+    start_time = time.time()
+                 ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
+2025-07-29 12:46:52 - routes.api - INFO - Audio data decoded successfully: 14651 bytes, format: webm
+2025-07-29 12:46:52 - utils.audio_utils - INFO - Loading audio: 14651 bytes, format: webm
+2025-07-29 12:46:52 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-29 12:46:52 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpdd2ep6iy.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpdd2ep6iy.wav
+2025-07-29 12:46:52 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-29 12:46:52 - utils.audio_utils - INFO - Audio loaded successfully: 14400 samples, 16000Hz
+2025-07-29 12:46:52 - utils.audio_utils - INFO - Audio preprocessed: 2048 samples
+2025-07-29 12:46:52 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-29 12:46:53 - services.transcription_service - INFO - Transcription completed: 'you' (3 characters)
+2025-07-29 12:46:53 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-29 12:46:53 - services.transcription_service - INFO - Model used: whisper
+2025-07-29 12:46:53 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-29 12:46:53 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-29 12:46:58 - routes.api - INFO - Audio data decoded successfully: 47495 bytes, format: webm
+2025-07-29 12:46:58 - utils.audio_utils - INFO - Loading audio: 47495 bytes, format: webm
+2025-07-29 12:46:58 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-29 12:46:58 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp8ouj7zzp.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp8ouj7zzp.wav
+2025-07-29 12:46:58 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-29 12:46:58 - utils.audio_utils - INFO - Audio loaded successfully: 47040 samples, 16000Hz
+2025-07-29 12:46:58 - utils.audio_utils - INFO - Audio preprocessed: 2560 samples
+2025-07-29 12:46:58 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-29 12:46:59 - services.transcription_service - INFO - Transcription completed: 'you' (3 characters)
+2025-07-29 12:46:59 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-29 12:46:59 - services.transcription_service - INFO - Model used: whisper
+2025-07-29 12:46:59 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-29 12:46:59 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-29 12:53:08 - utils.error_handlers - ERROR - Unexpected Error: cannot access local variable 'time' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone-Bridge\backend\routes\api.py", line 332, in text_to_speech
+    start_time = time.time()
+                 ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
+2025-07-29 12:55:09 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:55:09 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:55:09 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:55:09 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:55:09 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:55:11 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:55:11 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:55:11 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:55:11 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:55:11 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:55:12 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:55:12 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:55:12 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:55:18 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:55:18 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:55:18 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:55:18 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:55:18 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:55:20 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:55:20 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:55:20 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:55:20 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:55:20 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:55:21 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:55:21 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:55:21 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:56:43 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:56:43 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:56:43 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:56:43 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:56:43 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:56:46 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:56:46 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:56:46 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:56:46 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:56:46 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:56:47 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:56:47 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:56:47 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 12:56:52 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 12:56:52 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 12:56:52 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 12:56:52 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 12:56:52 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 12:56:55 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 12:56:55 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 12:56:55 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 12:56:55 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 12:56:55 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 12:56:56 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 12:56:56 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 12:56:56 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:07:47 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:07:47 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:07:47 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:07:47 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:07:47 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:07:49 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:07:49 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:07:49 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:07:49 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:07:49 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:07:51 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:07:51 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:07:51 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:07:56 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:07:56 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:07:56 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:07:56 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:07:56 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:07:59 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:07:59 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:07:59 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:07:59 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:07:59 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:08:00 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:08:00 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:08:00 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:08:24 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:08:24 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:08:24 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:08:24 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:08:24 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:08:27 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:08:27 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:08:27 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:08:27 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:08:27 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:08:29 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:08:29 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:08:29 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:08:34 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:08:34 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:08:34 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:08:34 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:08:34 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:08:40 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:08:40 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:08:40 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:08:40 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:08:40 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:08:41 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:08:41 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:08:41 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:10:02 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:10:02 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:10:02 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:10:02 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:10:02 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:10:05 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:10:05 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:10:05 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:10:05 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:10:05 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:10:06 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:10:06 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:10:06 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:10:11 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:10:11 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:10:11 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:10:11 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:10:11 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:10:14 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:10:14 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:10:14 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:10:14 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:10:14 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:10:16 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:10:16 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:10:16 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:15:34 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:15:34 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:15:34 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:15:34 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:15:34 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:15:37 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:15:37 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:15:37 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:15:37 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:15:37 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:15:39 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:15:39 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:15:39 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:15:44 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:15:44 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:15:44 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:15:44 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:15:44 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:36:52 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:36:52 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:36:52 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:36:52 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:36:52 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:36:55 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:36:55 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:36:55 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:36:55 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:36:55 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:36:56 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:36:56 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:36:56 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:37:01 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:37:01 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:37:01 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:37:01 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:37:01 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:37:04 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:37:04 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:37:04 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:37:04 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:37:04 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:37:05 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:37:05 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:37:05 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:43:11 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:43:11 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:43:11 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:43:11 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:43:11 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:43:13 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:43:13 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:43:13 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:43:13 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:43:13 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:43:15 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:43:15 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:43:15 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 13:43:20 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 13:43:20 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 13:43:20 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 13:43:20 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 13:43:20 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 13:43:22 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 13:43:22 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 13:43:22 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 13:43:22 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 13:43:22 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 13:43:24 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 13:43:24 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 13:43:24 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:08:22 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 14:08:22 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 14:08:22 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 14:08:22 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 14:08:22 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 14:08:25 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 14:08:25 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 14:08:25 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 14:08:25 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 14:08:25 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 14:08:27 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 14:08:27 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 14:08:27 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:08:32 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 14:08:32 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 14:08:32 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 14:08:32 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 14:08:32 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 14:08:34 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 14:08:34 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 14:08:34 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 14:08:34 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 14:08:34 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 14:08:36 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 14:08:36 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 14:08:36 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:12:43 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 14:12:43 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 14:12:43 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 14:12:43 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 14:12:43 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 14:12:46 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 14:12:46 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 14:12:46 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 14:12:46 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 14:12:46 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 14:12:48 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 14:12:48 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 14:12:48 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:13:33 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 14:13:33 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 14:13:33 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 14:13:33 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 14:13:33 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 14:13:36 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 14:13:36 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 14:13:36 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 14:13:36 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 14:13:36 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 14:13:37 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 14:13:37 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 14:13:37 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:13:53 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 14:13:53 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 14:13:53 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 14:13:53 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 14:13:53 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 14:13:56 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 14:13:56 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 14:13:56 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 14:13:56 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 14:13:56 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 14:13:58 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 14:13:58 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 14:13:58 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:14:04 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-29 14:14:04 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-29 14:14:04 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-29 14:14:04 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-29 14:14:04 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-29 14:14:06 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-29 14:14:06 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-29 14:14:06 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-29 14:14:06 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-29 14:14:06 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-29 14:14:07 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-29 14:14:07 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-29 14:14:07 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-29 14:14:12 - routes.api - INFO - Audio data decoded successfully: 49427 bytes, format: webm
+2025-07-29 14:14:12 - utils.audio_utils - INFO - Loading audio: 49427 bytes, format: webm
+2025-07-29 14:14:12 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-29 14:14:12 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp_rcff331.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp_rcff331.wav
+2025-07-29 14:14:12 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-29 14:14:17 - utils.audio_utils - INFO - Audio loaded successfully: 48960 samples, 16000Hz
+2025-07-29 14:14:18 - utils.audio_utils - INFO - Audio preprocessed: 2560 samples
+2025-07-29 14:14:18 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-29 14:14:19 - services.transcription_service - INFO - Transcription completed: 'you' (3 characters)
+2025-07-29 14:14:19 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-29 14:14:19 - services.transcription_service - INFO - Model used: whisper
+2025-07-29 14:14:19 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-29 14:14:21 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-29 14:14:32 - utils.error_handlers - ERROR - Unexpected Error: cannot access local variable 'time' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone-Bridge\backend\routes\api.py", line 332, in text_to_speech
+    start_time = time.time()
+                 ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
+2025-07-29 14:14:44 - utils.error_handlers - ERROR - Unexpected Error: cannot access local variable 'time' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone-Bridge\backend\routes\api.py", line 332, in text_to_speech
+    start_time = time.time()
+                 ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
+2025-07-29 14:14:45 - utils.error_handlers - ERROR - Unexpected Error: cannot access local variable 'time' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone-Bridge\backend\routes\api.py", line 332, in text_to_speech
+    start_time = time.time()
+                 ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
+2025-07-29 14:16:50 - utils.error_handlers - ERROR - Unexpected Error: cannot access local variable 'time' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alaqm\AppData\Roaming\Python\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "X:\Projects\Personal Projects\Tone-Bridge\backend\routes\api.py", line 332, in text_to_speech
+    start_time = time.time()
+                 ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
+2025-07-30 13:08:43 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 13:08:43 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 13:08:43 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 13:08:43 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 13:08:43 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 13:08:47 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 13:08:47 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 13:08:47 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 13:08:47 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 13:08:47 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 13:08:49 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 13:08:49 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 13:08:49 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 13:08:54 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 13:08:54 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 13:08:54 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 13:08:54 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 13:08:54 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 13:08:57 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 13:08:57 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 13:08:57 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 13:08:57 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 13:08:57 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 13:08:58 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 13:08:58 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 13:08:58 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:09:16 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:09:16 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:09:16 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:09:16 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:09:16 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:09:19 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:09:19 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:09:19 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:09:19 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:09:19 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:09:21 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:09:21 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:09:21 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:09:26 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:09:26 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:09:26 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:09:26 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:09:26 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:09:28 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:09:28 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:09:28 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:09:28 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:09:28 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:09:29 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:09:29 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:09:29 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:18:03 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:18:03 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:18:03 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:18:03 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:18:03 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:18:06 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:18:06 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:18:06 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:18:06 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:18:06 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:18:07 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:18:07 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:18:07 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:18:12 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:18:12 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:18:12 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:18:12 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:18:12 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:18:15 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:18:15 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:18:15 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:18:15 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:18:15 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:18:16 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:18:16 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:18:16 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:19:33 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:19:33 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:19:33 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:19:33 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:19:33 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:19:36 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:19:36 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:19:36 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:19:36 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:19:36 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:19:37 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:19:37 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:19:37 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:19:42 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:19:42 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:19:42 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:19:42 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:19:42 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:19:45 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:19:45 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:19:45 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:19:45 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:19:45 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:19:46 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:19:46 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:19:46 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:22:05 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:22:05 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:22:05 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:22:05 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:22:05 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:22:07 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:22:07 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:22:07 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:22:07 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:22:07 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:22:09 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:22:09 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:22:09 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:22:21 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:22:21 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:22:21 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:22:21 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:22:21 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:22:24 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:22:24 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:22:24 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:22:24 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:22:24 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:22:25 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:22:25 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:22:25 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:22:25 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-30 15:22:37 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:22:37 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:22:37 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:22:37 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:22:37 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:22:39 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:22:39 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:22:39 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:22:39 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:22:39 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:22:41 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:22:41 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:22:41 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:22:41 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-30 15:23:09 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:23:09 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:23:09 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:23:09 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:23:09 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:23:11 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:23:11 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:23:11 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:23:11 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:23:11 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:23:13 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:23:13 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:23:13 - __main__ - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:23:13 - __main__ - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-30 15:23:18 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:23:18 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:23:18 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:23:18 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:23:18 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:23:36 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:23:36 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:23:36 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:23:36 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:23:36 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:23:38 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:23:38 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:23:38 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:23:38 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:23:38 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:23:49 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:23:49 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:23:49 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:23:49 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:23:49 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:23:51 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:23:51 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:23:51 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:23:51 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:23:51 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:23:53 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:23:53 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:23:53 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:23:53 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-30 15:23:59 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-30 15:23:59 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-30 15:23:59 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-30 15:23:59 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-30 15:23:59 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-30 15:24:01 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-30 15:24:01 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-30 15:24:01 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-30 15:24:01 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-30 15:24:01 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-30 15:24:02 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-30 15:24:02 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-30 15:24:02 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-30 15:24:02 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-30 15:24:07 - routes.api - INFO - Audio data decoded successfully: 42665 bytes, format: webm
+2025-07-30 15:24:07 - utils.audio_utils - INFO - Loading audio: 42665 bytes, format: webm
+2025-07-30 15:24:07 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-30 15:24:07 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpmtg0k44t.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpmtg0k44t.wav
+2025-07-30 15:24:07 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-30 15:24:11 - utils.audio_utils - INFO - Audio loaded successfully: 42240 samples, 16000Hz
+2025-07-30 15:24:12 - utils.audio_utils - INFO - Audio preprocessed: 8192 samples
+2025-07-30 15:24:12 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-30 15:24:13 - services.transcription_service - INFO - Transcription completed: 'BOOM!' (5 characters)
+2025-07-30 15:24:13 - services.transcription_service - INFO - Confidence: 0.7
+2025-07-30 15:24:13 - services.transcription_service - INFO - Model used: whisper
+2025-07-30 15:24:13 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-30 15:24:15 - services.emotion_service - INFO - Text emotion detected: surprise (confidence: 0.392)
+2025-07-30 15:26:21 - routes.api - INFO - Audio data decoded successfully: 22379 bytes, format: webm
+2025-07-30 15:26:21 - utils.audio_utils - INFO - Loading audio: 22379 bytes, format: webm
+2025-07-30 15:26:21 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-30 15:26:21 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpbcu9iw3m.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpbcu9iw3m.wav
+2025-07-30 15:26:21 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-30 15:26:21 - utils.audio_utils - INFO - Audio loaded successfully: 22080 samples, 16000Hz
+2025-07-30 15:26:21 - utils.audio_utils - INFO - Audio preprocessed: 2560 samples
+2025-07-30 15:26:21 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-30 15:26:22 - services.transcription_service - INFO - Transcription completed: 'you' (3 characters)
+2025-07-30 15:26:22 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-30 15:26:22 - services.transcription_service - INFO - Model used: whisper
+2025-07-30 15:26:22 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-30 15:26:22 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-30 15:27:40 - routes.api - INFO - Audio data decoded successfully: 22379 bytes, format: webm
+2025-07-30 15:27:40 - utils.audio_utils - INFO - Loading audio: 22379 bytes, format: webm
+2025-07-30 15:27:40 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-30 15:27:40 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpmpmy_tih.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpmpmy_tih.wav
+2025-07-30 15:27:41 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-30 15:27:41 - utils.audio_utils - INFO - Audio loaded successfully: 22080 samples, 16000Hz
+2025-07-30 15:27:41 - utils.audio_utils - INFO - Audio preprocessed: 2560 samples
+2025-07-30 15:27:41 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-30 15:27:41 - services.transcription_service - INFO - Transcription completed: 'you' (3 characters)
+2025-07-30 15:27:41 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-30 15:27:41 - services.transcription_service - INFO - Model used: whisper
+2025-07-30 15:27:41 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-30 15:27:41 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-30 15:27:45 - routes.api - INFO - Audio data decoded successfully: 50393 bytes, format: webm
+2025-07-30 15:27:45 - utils.audio_utils - INFO - Loading audio: 50393 bytes, format: webm
+2025-07-30 15:27:45 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-30 15:27:45 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmp93wd5h3w.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmp93wd5h3w.wav
+2025-07-30 15:27:45 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-30 15:27:45 - utils.audio_utils - INFO - Audio loaded successfully: 49920 samples, 16000Hz
+2025-07-30 15:27:45 - utils.audio_utils - INFO - Audio preprocessed: 2560 samples
+2025-07-30 15:27:45 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-30 15:27:46 - services.transcription_service - INFO - Transcription completed: 'you' (3 characters)
+2025-07-30 15:27:46 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-30 15:27:46 - services.transcription_service - INFO - Model used: whisper
+2025-07-30 15:27:46 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-30 15:27:46 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-30 15:28:22 - routes.api - INFO - Audio data decoded successfully: 32170 bytes, format: webm
+2025-07-30 15:28:22 - utils.audio_utils - INFO - Loading audio: 32170 bytes, format: webm
+2025-07-30 15:28:22 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-30 15:28:22 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpe9zn2fvp.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpe9zn2fvp.wav
+2025-07-30 15:28:22 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-30 15:28:22 - utils.audio_utils - INFO - Audio loaded successfully: 44160 samples, 16000Hz
+2025-07-30 15:28:22 - utils.audio_utils - INFO - Audio preprocessed: 43136 samples
+2025-07-30 15:28:22 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-30 15:28:23 - services.transcription_service - INFO - Transcription completed: 'Mm.' (3 characters)
+2025-07-30 15:28:23 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-30 15:28:23 - services.transcription_service - INFO - Model used: whisper
+2025-07-30 15:28:23 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-30 15:28:23 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.965)
+2025-07-30 15:28:36 - routes.api - INFO - Audio data decoded successfully: 52619 bytes, format: webm
+2025-07-30 15:28:36 - utils.audio_utils - INFO - Loading audio: 52619 bytes, format: webm
+2025-07-30 15:28:36 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-30 15:28:36 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpbpgmdrqg.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpbpgmdrqg.wav
+2025-07-30 15:28:36 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-30 15:28:36 - utils.audio_utils - INFO - Audio loaded successfully: 72960 samples, 16000Hz
+2025-07-30 15:28:36 - utils.audio_utils - INFO - Audio preprocessed: 44032 samples
+2025-07-30 15:28:36 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-30 15:28:37 - services.transcription_service - INFO - Transcription completed: 'Testing testing, this is a test and it better work.' (51 characters)
+2025-07-30 15:28:37 - services.transcription_service - INFO - Confidence: 0.8999999999999999
+2025-07-30 15:28:37 - services.transcription_service - INFO - Model used: whisper
+2025-07-30 15:28:37 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-30 15:28:37 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.490)

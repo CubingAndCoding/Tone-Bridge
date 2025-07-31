@@ -220,4 +220,37 @@ export interface StorageInfo {
   percentage: number;
   transcriptCount: number;
   date: string;
+}
+
+// Text-to-Speech Types
+export interface VoiceOption {
+  id: string;
+  name: string;
+  language: string;
+  gender: 'male' | 'female' | 'neutral';
+  description: string;
+  preview?: string;
+}
+
+export interface TTSRequest {
+  text: string;
+  voice: string;
+  speed: number;
+  pitch: number;
+  volume: number;
+}
+
+export interface TTSResponse {
+  audio_url: string;
+  duration: number;
+  word_count: number;
+  voice_used: string;
+}
+
+export interface TTSHistory {
+  id: string;
+  text: string;
+  voice: string;
+  timestamp: Date;
+  duration: number;
 } 

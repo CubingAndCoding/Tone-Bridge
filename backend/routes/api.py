@@ -316,3 +316,147 @@ def get_models():
         'supported_emotions': Config.SUPPORTED_EMOTIONS,
         'emotion_emojis': Config.EMOTION_EMOJIS
     }, "Model information retrieved")) 
+
+@api_bp.route('/tts', methods=['POST'])
+def text_to_speech():
+    """
+    Convert text to speech with voice options
+    
+    Expected request:
+    - text: text to convert to speech
+    - voice: voice ID (optional, defaults to 'en-US-Neural2-A')
+    - speed: playback speed (optional, defaults to 1.0)
+    - pitch: pitch adjustment (optional, defaults to 1.0)
+    - volume: volume level (optional, defaults to 1.0)
+    """
+    start_time = time.time()
+    
+    try:
+        # Get request data
+        data = request.get_json()
+        if not data:
+            raise ValidationError("No JSON data provided")
+        
+        # Extract parameters
+        text = data.get('text', '').strip()
+        voice = data.get('voice', 'en-US-Neural2-A')
+        speed = float(data.get('speed', 1.0))
+        pitch = float(data.get('pitch', 1.0))
+        volume = float(data.get('volume', 1.0))
+        
+        if not text:
+            raise ValidationError("No text provided")
+        
+        # Validate parameters
+        if len(text) > 5000:
+            raise ValidationError("Text too long (max 5000 characters)")
+        
+        if speed < 0.5 or speed > 2.0:
+            raise ValidationError("Speed must be between 0.5 and 2.0")
+        
+        if pitch < 0.5 or pitch > 2.0:
+            raise ValidationError("Pitch must be between 0.5 and 2.0")
+        
+        if volume < 0.0 or volume > 1.0:
+            raise ValidationError("Volume must be between 0.0 and 1.0")
+        
+        # Available voices (simulated for now)
+        available_voices = [
+            'en-US-Neural2-A', 'en-US-Neural2-B', 'en-US-Neural2-C',
+            'en-US-Neural2-D', 'en-US-Neural2-E', 'en-US-Neural2-F'
+        ]
+        
+        if voice not in available_voices:
+            raise ValidationError(f"Voice '{voice}' not available")
+        
+        # Simulate TTS processing (in a real implementation, you'd use a TTS service)
+        import time
+        time.sleep(0.5)  # Simulate processing time
+        
+        # Calculate estimated duration (rough estimate: 150 words per minute)
+        word_count = len(text.split())
+        estimated_duration = (word_count / 150) * 60  # seconds
+        
+        # Generate a mock audio URL (in real implementation, this would be the actual audio file)
+        audio_url = f"/api/tts/audio/{int(time.time())}_{hash(text) % 10000}"
+        
+        # Prepare response
+        response_data = {
+            'audio_url': audio_url,
+            'duration': estimated_duration,
+            'word_count': word_count,
+            'voice_used': voice,
+            'text_length': len(text),
+            'speed': speed,
+            'pitch': pitch,
+            'volume': volume
+        }
+        
+        # Log request
+        duration = time.time() - start_time
+        log_request(logger, {
+            'text_length': len(text),
+            'voice': voice,
+            'speed': speed,
+            'pitch': pitch,
+            'volume': volume
+        }, response_data, duration)
+        
+        return jsonify(create_success_response(response_data, "Text-to-speech conversion completed"))
+        
+    except Exception as e:
+        logger.error(f"TTS endpoint error: {str(e)}")
+        raise
+
+@api_bp.route('/tts/voices', methods=['GET'])
+def get_voices():
+    """Get available TTS voices"""
+    voices = [
+        {
+            'id': 'en-US-Neural2-A',
+            'name': 'Emma',
+            'language': 'English (US)',
+            'gender': 'female',
+            'description': 'Clear and friendly female voice'
+        },
+        {
+            'id': 'en-US-Neural2-B',
+            'name': 'James',
+            'language': 'English (US)',
+            'gender': 'male',
+            'description': 'Professional male voice'
+        },
+        {
+            'id': 'en-US-Neural2-C',
+            'name': 'Sophia',
+            'language': 'English (US)',
+            'gender': 'female',
+            'description': 'Warm and expressive voice'
+        },
+        {
+            'id': 'en-US-Neural2-D',
+            'name': 'Michael',
+            'language': 'English (US)',
+            'gender': 'male',
+            'description': 'Deep and authoritative voice'
+        },
+        {
+            'id': 'en-US-Neural2-E',
+            'name': 'Olivia',
+            'language': 'English (US)',
+            'gender': 'female',
+            'description': 'Young and energetic voice'
+        },
+        {
+            'id': 'en-US-Neural2-F',
+            'name': 'David',
+            'language': 'English (US)',
+            'gender': 'male',
+            'description': 'Calm and soothing voice'
+        }
+    ]
+    
+    return jsonify(create_success_response({
+        'voices': voices,
+        'total': len(voices)
+    }, "Voice list retrieved")) 

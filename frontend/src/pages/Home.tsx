@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import {
   IonPage,
   IonHeader,
@@ -8,6 +9,9 @@ import {
   IonIcon,
   IonBadge,
   IonButton,
+  IonFab,
+  IonFabButton,
+  IonSpinner,
 } from '@ionic/react';
 import {
   settingsOutline,
@@ -18,6 +22,8 @@ import {
   trashOutline,
   sunnyOutline,
   moonOutline,
+  volumeHighOutline,
+  closeOutline,
 } from 'ionicons/icons';
 import { AudioRecording, TranscriptionSegment, DisplayMode, UserSettings } from '../types';
 import { ApiUtils, AudioUtils, StorageUtils, AnalyticsUtils, ErrorUtils, ThemeUtils, DailyStorageManager, ThemeStorageManager, TranscriptStorageManager } from '../utils';
@@ -26,6 +32,7 @@ import { Loading, Toast } from '../components/common';
 import AudioRecorder from '../components/audio/AudioRecorder';
 import TranscriptionDisplay from '../components/transcription/TranscriptionDisplay';
 import SettingsPanel from '../components/settings/SettingsPanel';
+import { TextToSpeech } from '../components/tts';
 
 const Home: React.FC = () => {
   // State management
@@ -35,6 +42,7 @@ const Home: React.FC = () => {
 
   const [settings, setSettings] = useState<UserSettings>(StorageUtils.getSettings());
   const [showSettings, setShowSettings] = useState(false);
+  const [showTTS, setShowTTS] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error' | 'warning' | 'info'>('info');
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -139,11 +147,25 @@ const Home: React.FC = () => {
     setIsRecording(false);
 
     try {
+      console.log('Processing recording:', {
+        size: recording.blob.size,
+        duration: recording.duration,
+        format: recording.format,
+        timestamp: recording.timestamp
+      });
+
       // Debug: Test audio data first
       await DebugUtils.testAudioData(recording.blob, recording.format);
       
       // Convert audio to base64
       const audioBase64 = await AudioUtils.blobToBase64(recording.blob);
+      console.log('Audio converted to base64, length:', audioBase64.length);
+
+      // Test API connection first
+      const apiStatus = await ApiUtils.getApiStatus();
+      if (!apiStatus.connected) {
+        throw new Error(`Cannot connect to server: ${apiStatus.error || 'Unknown error'}`);
+      }
 
       // Send to backend
       const response = await ApiUtils.post<any>('/api/transcribe', {
@@ -175,12 +197,28 @@ const Home: React.FC = () => {
         // Show success message
         showToast('Transcription completed successfully!', 'success');
       } else {
-        throw new Error(response.message);
+        throw new Error(response.message || 'Transcription failed');
       }
     } catch (error) {
-      const appError = ErrorUtils.handleError(error);
-      showToast(`Transcription failed: ${appError.message}`, 'error');
-      AnalyticsUtils.trackError(appError);
+      console.error('Transcription error:', error);
+      
+      let errorMessage = 'Transcription failed';
+      if (error instanceof Error) {
+        if (error.message.includes('Cannot connect to server')) {
+          errorMessage = 'Cannot connect to server. Please check your internet connection and try again.';
+        } else if (error.message.includes('Network error')) {
+          errorMessage = 'Network connection issue. Please check your connection and try again.';
+        } else if (error.message.includes('Request timed out')) {
+          errorMessage = 'Request timed out. Please try again.';
+        } else if (error.message.includes('Audio file too large')) {
+          errorMessage = 'Recording too long. Please record a shorter message.';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      showToast(`Transcription failed: ${errorMessage}`, 'error');
+      AnalyticsUtils.trackError(ErrorUtils.createError('TRANSCRIPTION_FAILED', errorMessage));
     } finally {
       setIsProcessing(false);
     }
@@ -388,14 +426,16 @@ const Home: React.FC = () => {
           <IonButton
             fill="clear"
             slot="end"
-            onClick={() => setShowSettings(!showSettings)}
+            onClick={() => !isProcessing && setShowSettings(!showSettings)}
+            disabled={showTTS || isProcessing}
             style={{ 
               marginRight: '0.5rem',
-              color: 'var(--ion-text-color)',
-              '--color': 'var(--ion-text-color)'
+              color: (showTTS || isProcessing) ? 'var(--ion-color-medium)' : 'var(--ion-text-color)',
+              '--color': (showTTS || isProcessing) ? 'var(--ion-color-medium)' : 'var(--ion-text-color)',
+              opacity: (showTTS || isProcessing) ? 0.5 : 1
             }}
           >
-            <IonIcon icon={settingsOutline} style={{ color: 'var(--ion-text-color)' }} />
+            <IonIcon icon={settingsOutline} style={{ color: (showTTS || isProcessing) ? 'var(--ion-color-medium)' : 'var(--ion-text-color)' }} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
@@ -434,6 +474,7 @@ const Home: React.FC = () => {
             onRecordingComplete={handleRecordingComplete}
             onRecordingError={handleRecordingError}
             disabled={isProcessing}
+            isProcessing={isProcessing}
             maxDuration={300}
           />
         </div>
@@ -519,6 +560,7 @@ const Home: React.FC = () => {
             
             <IonButton
               onClick={copyTranscripts}
+              disabled={isProcessing}
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'primary'}
               fill="outline"
               size="default"
@@ -528,7 +570,8 @@ const Home: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 minWidth: window.innerWidth <= 460 ? 'auto' : undefined,
-                padding: window.innerWidth <= 460 ? '0.5rem' : undefined
+                padding: window.innerWidth <= 460 ? '0.5rem' : undefined,
+                opacity: isProcessing ? 0.5 : 1
               }}
             >
               <IonIcon icon={downloadOutline} />
@@ -537,6 +580,7 @@ const Home: React.FC = () => {
 
             <IonButton
               onClick={shareTranscript}
+              disabled={isProcessing}
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'warning'}
               fill="outline"
               size="default"
@@ -546,7 +590,8 @@ const Home: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 minWidth: window.innerWidth <= 460 ? 'auto' : undefined,
-                padding: window.innerWidth <= 460 ? '0.5rem' : undefined
+                padding: window.innerWidth <= 460 ? '0.5rem' : undefined,
+                opacity: isProcessing ? 0.5 : 1
               }}
             >
               <IonIcon icon={shareOutline} />
@@ -555,6 +600,7 @@ const Home: React.FC = () => {
 
             <IonButton
               onClick={clearTranscript}
+              disabled={isProcessing}
               color={settings.theme === 'high-contrast' && !isDarkMode ? 'dark' : 'danger'}
               fill="outline"
               size="default"
@@ -564,7 +610,8 @@ const Home: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 minWidth: window.innerWidth <= 460 ? 'auto' : undefined,
-                padding: window.innerWidth <= 460 ? '0.5rem' : undefined
+                padding: window.innerWidth <= 460 ? '0.5rem' : undefined,
+                opacity: isProcessing ? 0.5 : 1
               }}
             >
               <IonIcon icon={trashOutline} />
@@ -614,6 +661,49 @@ const Home: React.FC = () => {
             message="Processing audio..."
             spinner="bubbles"
           />
+        )}
+
+        {/* TTS Modal */}
+        <TextToSpeech
+          isOpen={showTTS}
+          onClose={() => setShowTTS(false)}
+        />
+
+        {/* TTS FAB */}
+        {!showSettings && (
+          <IonFab vertical="bottom" horizontal="end" slot="fixed">
+            <motion.div
+              whileHover={{ scale: isProcessing ? 1 : 1.05 }}
+              whileTap={{ scale: isProcessing ? 1 : 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <IonFabButton
+                onClick={() => !isProcessing && setShowTTS(!showTTS)}
+                disabled={isProcessing}
+                color={showTTS ? 'danger' : isProcessing ? 'medium' : 'primary'}
+                style={{
+                  opacity: isProcessing ? 0.5 : 1
+                }}
+              >
+                <motion.div
+                  animate={showTTS ? {
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0]
+                  } : {
+                    scale: 1,
+                    rotate: 0
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: showTTS ? Infinity : 0,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <IonIcon size="large" icon={showTTS ? closeOutline : volumeHighOutline} />
+                </motion.div>
+              </IonFabButton>
+            </motion.div>
+          </IonFab>
         )}
 
         {/* Toast notifications */}

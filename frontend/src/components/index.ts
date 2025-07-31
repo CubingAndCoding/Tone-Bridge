@@ -11,4 +11,7 @@ export { default as AudioRecorder } from './audio/AudioRecorder';
 export { default as TranscriptionDisplay } from './transcription/TranscriptionDisplay';
 
 // Settings Components
-export { default as SettingsPanel } from './settings/SettingsPanel'; 
+export { default as SettingsPanel } from './settings/SettingsPanel';
+
+// TTS Components
+export * from './tts'; 
