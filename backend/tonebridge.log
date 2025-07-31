@@ -3124,3 +3124,105 @@ UnboundLocalError: cannot access local variable 'time' where it is not associate
 2025-07-30 15:28:37 - services.transcription_service - INFO - Model used: whisper
 2025-07-30 15:28:37 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
 2025-07-30 15:28:37 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.490)
+2025-07-31 11:34:14 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 11:34:14 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 11:34:14 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 11:34:14 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 11:34:14 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 11:34:18 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-31 11:34:18 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-31 11:34:18 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-31 11:34:18 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-31 11:34:18 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-31 11:34:21 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-31 11:34:21 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-31 11:34:21 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-31 11:34:21 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-31 11:34:26 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 11:34:26 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 11:34:26 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 11:34:26 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 11:34:26 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 11:34:28 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-31 11:34:28 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-31 11:34:28 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-31 11:34:28 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-31 11:34:28 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-31 11:34:30 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-31 11:34:30 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-31 11:34:30 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-31 11:34:30 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-31 11:34:38 - routes.api - INFO - Audio data decoded successfully: 5991 bytes, format: webm
+2025-07-31 11:34:38 - utils.audio_utils - INFO - Loading audio: 5991 bytes, format: webm
+2025-07-31 11:34:38 - utils.audio_utils - INFO - Converting webm to wav using ffmpeg...
+2025-07-31 11:34:38 - utils.audio_utils - INFO - Running ffmpeg: ffmpeg -y -i C:\Users\alaqm\AppData\Local\Temp\tmpacer9tz4.webm -ar 16000 -ac 1 C:\Users\alaqm\AppData\Local\Temp\tmpacer9tz4.wav
+2025-07-31 11:34:39 - utils.audio_utils - INFO - ffmpeg conversion completed successfully
+2025-07-31 11:34:43 - utils.audio_utils - INFO - Audio loaded successfully: 7680 samples, 16000Hz
+2025-07-31 11:34:44 - utils.audio_utils - INFO - Audio preprocessed: 3072 samples
+2025-07-31 11:34:44 - services.transcription_service - INFO - Using Whisper for transcription
+2025-07-31 11:34:45 - services.transcription_service - INFO - Transcription completed: 'mm' (2 characters)
+2025-07-31 11:34:46 - services.transcription_service - INFO - Confidence: 0.5
+2025-07-31 11:34:46 - services.transcription_service - INFO - Model used: whisper
+2025-07-31 11:34:46 - services.emotion_service - INFO - Using AI-based emotion detection (transformer model)
+2025-07-31 11:34:48 - services.emotion_service - INFO - Text emotion detected: neutral (confidence: 0.968)
+2025-07-31 11:53:51 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 11:53:51 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 11:53:51 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 11:53:51 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 11:53:51 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 11:53:54 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-31 11:53:54 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-31 11:53:54 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-31 11:53:54 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-31 11:53:54 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-31 11:53:56 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-31 11:53:56 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-31 11:53:56 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-31 11:53:56 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-31 11:54:01 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 11:54:01 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 11:54:01 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 11:54:01 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 11:54:01 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 11:54:03 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-31 11:54:03 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-31 11:54:03 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-31 11:54:03 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-31 11:54:03 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-31 11:54:05 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-31 11:54:05 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-31 11:54:05 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-31 11:54:05 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-31 12:08:35 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 12:08:35 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 12:08:35 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 12:08:35 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 12:08:35 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 12:08:54 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 12:08:54 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 12:08:54 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 12:08:54 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 12:08:54 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 12:08:57 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-31 12:08:57 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-31 12:08:57 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-31 12:08:57 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-31 12:08:57 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-31 12:08:58 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-31 12:08:58 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-31 12:08:58 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-31 12:08:58 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']
+2025-07-31 12:09:03 - services.transcription_service - INFO - TRANSFORMERS_AVAILABLE: True
+2025-07-31 12:09:03 - services.transcription_service - INFO - torch version: 2.7.1+cpu
+2025-07-31 12:09:03 - services.transcription_service - INFO - transformers version: 4.35.0
+2025-07-31 12:09:03 - services.transcription_service - INFO - Using CPU for transcription
+2025-07-31 12:09:03 - services.transcription_service - INFO - Initializing Whisper pipeline with model: openai/whisper-base
+2025-07-31 12:09:06 - services.transcription_service - INFO - Transcription models initialized successfully
+2025-07-31 12:09:06 - services.transcription_service - INFO - Whisper pipeline created: True
+2025-07-31 12:09:06 - services.emotion_service - INFO - TRANSFORMERS_AVAILABLE for emotion: True
+2025-07-31 12:09:06 - services.emotion_service - INFO - Using CPU for emotion detection
+2025-07-31 12:09:06 - services.emotion_service - INFO - Initializing emotion pipeline with model: SamLowe/roberta-base-go_emotions
+2025-07-31 12:09:07 - services.emotion_service - INFO - Emotion detection models initialized successfully
+2025-07-31 12:09:07 - services.emotion_service - INFO - Emotion pipeline created: True
+2025-07-31 12:09:07 - app - INFO - ToneBridge Backend initialized successfully
+2025-07-31 12:09:07 - app - INFO - CORS allowed origins: ['http://localhost:3000', 'http://localhost:8100', 'https://localhost:8100', 'https://tonebridge.vercel.app', 'http://localhost:3000', 'http://localhost:8100', 'https://tonebridge.vercel.app', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100', 'http://192.168.1.100:3000', 'http://192.168.1.100:8100', 'https://192.168.1.100:3000', 'https://192.168.1.100:8100', 'http://10.0.0.1:3000', 'http://10.0.0.1:8100', 'https://10.0.0.1:3000', 'https://10.0.0.1:8100', 'http://192.168.1.210:3000', 'http://192.168.1.210:8100', 'https://192.168.1.210:3000', 'https://192.168.1.210:8100']

@@ -670,8 +670,12 @@ const Home: React.FC = () => {
         />
 
         {/* TTS FAB */}
-        {!showSettings && (
-          <IonFab vertical="bottom" horizontal="end" slot="fixed">
+        {!showSettings && !showTTS && (
+          <IonFab 
+            vertical="bottom" 
+            horizontal="end" 
+            slot="fixed"
+          >
             <motion.div
               whileHover={{ scale: isProcessing ? 1 : 1.05 }}
               whileTap={{ scale: isProcessing ? 1 : 0.95 }}
@@ -680,26 +684,23 @@ const Home: React.FC = () => {
               <IonFabButton
                 onClick={() => !isProcessing && setShowTTS(!showTTS)}
                 disabled={isProcessing}
-                color={showTTS ? 'danger' : isProcessing ? 'medium' : 'primary'}
+                color={isProcessing ? 'medium' : 'primary'}
                 style={{
                   opacity: isProcessing ? 0.5 : 1
                 }}
               >
                 <motion.div
-                  animate={showTTS ? {
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0]
-                  } : {
+                  animate={{
                     scale: 1,
                     rotate: 0
                   }}
                   transition={{
                     duration: 2,
-                    repeat: showTTS ? Infinity : 0,
+                    repeat: 0,
                     ease: "easeInOut"
                   }}
                 >
-                  <IonIcon size="large" icon={showTTS ? closeOutline : volumeHighOutline} />
+                  <IonIcon size="large" icon={volumeHighOutline} />
                 </motion.div>
               </IonFabButton>
             </motion.div>
