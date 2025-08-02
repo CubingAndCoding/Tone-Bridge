@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   IonButton,
   IonIcon,
@@ -15,6 +14,10 @@ import {
   IonItemGroup,
   IonChip,
   IonBadge,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
 } from '@ionic/react';
 import { 
   playOutline, 
@@ -52,6 +55,34 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     setPresentingElement(document.querySelector('ion-router-outlet') || document.body);
   }, []);
+
+  // Prevent body scrolling and adjust navbar z-index when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      // Lower the navbar z-index so it appears behind the backdrop
+      const header = document.querySelector('ion-header');
+      if (header) {
+        header.style.zIndex = '1';
+      }
+    } else {
+      document.body.style.overflow = '';
+      // Restore the navbar z-index
+      const header = document.querySelector('ion-header');
+      if (header) {
+        header.style.zIndex = '';
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      // Ensure navbar z-index is restored when component unmounts
+      const header = document.querySelector('ion-header');
+      if (header) {
+        header.style.zIndex = '';
+      }
+    };
+  }, [isOpen]);
 
   // Load available voices when component mounts
   useEffect(() => {
@@ -272,100 +303,39 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
   };
 
       return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
+        <IonModal
+          isOpen={isOpen}
+          onDidDismiss={onClose}
+          presentingElement={presentingElement!}
           style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0, 0, 0, 0.7)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem',
-            paddingTop: '4rem'
+            '--height': '85vh',
+            '--width': '500px',
+            '--max-width': '500px',
+            '--border-radius': '16px',
+            '--box-shadow': '0 8px 32px rgba(0, 0, 0, 0.5)',
+            '--backdrop-opacity': '0.7'
           }}
-          onClick={onClose} // Close when clicking backdrop
         >
-          <motion.div
-            initial={{ 
-              opacity: 0, 
-              scale: 0.85, 
-              y: 30,
-              rotateX: -15
-            }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              y: 0,
-              rotateX: 0
-            }}
-            exit={{ 
-              opacity: 0, 
-              scale: 0.85, 
-              y: 30,
-              rotateX: 15
-            }}
-            transition={{ 
-              type: "spring",
-              damping: 20,
-              stiffness: 400,
-              duration: 0.25
-            }}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking modal content
-            style={{
-              background: 'var(--ion-background-color)',
-              borderRadius: '16px',
-              maxWidth: '500px',
-              width: '100%',
-              maxHeight: '90vh',
-              overflow: 'hidden',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
-              border: '1px solid var(--ion-color-light-shade)',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: -15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05, duration: 0.2 }}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '1.5rem 1.5rem 1rem 1.5rem',
-                borderBottom: '1px solid var(--ion-color-light-shade)',
-                position: 'relative'
-              }}
-            >
-              <h2 style={{ 
-                margin: 0, 
-                fontSize: '1.5rem', 
+          <IonHeader>
+            <IonToolbar style={{
+              '--background': 'var(--ion-background-color)',
+              '--color': 'var(--ion-text-color)',
+              borderBottom: '1px solid var(--ion-color-light-shade)',
+              padding: '1rem 1.5rem'
+            }}>
+              <IonTitle style={{
+                fontSize: '1.5rem',
                 fontWeight: '600',
                 color: 'var(--ion-text-color)'
               }}>
                 Text to Speech (Beta)
-              </h2>
-              
-              {/* Close button positioned absolutely */}
+              </IonTitle>
               <IonButton
                 fill="clear"
                 size="small"
+                slot="end"
                 onClick={onClose}
                 style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  right: '1rem',
                   '--padding-start': '8px',
                   '--padding-end': '8px',
                   minWidth: 'auto',
@@ -373,28 +343,24 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
                   width: '40px',
                   borderRadius: '50%',
                   background: 'var(--ion-color-light)',
-                  color: 'var(--ion-color-medium)',
-                  zIndex: 1000
+                  color: 'var(--ion-color-medium)'
                 }}
               >
                 <IonIcon icon={closeOutline} size="small" />
               </IonButton>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.2 }}
-              style={{
-                flex: 1,
-                overflow: 'auto',
-                padding: '1rem 1.5rem',
-                paddingLeft: '2rem', 
-                paddingRight: '2rem',
-                maxWidth: '500px',
-                margin: '0 auto'
-              }}
-            >
+            </IonToolbar>
+          </IonHeader>
+          
+          <IonContent style={{
+            padding: '1.5rem',
+            '--padding-start': '1.5rem',
+            '--padding-end': '1.5rem',
+            '--padding-top': '1.5rem',
+            '--padding-bottom': '1.5rem',
+            maxWidth: '500px',
+            margin: '0 auto'
+          }}>
+            <div style={{ padding: '0.5rem' }}>
               {/* Beta Testing Notice */}
               <div
                 style={{
@@ -445,7 +411,9 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
               '--padding-start': '0',
               '--padding-end': '0',
               '--inner-padding-start': '0',
-              '--inner-padding-end': '0'
+              '--inner-padding-end': '0',
+              margin: '0',
+              borderRadius: '8px'
             }}>
               <IonTextarea
                 value={text}
@@ -549,28 +517,16 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
                     style={{
                       width: '100%',
                       height: 'auto',
-                      padding: '0.75rem',
+                      padding: '0.2rem',
                       borderRadius: '12px',
                       textTransform: 'none',
                       fontWeight: '500',
                       boxSizing: 'border-box',
                       overflow: 'hidden',
-                      outline: '2px solid transparent',
-                      outlineOffset: '2px',
                       transition: 'all 0.2s ease',
                       '--border-radius': '12px',
-                      '--padding-start': '0.75rem',
-                      '--padding-end': '0.75rem',
-                      '--padding-top': '0.75rem',
-                      '--padding-bottom': '0.75rem'
                     }}
                     onClick={() => setSelectedVoice(voice.id)}
-                    onFocus={(e) => {
-                      e.target.style.outlineColor = 'var(--ion-outline-color, var(--ion-color-primary))';
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.outlineColor = 'transparent';
-                    }}
                   >
                     <div style={{ 
                       width: '100%',
@@ -784,12 +740,10 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ isOpen, onClose }) => {
               </IonButton>
             </div>
           )}
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+            </div>
+          </IonContent>
+        </IonModal>
+      );
+    };
 
-export default TextToSpeech; 
+    export default TextToSpeech; 

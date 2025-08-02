@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   IonList,
   IonItem,
@@ -15,6 +14,11 @@ import {
   IonCard,
   IonCardContent,
   IonAlert,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
 } from '@ionic/react';
 import {
   settingsOutline,
@@ -24,6 +28,8 @@ import {
   eyeOutline,
   speedometerOutline,
   closeOutline,
+  sunnyOutline,
+  moonOutline,
 } from 'ionicons/icons';
 import { UserSettings, DisplayMode, TranscriptionSegment } from '../../types';
 import { StorageUtils, ThemeUtils, TranscriptStorageManager } from '../../utils';
@@ -52,10 +58,17 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   onDisplayModeChange,
   className = '',
 }) => {
+  const modal = useRef<HTMLIonModalElement>(null);
+  const [presentingElement, setPresentingElement] = useState<HTMLElement | null>(null);
   const [settings, setSettings] = useState<UserSettings>(StorageUtils.getSettings());
   const [supportsHover, setSupportsHover] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   
+  // Set presenting element for card modal
+  useEffect(() => {
+    setPresentingElement(document.querySelector('ion-router-outlet') || document.body);
+  }, []);
+
   // Set initial toolbar background and detect hover support
   useEffect(() => {
     const toolbar = document.querySelector('ion-toolbar');
@@ -82,6 +95,34 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     ThemeUtils.applyFontSize(settings.fontSize);
     applyAccessibilitySettings(settings.accessibility);
   }, [settings.fontSize, settings.accessibility]);
+
+  // Prevent body scrolling and adjust navbar z-index when modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      // Lower the navbar z-index so it appears behind the backdrop
+      const header = document.querySelector('ion-header');
+      if (header) {
+        header.style.zIndex = '1';
+      }
+    } else {
+      document.body.style.overflow = '';
+      // Restore the navbar z-index
+      const header = document.querySelector('ion-header');
+      if (header) {
+        header.style.zIndex = '';
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      // Ensure navbar z-index is restored when component unmounts
+      const header = document.querySelector('ion-header');
+      if (header) {
+        header.style.zIndex = '';
+      }
+    };
+  }, [isOpen]);
 
   // Display modes
   const displayModes: DisplayMode[] = [
@@ -221,112 +262,53 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: settings.accessibility.reducedMotion ? 0.01 : 0.15 }}
-          className="settings-modal-backdrop"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: (() => {
-              // Check if we're in high contrast theme
-              const isHighContrast = document.documentElement.classList.contains('theme-high-contrast');
-              const isDarkMode = document.documentElement.classList.contains('dark-mode');
-              
-              if (isHighContrast) {
-                // High contrast theme: use opposite color for backdrop
-                if (isDarkMode) {
-                  return 'rgba(255, 255, 255, 0.3)'; // White overlay on black
-                } else {
-                  return 'rgba(0, 0, 0, 0.7)'; // Black overlay on white
-                }
-              } else {
-                // Regular themes: use standard dark overlay
-                return 'rgba(0, 0, 0, 0.7)';
-              }
-            })(),
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem',
-            paddingTop: '4rem'
-          }}
-          onClick={onClose} // Close when clicking backdrop
-        >
-          <motion.div
-            initial={{ 
-              opacity: 0, 
-              scale: 0.85, 
-              y: 30,
-              rotateX: -15
-            }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              y: 0,
-              rotateX: 0
-            }}
-            exit={{ 
-              opacity: 0, 
-              scale: 0.85, 
-              y: 30,
-              rotateX: 15
-            }}
-            transition={{ 
-              type: "spring",
-              damping: 20,
-              stiffness: 400,
-              duration: 0.25
-            }}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking modal content
-            className="settings-modal-content"
-            style={{
-              background: 'var(--ion-background-color)',
-              borderRadius: '16px',
-              maxWidth: '500px',
-              width: '100%',
-              maxHeight: '90vh',
-              overflow: 'hidden',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
-              border: '1px solid var(--ion-color-light-shade)',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: -15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05, duration: 0.2 }}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '1.5rem 1.5rem 1rem 1.5rem',
-                borderBottom: '1px solid var(--ion-color-light-shade)'
-              }}
-            >
-              <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '600' }}>
-                Settings
-              </h2>
+    <IonModal
+      isOpen={isOpen}
+      onDidDismiss={onClose}
+      presentingElement={presentingElement!}
+      style={{
+        '--height': '85vh',
+        '--width': '500px',
+        '--max-width': '500px',
+        '--border-radius': '16px',
+        '--box-shadow': '0 8px 32px rgba(0, 0, 0, 0.5)',
+        '--backdrop-opacity': '0.7'
+      }}
+    >
+      <IonHeader>
+        <IonToolbar style={{
+          '--background': 'var(--ion-background-color)',
+          '--color': 'var(--ion-text-color)',
+          borderBottom: '1px solid var(--ion-color-light-shade)',
+          padding: '1rem 1.5rem'
+        }}>
+          <IonTitle style={{
+            fontSize: '1.5rem',
+            fontWeight: '600',
+            color: 'var(--ion-text-color)'
+          }}>
+            Settings
+          </IonTitle>
               <IonButton
                 fill="clear"
                 size="small"
+                slot="end"
                 onClick={onClose}
               >
                 <IonIcon icon={closeOutline} />
               </IonButton>
-            </motion.div>
-
-            {/* Content */}
+            </IonToolbar>
+          </IonHeader>
+          
+          <IonContent style={{
+            padding: '1.5rem',
+            '--padding-start': '1.5rem',
+            '--padding-end': '1.5rem',
+            '--padding-top': '1.5rem',
+            '--padding-bottom': '1.5rem'
+          }}>
+            <div style={{ padding: '0.5rem' }}>
+              {/* Content */}
             <div style={{ 
               flex: 1, 
               overflow: 'auto', 
@@ -338,11 +320,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             }}>
               <IonList style={{ background: 'transparent' }}>
                 {/* Display Mode Settings */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.1, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
-                >
+                <div>
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
                       marginBottom: '0.5rem', 
@@ -367,54 +345,38 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       Choose how emotions appear in your transcriptions
                     </p>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
-                      {displayModes.map((mode, index) => (
-                        <motion.button
-                          key={mode.id}
-                          className={`display-mode-button ${currentDisplayMode.id === mode.id ? 'selected' : ''}`}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          whileHover={supportsHover ? {
-                            scale: 1.03,
-                          } : {}}
-                          whileTap={{
-                            scale: 0.85,
-                            transition: { delay: 0, duration: 0.1 },
-                          }}
-                          transition={{ 
-                            delay: 0,
-                            duration: 0.2,
-                            type: 'spring',
-                            stiffness: 200,
-                            damping: 20
-                          }}
-                          onClick={() => onDisplayModeChange(mode)}
-                          style={{
-                            padding: '0.5rem .4rem',
-                            borderRadius: '8px',
-                            border: currentDisplayMode.id === mode.id 
-                              ? '1px solid var(--ion-color-primary) !important' 
-                              : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
-                            background: currentDisplayMode.id === mode.id 
-                              ? 'var(--ion-color-primary) !important' 
-                              : 'var(--ion-color-light-shade) !important',
-                            color: currentDisplayMode.id === mode.id 
-                              ? 'var(--ion-color-light-shade)'
-                              : 'var(--ion-color-primary)',
-                            fontSize: '0.9rem',
-                            fontWeight: currentDisplayMode.id === mode.id ? '600' : '400',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.75rem',
-                            width: '95%',
-                            textAlign: 'left',
-                            minHeight: '48px',
-                            position: 'relative'
-                          }}
-                        >
-                          <motion.span 
+                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'center' }}>
+                                             {displayModes.map((mode, index) => (
+                                                   <IonButton
+                            key={mode.id}
+                            fill={currentDisplayMode.id === mode.id ? 'solid' : 'outline'}
+                            color="primary"
+                            className={`display-mode-button ${currentDisplayMode.id === mode.id ? 'selected' : ''}`}
+                            onClick={() => onDisplayModeChange(mode)}
+                                                          style={{
+                                width: '95%',
+                                height: 'auto',
+                                padding: '0.2rem',
+                                borderRadius: '12px',
+                                textTransform: 'none',
+                                fontWeight: '500',
+                                boxSizing: 'border-box',
+                                overflow: 'hidden',
+                                transition: 'all 0.2s ease',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '1rem',
+                                textAlign: 'left',
+                                minHeight: '48px',
+                                position: 'relative',
+                                '--border-radius': '12px',
+                                '--padding-start': '0.75rem',
+                                '--padding-end': '0.75rem',
+                                '--padding-top': '0.75rem',
+                                '--padding-bottom': '0.75rem'
+                              }}
+                          >
+                          <span 
                             key={`${mode.id}`}
                             style={{ 
                               fontSize: '1.2rem',
@@ -423,7 +385,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             }}
                           >
                             {mode.id === 'combined' ? '😊' : mode.id === 'emoji-only' ? '😄' : '🏷️'}
-                          </motion.span>
+                          </span>
                           <div style={{ flex: 1 }}>
                             <div style={{ 
                                 fontWeight: '500', 
@@ -452,52 +414,69 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             justifyContent: 'center',
                             flexShrink: 0
                           }}>
-                            <AnimatePresence>
-                              {currentDisplayMode.id === mode.id && (
-                                <motion.span 
-                                  initial={{ scale: 0, opacity: 0 }}
-                                  animate={{ scale: 1, opacity: 1 }}
-                                  exit={{ scale: 0, opacity: 0 }}
-                                  transition={{ 
-                                    type: settings.accessibility.reducedMotion ? "tween" : "spring",
-                                    stiffness: settings.accessibility.reducedMotion ? 0 : 500,
-                                    damping: settings.accessibility.reducedMotion ? 0 : 30
-                                  }}
-                                  style={{ 
-                                    color: 'var(--ion-color-primary-contrast)',
-                                    fontSize: '1.2rem',
-                                    fontWeight: 'bold'
-                                  }}
-                                >
-                                  ✓
-                                </motion.span>
-                              )}
-                            </AnimatePresence>
+                            {currentDisplayMode.id === mode.id && (
+                              <span 
+                                style={{ 
+                                  color: 'var(--ion-color-primary-contrast)',
+                                  fontSize: '1.2rem',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                ✓
+                              </span>
+                            )}
                           </div>
-                        </motion.button>
+                          </IonButton>
                       ))}
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Theme Settings */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.2, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
-                >
-                  <ThemeSelector
-                    currentTheme={settings.theme}
-                    onThemeChange={(themeId) => updateSettings({ theme: themeId })}
-                  />
-                </motion.div>
+                                 {/* Theme Settings */}
+                 <div>
+                   <ThemeSelector
+                     currentTheme={settings.theme}
+                     onThemeChange={(themeId) => updateSettings({ theme: themeId })}
+                   />
+                 </div>
 
-                {/* Display Settings */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.25, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
-                >
+                 {/* Light/Dark Mode Toggle */}
+                 <div>
+                   <div style={{ marginBottom: '1.5rem' }}>
+                     <h3 style={{ 
+                       marginBottom: '0.5rem', 
+                       fontSize: '1.1rem',
+                       fontWeight: '600',
+                       color: 'var(--ion-text-color)'
+                     }}>
+                       <IonIcon 
+                         icon={colorPaletteOutline} 
+                         style={{ 
+                           marginRight: '0.5rem',
+                           verticalAlign: 'middle'
+                         }} 
+                       />
+                       Appearance
+                     </h3>
+                     <IonItem style={{ '--background': 'transparent' }}>
+                       <IonLabel>Dark Mode</IonLabel>
+                       <IonToggle
+                         checked={document.documentElement.classList.contains('dark-mode')}
+                         onIonChange={(e) => {
+                           if (e.detail.checked) {
+                             document.documentElement.classList.add('dark-mode');
+                           } else {
+                             document.documentElement.classList.remove('dark-mode');
+                           }
+                         }}
+                         slot="end"
+                       />
+                     </IonItem>
+                   </div>
+                 </div>
+
+                                 {/* Display Settings */}
+                 <div>
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
                       marginBottom: '0.5rem', 
@@ -515,70 +494,58 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       Display Options
                     </h3>
 
-                    <IonItem style={{ '--background': 'transparent' }}>
-                      <IonLabel>Font Size</IonLabel>
-                      <div slot="end" style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: '0.5rem', 
-                        alignItems: 'center',
-                        width: '100%',
-                        marginTop: '1rem',
-                        marginBottom: '1rem'
+                    <div style={{ marginBottom: '1.5rem' }}>
+                      <h3 style={{ 
+                        marginBottom: '0.5rem', 
+                        fontSize: '1.1rem',
+                        fontWeight: '600',
+                        color: 'var(--ion-text-color)'
                       }}>
+                        <IonIcon 
+                          icon={textOutline} 
+                          style={{ 
+                            marginRight: '0.5rem',
+                            verticalAlign: 'middle'
+                          }} 
+                        />
+                        Font Size
+                      </h3>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'center' }}>
                         {[
                           { value: 'small', name: 'Small Text', icon: 'Aa' },
                           { value: 'medium', name: 'Medium Text', icon: 'Aa' },
                           { value: 'large', name: 'Large Text', icon: 'Aa' }
                         ].map((option, index) => (
-                          <motion.button
+                          <IonButton
                             key={option.value}
+                            fill={settings.fontSize === option.value ? 'solid' : 'outline'}
+                            color="primary"
                             className={`font-size-button ${settings.fontSize === option.value ? 'selected' : ''}`}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ 
-                              delay: settings.accessibility.reducedMotion ? 0 : 0.05, 
-                              duration: settings.accessibility.reducedMotion ? 0.01 : 0.1,
-                              type: settings.accessibility.reducedMotion ? "tween" : "spring",
-                              stiffness: settings.accessibility.reducedMotion ? 0 : 400
-                            }}
-                            whileHover={settings.accessibility.reducedMotion ? {} : { 
-                              scale: 1.05,
-                              transition: { duration: 0.15 }
-                            }}
-                            whileTap={settings.accessibility.reducedMotion ? {} : { 
-                              scale: 0.95,
-                              transition: { duration: 0.1 }
-                            }}
                             onClick={() => {
                               setFontSize(option.value as 'small' | 'medium' | 'large');
                             }}
                             style={{
-                              padding: '0.75rem 1rem',
-                              borderRadius: '8px',
-                                                            border: settings.fontSize === option.value 
-                                ? '1px solid var(--ion-color-primary) !important' 
-                                : '1px solid var(--ion-border-color, var(--ion-color-light-shade)) !important',
-                            background: settings.fontSize === option.value 
-                              ? 'var(--ion-color-primary) !important' 
-                              : 'var(--ion-color-light-shade) !important',
-                            color: settings.fontSize === option.value 
-                              ? 'var(--ion-color-light-shade)'
-                              : 'var(--ion-color-primary)',
-                              fontSize: '0.9rem',
-                              fontWeight: settings.fontSize === option.value ? '600' : '400',
-                              cursor: 'pointer',
+                              width: '100%',
+                              height: 'auto',
+                              borderRadius: '12px',
+                              textTransform: 'none',
+                              fontWeight: '500',
+                              boxSizing: 'border-box',
+                              overflow: 'hidden',
                               transition: 'all 0.2s ease',
                               display: 'flex',
                               alignItems: 'center',
-                              gap: '0.75rem',
-                              width: '95%',
+                              gap: '1rem',
                               textAlign: 'left',
                               minHeight: '48px',
-                              position: 'relative'
+                              position: 'relative',
+                              padding: '0.2rem',
+                              '--border-radius': '12px',
+                              '--border-width': '1px',
+                              '--border-style': 'solid'
                             }}
                           >
-                            <motion.span 
+                            <span 
                               style={{ 
                                 fontSize: option.value === 'small' ? '1rem' : 
                                          option.value === 'medium' ? '1.2rem' : '1.4rem',
@@ -586,24 +553,20 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                 textAlign: 'center',
                                 fontWeight: '600',
                                 color: settings.fontSize === option.value 
-                                  ? 'var(--ion-color-light-shade)'
+                                  ? 'var(--ion-color-primary-contrast)'
                                   : 'var(--ion-color-primary)'
                               }}
-                              animate={{ 
-                                scale: settings.fontSize === option.value ? 1.1 : 1 
-                              }}
-                              transition={{ duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
                             >
                               {option.icon}
-                            </motion.span>
+                            </span>
                             <div style={{ flex: 1 }}>
                               <div style={{ 
-                                  fontWeight: '500', 
-                                  marginBottom: '0.25rem',
-                                  color: settings.fontSize === option.value 
-                                    ? 'var(--ion-color-light-shade)'
-                                    : 'var(--ion-color-primary)'
-                                }}>
+                                fontWeight: '500', 
+                                marginBottom: '0.25rem',
+                                color: settings.fontSize === option.value 
+                                  ? 'var(--ion-color-primary-contrast)'
+                                  : 'var(--ion-color-primary)'
+                              }}>
                                 {option.name}
                               </div>
                             </div>
@@ -615,32 +578,22 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                               justifyContent: 'center',
                               flexShrink: 0
                             }}>
-                              <AnimatePresence>
-                                {settings.fontSize === option.value && (
-                                  <motion.span 
-                                    initial={{ scale: 0, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0, opacity: 0 }}
-                                    transition={{ 
-                                      type: settings.accessibility.reducedMotion ? "tween" : "spring",
-                                      stiffness: settings.accessibility.reducedMotion ? 0 : 500,
-                                      damping: settings.accessibility.reducedMotion ? 0 : 30
-                                    }}
-                                    style={{ 
-                                      color: 'var(--ion-color-primary-contrast)',
-                                      fontSize: '1.2rem',
-                                      fontWeight: 'bold'
-                                    }}
-                                  >
-                                    ✓
-                                  </motion.span>
-                                )}
-                              </AnimatePresence>
+                              {settings.fontSize === option.value && (
+                                <span 
+                                  style={{ 
+                                    color: 'var(--ion-color-primary-contrast)',
+                                    fontSize: '1.2rem',
+                                    fontWeight: 'bold'
+                                  }}
+                                >
+                                  ✓
+                                </span>
+                              )}
                             </div>
-                          </motion.button>
+                          </IonButton>
                         ))}
                       </div>
-                    </IonItem>
+                    </div>
 
                     <IonItem style={{ '--background': 'transparent' }}>
                       <IonLabel>Auto-save Transcripts</IonLabel>
@@ -651,14 +604,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       />
                     </IonItem>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Accessibility Settings */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.3, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
-                >
+                                 {/* Accessibility Settings */}
+                 <div>
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
                       marginBottom: '0.5rem', 
@@ -700,16 +649,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       />
                     </IonItem>
                   </div>
-                </motion.div>
+                </div>
 
 
 
-                {/* Download Button */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.35, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
-                >
+                                 {/* Download Button */}
+                 <div>
                   <div style={{ padding: '0 1rem', marginTop: '1rem' }}>
                     <IonButton
                       onClick={downloadTranscripts}
@@ -723,14 +668,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       Download Transcripts
                     </IonButton>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Reset Button */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.4, duration: settings.accessibility.reducedMotion ? 0.01 : 0.2 }}
-                >
+                                 {/* Reset Button */}
+                 <div>
                   <div style={{ padding: '0 1rem', marginTop: '1rem' }}>
                     <IonButton
                       onClick={() => setShowResetConfirm(true)}
@@ -744,14 +685,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       Reset to Defaults
                     </IonButton>
                   </div>
-                </motion.div>
+                </div>
 
                 {/* Live Preview Footer - Fixed Position */}
-                <motion.div
+                <div
                   className="preview-transcript"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: settings.accessibility.reducedMotion ? 0 : 0.5, duration: settings.accessibility.reducedMotion ? 0.01 : 0.3 }}
                   style={{
                     position: 'sticky',
                     bottom: 0,
@@ -780,7 +718,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       highlightCurrent={true}
                       reducedMotion={settings.accessibility.reducedMotion}
                     />
-                  </motion.div>
+                  </div>
 
                                 {/* Reset Confirmation Alert */}
                 <IonAlert
@@ -803,12 +741,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   ]}
                 />
               </IonList>
+                          </div>
             </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+          </IonContent>
+        </IonModal>
+      );
+    };
 
-export default SettingsPanel; 
+    export default SettingsPanel; 
