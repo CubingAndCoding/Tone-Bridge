@@ -305,20 +305,27 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             '--padding-start': '1.5rem',
             '--padding-end': '1.5rem',
             '--padding-top': '1.5rem',
-            '--padding-bottom': '1.5rem'
+            '--padding-bottom': '1.5rem',
+            position: 'relative'
           }}>
-            <div style={{ padding: '0.5rem' }}>
-              {/* Content */}
             <div style={{ 
-              flex: 1, 
-              overflow: 'auto', 
-              padding: '1rem 1.5rem', 
-              paddingLeft: '2rem', 
-              paddingRight: '2rem',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none'
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative'
             }}>
-              <IonList style={{ background: 'transparent' }}>
+              {/* Scrollable Content */}
+              <div style={{ 
+                flex: 1, 
+                overflow: 'auto', 
+                padding: '1rem 1.5rem', 
+                paddingLeft: '2rem', 
+                paddingRight: '2rem',
+                paddingBottom: '120px', // Add space for fixed preview card
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
+              }}>
+                <IonList style={{ background: 'transparent' }}>
                 {/* Display Mode Settings */}
                 <div>
                   <div style={{ marginBottom: '1.5rem' }}>
@@ -365,7 +372,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                 transition: 'all 0.2s ease',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '1rem',
+                                gap: '2rem',
                                 textAlign: 'left',
                                 minHeight: '48px',
                                 position: 'relative',
@@ -386,7 +393,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           >
                             {mode.id === 'combined' ? '😊' : mode.id === 'emoji-only' ? '😄' : '🏷️'}
                           </span>
-                          <div style={{ flex: 1 }}>
+                          <div style={{ flex: 1, paddingLeft: '0.5rem' }}>
                             <div style={{ 
                                 fontWeight: '500', 
                                 marginBottom: '0.25rem',
@@ -438,28 +445,16 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                      currentTheme={settings.theme}
                      onThemeChange={(themeId) => updateSettings({ theme: themeId })}
                    />
-                 </div>
-
-                 {/* Light/Dark Mode Toggle */}
-                 <div>
-                   <div style={{ marginBottom: '1.5rem' }}>
-                     <h3 style={{ 
-                       marginBottom: '0.5rem', 
-                       fontSize: '1.1rem',
-                       fontWeight: '600',
-                       color: 'var(--ion-text-color)'
-                     }}>
-                       <IonIcon 
-                         icon={colorPaletteOutline} 
-                         style={{ 
-                           marginRight: '0.5rem',
-                           verticalAlign: 'middle'
-                         }} 
-                       />
-                       Appearance
-                     </h3>
+                   
+                   {/* Dark Mode Toggle */}
+                   <div style={{ marginTop: '1rem' }}>
                      <IonItem style={{ '--background': 'transparent' }}>
-                       <IonLabel>Dark Mode</IonLabel>
+                       <IonLabel>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <IonIcon icon={moonOutline} style={{ fontSize: '1.1rem' }} />
+                           <span>Dark Mode</span>
+                         </div>
+                       </IonLabel>
                        <IonToggle
                          checked={document.documentElement.classList.contains('dark-mode')}
                          onIonChange={(e) => {
@@ -468,6 +463,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                            } else {
                              document.documentElement.classList.remove('dark-mode');
                            }
+                           // Re-apply current theme to ensure proper variables
+                           ThemeUtils.applyTheme(settings.theme);
                          }}
                          slot="end"
                        />
@@ -520,30 +517,32 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             key={option.value}
                             fill={settings.fontSize === option.value ? 'solid' : 'outline'}
                             color="primary"
-                            className={`font-size-button ${settings.fontSize === option.value ? 'selected' : ''}`}
+                                                        className={`font-size-button ${settings.fontSize === option.value ? 'selected' : ''}`}
                             onClick={() => {
                               setFontSize(option.value as 'small' | 'medium' | 'large');
                             }}
-                            style={{
-                              width: '100%',
-                              height: 'auto',
-                              borderRadius: '12px',
-                              textTransform: 'none',
-                              fontWeight: '500',
-                              boxSizing: 'border-box',
-                              overflow: 'hidden',
-                              transition: 'all 0.2s ease',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '1rem',
-                              textAlign: 'left',
-                              minHeight: '48px',
-                              position: 'relative',
-                              padding: '0.2rem',
-                              '--border-radius': '12px',
-                              '--border-width': '1px',
-                              '--border-style': 'solid'
-                            }}
+                                                                                       style={{
+                                width: '95%',
+                                height: 'auto',
+                                padding: '0.2rem',
+                                borderRadius: '12px',
+                                textTransform: 'none',
+                                fontWeight: '500',
+                                boxSizing: 'border-box',
+                                overflow: 'hidden',
+                                transition: 'all 0.2s ease',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '2rem',
+                                textAlign: 'left',
+                                minHeight: '48px',
+                                position: 'relative',
+                                '--border-radius': '12px',
+                                '--padding-start': '0.75rem',
+                                '--padding-end': '0.75rem',
+                                '--padding-top': '0.75rem',
+                                '--padding-bottom': '0.75rem'
+                              }}
                           >
                             <span 
                               style={{ 
@@ -551,7 +550,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                                          option.value === 'medium' ? '1.2rem' : '1.4rem',
                                 minWidth: '24px',
                                 textAlign: 'center',
-                                fontWeight: '600',
                                 color: settings.fontSize === option.value 
                                   ? 'var(--ion-color-primary-contrast)'
                                   : 'var(--ion-color-primary)'
@@ -559,10 +557,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                             >
                               {option.icon}
                             </span>
-                            <div style={{ flex: 1 }}>
+                            <div style={{ flex: 1, paddingLeft: '0.5rem' }}>
                               <div style={{ 
                                 fontWeight: '500', 
-                                marginBottom: '0.25rem',
                                 color: settings.fontSize === option.value 
                                   ? 'var(--ion-color-primary-contrast)'
                                   : 'var(--ion-color-primary)'
@@ -686,42 +683,32 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </IonButton>
                   </div>
                 </div>
+              </IonList>
+            </div>
+          </div>
 
-                {/* Live Preview Footer - Fixed Position */}
-                <div
-                  className="preview-transcript"
-                  style={{
-                    position: 'sticky',
-                    bottom: 0,
-                    zIndex: 10,
-                    width: '95%',
-                    margin: '0 auto',
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}
-                >
-                                        {/* Sample Transcript Card - Using Reusable Component */}
-                    <TranscriptionCard
-                      segment={{
-                        id: 'sample-1',
-                        text: "Hey! I hope you like the look!",
-                        emotion: 'happy',
-                        emoji: '😊',
-                        confidence: 0.9,
-                        timestamp: new Date()
-                      }}
-                      displayMode={currentDisplayMode}
-                      showTimestamps={true}
-                      showConfidence={true}
-                      highlightCurrent={true}
-                      reducedMotion={settings.accessibility.reducedMotion}
-                    />
-                  </div>
+          {/* Live Preview Footer - Fixed Position */}
+          <div className="preview-transcript">
+            {/* Sample Transcript Card - Using Reusable Component */}
+            <TranscriptionCard
+              segment={{
+                id: 'sample-1',
+                text: "Hey! I hope you like the look!",
+                emotion: 'happy',
+                emoji: '😊',
+                confidence: 0.9,
+                timestamp: new Date()
+              }}
+              displayMode={currentDisplayMode}
+              showTimestamps={true}
+              showConfidence={true}
+              highlightCurrent={true}
+              reducedMotion={settings.accessibility.reducedMotion}
+            />
+          </div>
 
-                                {/* Reset Confirmation Alert */}
-                <IonAlert
+          {/* Reset Confirmation Alert */}
+          <IonAlert
                   isOpen={showResetConfirm}
                   onDidDismiss={() => setShowResetConfirm(false)}
                   header="Reset Settings"
@@ -740,9 +727,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     }
                   ]}
                 />
-              </IonList>
-                          </div>
-            </div>
           </IonContent>
         </IonModal>
       );

@@ -60,6 +60,32 @@ def transcribe_audio():
         audio_format = data.get('format', 'wav')
         include_emotion = data.get('include_emotion', True)
         
+        # Normalize and validate audio format
+        if audio_format:
+            # Map common MIME types to format names
+            format_mapping = {
+                'audio/webm': 'webm',
+                'audio/mp4': 'mp4',
+                'audio/wav': 'wav',
+                'audio/mpeg': 'mp3',
+                'audio/ogg': 'ogg',
+                'audio/flac': 'flac',
+                'audio/aac': 'aac'
+            }
+            
+            # If format looks like a MIME type, convert it
+            if audio_format.startswith('audio/'):
+                audio_format = format_mapping.get(audio_format, audio_format.split('/')[-1])
+            
+            # Clean up format name
+            audio_format = audio_format.lower().strip()
+            
+            # Validate format
+            supported_formats = ['wav', 'webm', 'mp4', 'mp3', 'ogg', 'flac', 'aac', 'm4a']
+            if audio_format not in supported_formats:
+                logger.warning(f"Unsupported format '{audio_format}', defaulting to 'wav'")
+                audio_format = 'wav'
+        
         if not audio_b64:
             raise ValidationError("No audio data provided")
         

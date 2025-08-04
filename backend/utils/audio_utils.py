@@ -94,11 +94,43 @@ class AudioProcessor:
                         except Exception as cleanup_error:
                             logger.warning(f"Failed to cleanup temp files: {cleanup_error}")
                 else:
-                    audio_array, sample_rate = librosa.load(
-                        io.BytesIO(audio_data),
-                        sr=self.target_sample_rate,
-                        mono=(self.target_channels == 1)
-                    )
+                    # For other formats, try using pydub first for better format support
+                    try:
+                        logger.info(f"Attempting to load audio with pydub, format: {format}")
+                        
+                        # Use pydub to load and convert to wav
+                        audio = AudioSegment.from_file(io.BytesIO(audio_data), format=format)
+                        
+                        # Export to wav format in memory
+                        wav_buffer = io.BytesIO()
+                        audio.export(wav_buffer, format='wav')
+                        wav_buffer.seek(0)
+                        
+                        # Load with librosa
+                        audio_array, sample_rate = librosa.load(
+                            wav_buffer,
+                            sr=self.target_sample_rate,
+                            mono=(self.target_channels == 1)
+                        )
+                        
+                        logger.info("Audio loaded successfully with pydub + librosa")
+                        
+                    except Exception as pydub_error:
+                        logger.warning(f"Pydub loading failed: {str(pydub_error)}, trying librosa directly")
+                        
+                        # Fallback to direct librosa loading
+                        try:
+                            audio_array, sample_rate = librosa.load(
+                                io.BytesIO(audio_data),
+                                sr=self.target_sample_rate,
+                                mono=(self.target_channels == 1)
+                            )
+                            logger.info("Audio loaded successfully with librosa directly")
+                        except Exception as librosa_error:
+                            logger.error(f"Both pydub and librosa loading failed")
+                            logger.error(f"Pydub error: {str(pydub_error)}")
+                            logger.error(f"Librosa error: {str(librosa_error)}")
+                            raise AudioProcessingError(f"Failed to load audio with any method. Pydub: {str(pydub_error)}, Librosa: {str(librosa_error)}")
             else:
                 # Load from file path
                 audio_array, sample_rate = librosa.load(

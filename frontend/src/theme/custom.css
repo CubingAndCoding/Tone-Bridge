@@ -375,73 +375,42 @@ body.font-size-large span {
 
 
 
-/* Legacy font-size-button styles for backward compatibility */
+/* Font size buttons - using Ionic CSS custom properties */
 .font-size-button {
-  padding: 0.75rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  width: 90px;
-  height: 40px;
-  cursor: pointer;
-  outline: none;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 90px;
+  --border-radius: 8px !important;
+  --background: transparent;
+  --color: var(--ion-color-primary);
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: var(--ion-color-primary);
+  --padding-start: 0.5rem;
+  --padding-end: 0.5rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.font-size-button.selected {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  --border-color: var(--ion-color-primary);
 }
 
 .font-size-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .font-size-button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.font-size-button .font-size-small {
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.font-size-button .font-size-medium {
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.font-size-button .font-size-large {
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Mobile Responsive Font Size Buttons */
 @media (max-width: 480px) {
   .font-size-button {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.7rem;
-    width: 60px;
-    height: 36px;
-    min-width: 60px;
-    border-radius: 10px;
-  }
-  
-  .font-size-button .font-size-small {
-    font-size: 0.7rem;
-  }
-  
-  .font-size-button .font-size-medium {
-    font-size: 0.9rem;
-  }
-  
-  .font-size-button .font-size-large {
-    font-size: 1rem;
+    --border-radius: 6px !important;
   }
 }
 
@@ -826,6 +795,13 @@ ion-toolbar {
   /* Make toolbar completely static - no state changes */
   transition: none !important;
   animation: none !important;
+            /* Add subtle gradient for better edge definition */
+          background: linear-gradient(
+            to bottom,
+            var(--ion-toolbar-background, var(--ion-color-dark)) 0%,
+            var(--ion-toolbar-background, var(--ion-color-dark)) 95%,
+            rgba(var(--ion-toolbar-background-rgb, 0, 0, 0), 0.95) 100%
+          ) !important;
 }
 
 /* Force toolbar to stay constant regardless of focus state */
@@ -1151,9 +1127,13 @@ ion-modal {
 
 /* Theme selector buttons specifically */
 .theme-selector-button {
-  border: 1px solid var(--ion-border-color, var(--ion-color-primary));
+  --border-radius: 8px !important;
+}
+
+.theme-selector-button.selected {
+  border: 2px solid var(--ion-border-color, var(--ion-color-primary));
   outline: 2px solid transparent;
-  outline-offset: 2px;
+  outline-offset: 1px;
 }
 
 .theme-selector-button:focus {
@@ -1573,26 +1553,6 @@ ion-toolbar {
   --ion-outline-color: #d1d5db !important;
 }
 
-/* High Contrast Theme - Theme Selector Buttons */
-.theme-high-contrast .theme-selector-button {
-  border: 2px solid #000000 !important;
-}
-
-.theme-high-contrast .theme-selector-button.selected {
-  background: #000000 !important;
-  border: 4px solid #000000 !important;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #000000 !important;
-}
-
-.theme-high-contrast .theme-selector-button:not(.selected) {
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-/* High Contrast Dark Mode - Navbar Border */
-.dark-mode.theme-high-contrast ion-header {
-  border-bottom: 2px solid rgba(255, 255, 255, 0.8) !important;
-}
 
 /* High Contrast Dark Mode - Inactive Transcript Borders */
 .theme-high-contrast .transcription-segment:not(.highlighted) {
@@ -1770,4 +1730,34 @@ ion-toolbar {
 
 .tts-overlay ion-card > div:last-child > div {
   min-height: 100% !important;
+}
+
+/* Settings modal preview transcript - fixed at bottom like a toast */
+.preview-transcript {
+  position: fixed !important;
+  bottom: 2rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+  width: 90% !important;
+  max-width: 500px !important;
+  background-color: var(--ion-background-color) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
+  padding: 1rem !important;
+  border: 1px solid var(--ion-border-color, rgba(0, 0, 0, 0.1)) !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure modal content doesn't overlap the fixed preview */
+ion-modal ion-content {
+  padding-bottom: 140px !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 480px) {
+  .preview-transcript {
+    width: 95% !important;
+    bottom: 1rem !important;
+  }
 }

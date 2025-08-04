@@ -319,10 +319,10 @@ const TranscriptionCard: React.FC<TranscriptionCardProps> = ({
           style={{
             margin: 0,
             transition: 'all 0.2s ease',
-            border: highlightCurrent ? '2px solid var(--ion-color-primary) !important' : 'none',
+            border: highlightCurrent ? '3px solid var(--ion-color-primary) !important' : '1px solid var(--ion-color-primary) !important',
             borderRadius: '12px',
             boxShadow: highlightCurrent
-              ? '0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2)'
+              ? '0 8px 12px rgba(var(--ion-color-primary-rgb), 0.2)'
               : '0 2px 8px rgba(0, 0, 0, 0.1)',
             background: 'var(--ion-card-background)',
             transform: `translateX(${slideOffset}px)`,
