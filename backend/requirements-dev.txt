@@ -1,6 +1,5 @@
 Flask==2.3.3
 Flask-CORS==4.0.0
-gunicorn==21.2.0
 python-dotenv==1.0.0
 requests==2.31.0
 numpy==1.24.3
@@ -13,7 +12,5 @@ pytest==7.4.2
 black==23.9.1
 flake8==6.1.0
 
-# PyTorch and Transformers for AI models (compatible versions)
-torch>=2.1.0
-transformers>=4.35.0
-accelerate>=0.24.0 
+# Development tools
+python-dotenv==1.0.0

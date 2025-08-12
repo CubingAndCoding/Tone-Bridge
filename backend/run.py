@@ -1,43 +1,40 @@
 #!/usr/bin/env python3
 """
-ToneBridge Backend Runner Script
+ToneBridge Backend Runner
 """
 
 import os
-import sys
-from app import create_app
+from app import app
+from config import get_config
 
 def main():
-    """Main entry point for the application"""
-    try:
-        # Create the Flask app
-        app = create_app()
-        
-        # Get configuration
-        host = os.getenv('HOST', '0.0.0.0')
-        port = int(os.getenv('PORT', 5000))
-        debug = os.getenv('FLASK_ENV') == 'development'
-        
-        print(f"🚀 Starting ToneBridge Backend...")
-        print(f"📍 Server: {host}:{port}")
-        print(f"🔧 Debug Mode: {debug}")
-        print(f"🌐 Health Check: http://{host}:{port}/health")
-        print(f"📚 API Docs: http://{host}:{port}/")
-        print("=" * 50)
-        
-        # Run the application
-        app.run(
-            host=host,
-            port=port,
-            debug=debug
-        )
-        
-    except KeyboardInterrupt:
-        print("\n🛑 Shutting down ToneBridge Backend...")
-        sys.exit(0)
-    except Exception as e:
-        print(f"❌ Error starting ToneBridge Backend: {str(e)}")
-        sys.exit(1)
+    """Main application entry point"""
+    # Get configuration
+    config = get_config()
+    
+    # Set up environment
+    host = os.getenv('HOST', config.HOST)
+    port = int(os.getenv('PORT', config.PORT))
+    debug = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    
+    # Production settings
+    if config.DEBUG:
+        print("🚀 Starting ToneBridge Backend (Development)")
+        print(f"📍 Server: http://{host}:{port}")
+        print(f"🔧 Debug: {debug}")
+    else:
+        print("🚀 Starting ToneBridge Backend (Production)")
+        print(f"📍 Server: https://{host}:{port}")
+        print("🔒 Privacy: No data storage enabled")
+        print("📱 All transcriptions stored in browser localStorage only")
+    
+    # Start the application
+    app.run(
+        host=host,
+        port=port,
+        debug=debug,
+        threaded=True
+    )
 
 if __name__ == '__main__':
     main() 

@@ -8,8 +8,8 @@ from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
 import os
 
-from services.transcription_service import transcription_service
-from services.emotion_service import emotion_service
+from services.transcription_service import TranscriptionService
+from services.emotion_service import EmotionService
 from utils.logger import setup_logger, log_request
 from utils.error_handlers import ValidationError, validate_audio_file
 from config import Config
@@ -18,6 +18,10 @@ logger = setup_logger(__name__)
 
 # Create blueprint
 api_bp = Blueprint('api', __name__)
+
+# Create service instances
+transcription_service = TranscriptionService()
+emotion_service = EmotionService()
 
 def create_success_response(data: dict, message: str = "Success") -> dict:
     """

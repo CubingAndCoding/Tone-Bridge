@@ -20,7 +20,10 @@ except ImportError:
 
 from utils.logger import setup_logger
 from utils.error_handlers import AudioProcessingError, ModelError
-from utils.audio_utils import audio_processor
+try:
+    from utils.audio_utils import audio_processor
+except ImportError:
+    from utils.audio_utils_deploy import audio_processor
 from config import Config
 
 logger = setup_logger(__name__)
@@ -56,10 +59,12 @@ class TranscriptionService:
             else:
                 device = "cpu"
                 logger.info("Using CPU for transcription")
-            logger.info(f"Initializing Whisper pipeline with model: {Config.TRANSCRIPTION_MODEL_NAME}")
+            
+            model_name = getattr(Config, 'TRANSCRIPTION_MODEL_NAME', 'openai/whisper-tiny')
+            logger.info(f"Initializing Whisper pipeline with model: {model_name}")
             self.whisper_pipeline = pipeline(
                 "automatic-speech-recognition",
-                model=Config.TRANSCRIPTION_MODEL_NAME,
+                model=model_name,
                 device=device
             )
             logger.info("Transcription models initialized successfully")
@@ -68,7 +73,8 @@ class TranscriptionService:
             import traceback
             tb = traceback.format_exc()
             logger.error(f"Failed to initialize Whisper pipeline: {str(e)}\n{tb}")
-            raise ModelError(f"Failed to initialize Whisper pipeline: {str(e)}")
+            logger.warning("Continuing with fallback speech recognition only")
+            self.whisper_pipeline = None
     
     def transcribe_audio(self, audio_data: bytes, audio_format: str = 'wav') -> Dict[str, Any]:
         """
@@ -95,9 +101,6 @@ class TranscriptionService:
                 # Fallback to speech_recognition
                 result = self._transcribe_with_speech_recognition(audio_data, audio_format)
             
-            logger.info(f"Transcription completed: '{result['text']}' ({len(result['text'])} characters)")
-            logger.info(f"Confidence: {result.get('confidence', 'N/A')}")
-            logger.info(f"Model used: {result.get('model', 'N/A')}")
             return result
             
         except Exception as e:
@@ -107,61 +110,63 @@ class TranscriptionService:
     def _transcribe_with_whisper(self, audio_array, sample_rate: int) -> Dict[str, Any]:
         """Transcribe using Whisper model"""
         try:
-            # Convert audio array to format expected by Whisper
+            # Ensure audio is in the right format for Whisper
+            if audio_array.dtype != 'float32':
+                audio_array = audio_array.astype('float32')
+            
+            # Transcribe with Whisper - use the correct API format
+            # For newer transformers versions, we need to pass audio as a dict
             audio_input = {
                 "array": audio_array,
                 "sampling_rate": sample_rate
             }
             
             result = self.whisper_pipeline(audio_input)
+            text = result.get('text', '').strip()
             
-            # Calculate confidence based on text quality and length
-            text = result['text'].strip()
+            # Calculate confidence (Whisper doesn't provide this directly)
             confidence = self._calculate_whisper_confidence(text, audio_array)
             
             return {
                 'text': text,
                 'confidence': confidence,
-                'language': result.get('language', 'en'),
+                'language': 'en',
                 'model': 'whisper'
             }
             
         except Exception as e:
             logger.error(f"Whisper transcription failed: {str(e)}")
-            raise ModelError(f"Whisper transcription failed: {str(e)}")
+            raise AudioProcessingError(f"Whisper transcription failed: {str(e)}")
     
     def _calculate_whisper_confidence(self, text: str, audio_array) -> float:
-        """Calculate confidence score for Whisper transcription"""
+        """Calculate confidence score for Whisper results"""
+        # Simple heuristic: longer text with more words suggests better recognition
         if not text:
             return 0.0
         
-        # Base confidence on text length and quality
-        base_confidence = 0.7  # Whisper is generally quite accurate
+        word_count = len(text.split())
+        char_count = len(text)
         
-        # Boost confidence for longer, more complete sentences
-        if len(text.split()) >= 3:
-            base_confidence += 0.1
+        # Normalize by audio length (assuming longer audio = more complex content)
+        audio_length = len(audio_array)
         
-        # Boost confidence if text contains common words/patterns
-        common_words = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by']
-        word_count = sum(1 for word in text.lower().split() if word in common_words)
-        if word_count > 0:
-            base_confidence += 0.1
+        if audio_length == 0:
+            return 0.5
         
-        # Reduce confidence for very short or unclear text
-        if len(text) < 5:
-            base_confidence -= 0.2
-        
-        # Cap confidence between 0.5 and 0.95
-        return max(0.5, min(0.95, base_confidence))
+        # Simple confidence calculation
+        confidence = min(0.95, 0.3 + (word_count * 0.1) + (char_count / audio_length * 100))
+        return confidence
     
-    def _transcribe_with_speech_recognition(self, audio_data: bytes, audio_format: str) -> Dict[str, Any]:
+    def _transcribe_with_speech_recognition(self, audio_data: bytes, audio_format: str = 'wav') -> Dict[str, Any]:
         """Transcribe using speech_recognition library"""
         try:
+            # Default sample rate if not specified
+            sample_rate = 16000
+            
             # Convert audio data to AudioData object
             audio = sr.AudioData(
                 audio_data,
-                sample_rate=Config.AUDIO_SAMPLE_RATE,
+                sample_rate=sample_rate,
                 sample_width=2  # 16-bit audio
             )
             
@@ -255,7 +260,4 @@ class TranscriptionService:
             'successful_chunks': successful_chunks,
             'total_chunks': len(results),
             'success_rate': successful_chunks / len(results) if results else 0.0
-        }
-
-# Global transcription service instance
-transcription_service = TranscriptionService() 
+        } 

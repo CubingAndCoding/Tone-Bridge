@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:network": "vite --host 0.0.0.0 --port 8100",
+    "dev:http": "vite --host 0.0.0.0 --port 8100",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test.e2e": "cypress run",

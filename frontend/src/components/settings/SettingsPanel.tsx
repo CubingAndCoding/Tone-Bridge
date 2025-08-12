@@ -321,7 +321,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 padding: '1rem 1.5rem', 
                 paddingLeft: '2rem', 
                 paddingRight: '2rem',
-                paddingBottom: '120px', // Add space for fixed preview card
+                paddingBottom: '1rem',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}>
@@ -446,13 +446,40 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                      onThemeChange={(themeId) => updateSettings({ theme: themeId })}
                    />
                    
-                   {/* Dark Mode Toggle */}
-                   <div style={{ marginTop: '1rem' }}>
-                     <IonItem style={{ '--background': 'transparent' }}>
+                   {/* Clean Dark Mode Toggle */}
+                   <div style={{ marginTop: '1.5rem' }}>
+                     <h3 style={{ 
+                       marginBottom: '1rem', 
+                       fontSize: '1.1rem',
+                       fontWeight: '600',
+                       color: 'var(--ion-text-color)',
+                       display: 'flex',
+                       alignItems: 'center',
+                       gap: '0.5rem'
+                     }}>
+                       <IonIcon icon={moonOutline} style={{ fontSize: '1.1rem' }} />
+                       Dark Mode
+                     </h3>
+                     
+                     {/* Simple Toggle with Description */}
+                     <IonItem style={{ 
+                       '--background': 'transparent',
+                       borderRadius: '12px',
+                       marginBottom: '0.5rem'
+                     }}>
                        <IonLabel>
-                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                           <IonIcon icon={moonOutline} style={{ fontSize: '1.1rem' }} />
-                           <span>Dark Mode</span>
+                         <div style={{ 
+                           display: 'flex', 
+                           alignItems: 'center', 
+                           gap: '0.75rem',
+                           marginBottom: '0.25rem'
+                         }}>
+                           <span style={{ 
+                             fontWeight: '500',
+                             color: 'var(--ion-text-color)'
+                           }}>
+                             Apply Dark Mode
+                           </span>
                          </div>
                        </IonLabel>
                        <IonToggle
@@ -467,12 +494,21 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                            ThemeUtils.applyTheme(settings.theme);
                          }}
                          slot="end"
+                         style={{
+                           '--handle-width': '20px',
+                           '--handle-height': '20px',
+                           '--handle-box-shadow': '0 2px 4px rgba(0,0,0,0.2)',
+                           '--background': 'var(--ion-color-medium)',
+                           '--background-checked': 'var(--ion-color-primary)',
+                           '--handle-background': 'var(--ion-color-light)',
+                           '--handle-background-checked': 'var(--ion-color-light)',
+                         }}
                        />
                      </IonItem>
                    </div>
                  </div>
 
-                                 {/* Display Settings */}
+                                 {/* Font Size Settings */}
                  <div>
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ 
@@ -482,124 +518,97 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       color: 'var(--ion-text-color)'
                     }}>
                       <IonIcon 
-                        icon={eyeOutline} 
+                        icon={textOutline} 
                         style={{ 
                           marginRight: '0.5rem',
                           verticalAlign: 'middle'
                         }} 
                       />
-                      Display Options
+                      Font Size
                     </h3>
-
-                    <div style={{ marginBottom: '1.5rem' }}>
-                      <h3 style={{ 
-                        marginBottom: '0.5rem', 
-                        fontSize: '1.1rem',
-                        fontWeight: '600',
-                        color: 'var(--ion-text-color)'
-                      }}>
-                        <IonIcon 
-                          icon={textOutline} 
-                          style={{ 
-                            marginRight: '0.5rem',
-                            verticalAlign: 'middle'
-                          }} 
-                        />
-                        Font Size
-                      </h3>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'center' }}>
-                        {[
-                          { value: 'small', name: 'Small Text', icon: 'Aa' },
-                          { value: 'medium', name: 'Medium Text', icon: 'Aa' },
-                          { value: 'large', name: 'Large Text', icon: 'Aa' }
-                        ].map((option, index) => (
-                          <IonButton
-                            key={option.value}
-                            fill={settings.fontSize === option.value ? 'solid' : 'outline'}
-                            color="primary"
-                                                        className={`font-size-button ${settings.fontSize === option.value ? 'selected' : ''}`}
-                            onClick={() => {
-                              setFontSize(option.value as 'small' | 'medium' | 'large');
-                            }}
-                                                                                       style={{
-                                width: '95%',
-                                height: 'auto',
-                                padding: '0.2rem',
-                                borderRadius: '12px',
-                                textTransform: 'none',
-                                fontWeight: '500',
-                                boxSizing: 'border-box',
-                                overflow: 'hidden',
-                                transition: 'all 0.2s ease',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '2rem',
-                                textAlign: 'left',
-                                minHeight: '48px',
-                                position: 'relative',
-                                '--border-radius': '12px',
-                                '--padding-start': '0.75rem',
-                                '--padding-end': '0.75rem',
-                                '--padding-top': '0.75rem',
-                                '--padding-bottom': '0.75rem'
-                              }}
-                          >
-                            <span 
-                              style={{ 
-                                fontSize: option.value === 'small' ? '1rem' : 
-                                         option.value === 'medium' ? '1.2rem' : '1.4rem',
-                                minWidth: '24px',
-                                textAlign: 'center',
-                                color: settings.fontSize === option.value 
-                                  ? 'var(--ion-color-primary-contrast)'
-                                  : 'var(--ion-color-primary)'
-                              }}
-                            >
-                              {option.icon}
-                            </span>
-                            <div style={{ flex: 1, paddingLeft: '0.5rem' }}>
-                              <div style={{ 
-                                fontWeight: '500', 
-                                color: settings.fontSize === option.value 
-                                  ? 'var(--ion-color-primary-contrast)'
-                                  : 'var(--ion-color-primary)'
-                              }}>
-                                {option.name}
-                              </div>
-                            </div>
-                            <div style={{ 
-                              width: '24px', 
-                              height: '24px',
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'center' }}>
+                      {[
+                        { value: 'small', name: 'Small Text', icon: 'Aa' },
+                        { value: 'medium', name: 'Medium Text', icon: 'Aa' },
+                        { value: 'large', name: 'Large Text', icon: 'Aa' }
+                      ].map((option, index) => (
+                        <IonButton
+                          key={option.value}
+                          fill={settings.fontSize === option.value ? 'solid' : 'outline'}
+                          color="primary"
+                                                      className={`font-size-button ${settings.fontSize === option.value ? 'selected' : ''}`}
+                          onClick={() => {
+                            setFontSize(option.value as 'small' | 'medium' | 'large');
+                          }}
+                                                                                     style={{
+                              width: '95%',
+                              height: 'auto',
+                              padding: '0.2rem',
+                              borderRadius: '12px',
+                              textTransform: 'none',
+                              fontWeight: '500',
+                              boxSizing: 'border-box',
+                              overflow: 'hidden',
+                              transition: 'all 0.2s ease',
                               display: 'flex',
                               alignItems: 'center',
-                              justifyContent: 'center',
-                              flexShrink: 0
+                              gap: '2rem',
+                              textAlign: 'left',
+                              minHeight: '48px',
+                              position: 'relative',
+                              '--border-radius': '12px',
+                              '--padding-start': '0.75rem',
+                              '--padding-end': '0.75rem',
+                              '--padding-top': '0.75rem',
+                              '--padding-bottom': '0.75rem'
+                            }}
+                        >
+                          <span 
+                            style={{ 
+                              fontSize: option.value === 'small' ? '1rem' : 
+                                       option.value === 'medium' ? '1.2rem' : '1.4rem',
+                              minWidth: '24px',
+                              textAlign: 'center',
+                              color: settings.fontSize === option.value 
+                                ? 'var(--ion-color-primary-contrast)'
+                                : 'var(--ion-color-primary)'
+                            }}
+                          >
+                            {option.icon}
+                          </span>
+                          <div style={{ flex: 1, paddingLeft: '0.5rem' }}>
+                            <div style={{ 
+                              fontWeight: '500', 
+                              color: settings.fontSize === option.value 
+                                ? 'var(--ion-color-primary-contrast)'
+                                : 'var(--ion-color-primary)'
                             }}>
-                              {settings.fontSize === option.value && (
-                                <span 
-                                  style={{ 
-                                    color: 'var(--ion-color-primary-contrast)',
-                                    fontSize: '1.2rem',
-                                    fontWeight: 'bold'
-                                  }}
-                                >
-                                  ✓
-                                </span>
-                              )}
+                              {option.name}
                             </div>
-                          </IonButton>
-                        ))}
-                      </div>
+                          </div>
+                          <div style={{ 
+                            width: '24px', 
+                            height: '24px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0
+                          }}>
+                            {settings.fontSize === option.value && (
+                              <span 
+                                style={{ 
+                                  color: 'var(--ion-color-primary-contrast)',
+                                  fontSize: '1.2rem',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                ✓
+                              </span>
+                            )}
+                          </div>
+                        </IonButton>
+                      ))}
                     </div>
-
-                    <IonItem style={{ '--background': 'transparent' }}>
-                      <IonLabel>Auto-save Transcripts</IonLabel>
-                      <IonToggle
-                        checked={settings.autoSave}
-                        onIonChange={(e) => updateSettings({ autoSave: e.detail.checked })}
-                        slot="end"
-                      />
-                    </IonItem>
                   </div>
                 </div>
 
@@ -645,6 +654,15 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         slot="end"
                       />
                     </IonItem>
+
+                    <IonItem style={{ '--background': 'transparent' }}>
+                      <IonLabel>Auto-save Transcripts</IonLabel>
+                      <IonToggle
+                        checked={settings.autoSave}
+                        onIonChange={(e) => updateSettings({ autoSave: e.detail.checked })}
+                        slot="end"
+                      />
+                    </IonItem>
                   </div>
                 </div>
 
@@ -677,6 +695,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       style={{
                         color: 'var(--ion-color-warning)',
                         '--border-color': 'var(--ion-color-warning)',
+                        marginBottom: '1rem'
                       }}
                     >
                       Reset to Defaults
@@ -687,25 +706,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </div>
           </div>
 
-          {/* Live Preview Footer - Fixed Position */}
-          <div className="preview-transcript">
-            {/* Sample Transcript Card - Using Reusable Component */}
-            <TranscriptionCard
-              segment={{
-                id: 'sample-1',
-                text: "Hey! I hope you like the look!",
-                emotion: 'happy',
-                emoji: '😊',
-                confidence: 0.9,
-                timestamp: new Date()
-              }}
-              displayMode={currentDisplayMode}
-              showTimestamps={true}
-              showConfidence={true}
-              highlightCurrent={true}
-              reducedMotion={settings.accessibility.reducedMotion}
-            />
-          </div>
+
 
           {/* Reset Confirmation Alert */}
           <IonAlert

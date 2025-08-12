@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from config import Config
+from config import Config, get_config
 from services.transcription_service import TranscriptionService
 from services.emotion_service import EmotionService
 from utils.logger import setup_logger
@@ -21,17 +21,20 @@ load_dotenv()
 # Setup logging
 logger = setup_logger(__name__)
 
-def create_app(config_class=Config):
+def create_app(config_class=None):
     """Application factory pattern for Flask app creation"""
+    if config_class is None:
+        config_class = get_config()
+    
     app = Flask(__name__)
     app.config.from_object(config_class)
     
-    # Initialize CORS with dynamic origins for local development
+    # Initialize CORS with localhost origins only
     allowed_origins = [
         "http://localhost:3000", 
         "http://localhost:8100", 
-        "https://localhost:8100",
-        "https://tonebridge.vercel.app"
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:8100"
     ]
     
     # Add environment variable origins if specified
@@ -39,41 +42,25 @@ def create_app(config_class=Config):
     if env_origins:
         allowed_origins.extend([origin.strip() for origin in env_origins.split(',')])
     
-    # Add specific IP addresses for common local development
-    specific_ips = [
-        "192.168.1.210",  # Common local network IP
-        "192.168.1.100",  # Another common local network IP
-        "10.0.0.1",       # Common router IP
-    ]
-    
-    for ip in specific_ips:
-        allowed_origins.extend([
-            f"http://{ip}:3000",
-            f"http://{ip}:8100", 
-            f"https://{ip}:3000",
-            f"https://{ip}:8100"
-        ])
-    
-    # Add local IP addresses dynamically
-    import socket
-    try:
-        hostname = socket.gethostname()
-        local_ip = socket.gethostbyname(hostname)
-        allowed_origins.extend([
-            f"http://{local_ip}:3000",
-            f"http://{local_ip}:8100", 
-            f"https://{local_ip}:3000",
-            f"https://{local_ip}:8100"
-        ])
-    except:
-        pass  # Fallback if IP detection fails
+    # Log all allowed origins for debugging
+    logger.info(f"Configured CORS origins: {allowed_origins}")
     
     CORS(app, resources={
         r"/*": {
             "origins": allowed_origins,
-            "methods": ["GET", "POST", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
-            "supports_credentials": True
+            "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+            "allow_headers": [
+                "Content-Type", 
+                "Authorization", 
+                "X-Requested-With",
+                "Accept",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "expose_headers": ["Content-Type", "Authorization"],
+            "supports_credentials": True,
+            "max_age": 86400  # Cache preflight requests for 24 hours
         }
     })
     
@@ -110,8 +97,12 @@ def create_app(config_class=Config):
 
 if __name__ == '__main__':
     app = create_app()
+    host = os.getenv('HOST', '127.0.0.1')
+    port = int(os.getenv('PORT', 5000))
+    debug = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
+    
     app.run(
-        host=os.getenv('HOST', '0.0.0.0'),
-        port=int(os.getenv('PORT', 5000)),
-        debug=os.getenv('FLASK_ENV') == 'development'
+        host=host,
+        port=port,
+        debug=debug
     ) 

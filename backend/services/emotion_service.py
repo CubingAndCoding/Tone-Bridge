@@ -12,14 +12,19 @@ try:
     from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
     import torch
     TRANSFORMERS_AVAILABLE = True
-except ImportError:
+    print("✅ PyTorch/Transformers available for emotion detection")
+except ImportError as e:
     TRANSFORMERS_AVAILABLE = False
-    print("Warning: PyTorch/Transformers not available. Using rule-based emotion detection.")
+    print(f"⚠️ Warning: PyTorch/Transformers not available: {e}")
+    print("⚠️ Using rule-based emotion detection as fallback")
 
-from sklearn.preprocessing import StandardScaler
+# StandardScaler import removed for deployment - not needed for basic emotion detection
 from utils.logger import setup_logger
 from utils.error_handlers import ModelError
-from utils.audio_utils import audio_processor
+try:
+    from utils.audio_utils import audio_processor
+except ImportError:
+    from utils.audio_utils_deploy import audio_processor
 from config import Config
 
 logger = setup_logger(__name__)
@@ -30,7 +35,7 @@ class EmotionService:
     def __init__(self):
         self.text_emotion_pipeline = None
         self.audio_emotion_model = None
-        self.scaler = StandardScaler()
+        self.scaler = None  # Not needed for deployment
         self._initialize_models()
     
     def _initialize_models(self):
@@ -51,13 +56,21 @@ class EmotionService:
                 logger.info("Using CPU for emotion detection")
             
             # Use a reliable, public emotion model
-            emotion_model = "SamLowe/roberta-base-go_emotions"
+            emotion_model = "j-hartmann/emotion-english-distilroberta-base"
             logger.info(f"Initializing emotion pipeline with model: {emotion_model}")
+            
+            # Test if we can import the pipeline function
+            logger.info("Creating pipeline...")
             self.text_emotion_pipeline = pipeline(
                 "text-classification",
                 model=emotion_model,
                 device=device
             )
+            
+            # Test the pipeline with a simple input
+            logger.info("Testing pipeline with sample input...")
+            test_result = self.text_emotion_pipeline("I am happy")
+            logger.info(f"Pipeline test result: {test_result}")
             
             logger.info("Emotion detection models initialized successfully")
             logger.info(f"Emotion pipeline created: {self.text_emotion_pipeline is not None}")
@@ -65,8 +78,10 @@ class EmotionService:
         except Exception as e:
             import traceback
             tb = traceback.format_exc()
-            logger.error(f"Failed to initialize emotion models: {str(e)}\n{tb}")
+            logger.error(f"Failed to initialize emotion models: {str(e)}")
+            logger.error(f"Full traceback: {tb}")
             logger.info("Falling back to rule-based emotion detection")
+            self.text_emotion_pipeline = None
     
     def detect_emotion_from_text(self, text: str) -> Dict[str, Any]:
         """
@@ -87,38 +102,55 @@ class EmotionService:
                     'model': 'rule_based'
                 }
             
+            # Debug logging
+            logger.info(f"TRANSFORMERS_AVAILABLE: {TRANSFORMERS_AVAILABLE}")
+            logger.info(f"text_emotion_pipeline exists: {self.text_emotion_pipeline is not None}")
+            logger.info(f"Input text: '{text}'")
+            
             # Use transformer model if available
             if TRANSFORMERS_AVAILABLE and self.text_emotion_pipeline:
                 logger.info("Using AI-based emotion detection (transformer model)")
-                # Get emotion prediction
-                result = self.text_emotion_pipeline(text)
-                
-                # Extract emotion and confidence
-                emotion = result[0]['label'].lower()
-                confidence = result[0]['score']
-                
-                # Map to supported emotions
-                emotion = self._map_emotion(emotion)
-                
-                # Get emoji for emotion
-                emoji = Config.get_emotion_emoji(emotion)
-                
-                logger.info(f"Text emotion detected: {emotion} (confidence: {confidence:.3f})")
-                
-                return {
-                    'emotion': emotion,
-                    'confidence': confidence,
-                    'emoji': emoji,
-                    'model': 'text_classification',
-                    'original_text': text
-                }
+                try:
+                    # Get emotion prediction
+                    result = self.text_emotion_pipeline(text)
+                    logger.info(f"Raw pipeline result: {result}")
+                    
+                    # Extract emotion and confidence
+                    emotion = result[0]['label'].lower()
+                    confidence = result[0]['score']
+                    
+                    # Map to supported emotions
+                    emotion = self._map_emotion(emotion)
+                    
+                    # Get emoji for emotion
+                    emoji = Config.get_emotion_emoji(emotion)
+                    
+                    logger.info(f"Text emotion detected: {emotion} (confidence: {confidence:.3f})")
+                    
+                    return {
+                        'emotion': emotion,
+                        'confidence': confidence,
+                        'emoji': emoji,
+                        'model': 'text_classification',
+                        'original_text': text
+                    }
+                except Exception as pipeline_error:
+                    logger.error(f"Pipeline execution failed: {str(pipeline_error)}")
+                    import traceback
+                    logger.error(f"Pipeline error traceback: {traceback.format_exc()}")
+                    # Fall through to rule-based detection
             else:
                 logger.info("Using rule-based emotion detection (fallback)")
-                # Fallback to rule-based emotion detection
-                return self._detect_emotion_rule_based(text)
+                logger.info(f"TRANSFORMERS_AVAILABLE: {TRANSFORMERS_AVAILABLE}")
+                logger.info(f"Pipeline exists: {self.text_emotion_pipeline is not None}")
+            
+            # Fallback to rule-based emotion detection
+            return self._detect_emotion_rule_based(text)
             
         except Exception as e:
             logger.error(f"Text emotion detection failed: {str(e)}")
+            import traceback
+            logger.error(f"Full error traceback: {traceback.format_exc()}")
             return self._detect_emotion_rule_based(text)
     
     def detect_emotion_from_audio(self, audio_data: bytes, audio_format: str = 'wav') -> Dict[str, Any]:
@@ -238,52 +270,63 @@ class EmotionService:
     
     def _map_emotion(self, emotion: str) -> str:
         """
-        Map detected emotion to supported emotion categories
-        Maps Go Emotions model outputs to our supported emotions
+        Map emotion labels to supported emotions
         
         Args:
-            emotion: Raw emotion from model
+            emotion: Raw emotion label from model
         
         Returns:
-            Mapped emotion
+            Mapped emotion label
         """
-        # Go Emotions model has 27 emotions, map to our 11 supported emotions
+        # Map from the emotion model's output to our supported emotions
         emotion_mapping = {
-            # Positive emotions
-            'joy': 'happy',
-            'amusement': 'happy',
-            'excitement': 'excited',
-            'gratitude': 'happy',
-            'love': 'happy',
-            'optimism': 'excited',
-            'relief': 'calm',
-            'pride': 'excited',
-            'admiration': 'happy',
-            'desire': 'excited',
-            'caring': 'calm',
-            'approval': 'happy',
-            'realization': 'surprise',
-            'curiosity': 'excited',
-            'interest': 'excited',
-            'surprise': 'surprise',
-            
-            # Negative emotions
-            'sadness': 'sad',
-            'grief': 'sad',
-            'disappointment': 'sad',
-            'remorse': 'sad',
-            'embarrassment': 'fear',
-            'nervousness': 'fear',
+            # m3hrdadfi/emotion-english-distilroberta-base model outputs
+            'joy': 'joy',
+            'sadness': 'sadness', 
+            'anger': 'anger',
             'fear': 'fear',
+            'surprise': 'surprise',
+            'love': 'love',
+            'neutral': 'neutral',
+            
+            # SamLowe/roberta-base-go_emotions model outputs (fallback)
+            'excitement': 'excitement',
+            'amusement': 'amusement',
+            'contentment': 'contentment',
+            'confusion': 'confusion',
+            'determination': 'determination',
+            'embarrassment': 'embarrassment',
+            'pride': 'pride',
+            'relief': 'relief',
+            'admiration': 'admiration',
+            'optimism': 'optimism',
+            'pessimism': 'pessimism',
+            'gratitude': 'gratitude',
             'disgust': 'disgust',
-            'anger': 'angry',
-            'annoyance': 'frustrated',
-            'disapproval': 'frustrated',
-            'confusion': 'frustrated',
-            'neutral': 'neutral'
+            
+            # Additional mappings for better coverage
+            'happy': 'joy',
+            'happiness': 'joy',
+            'glad': 'joy',
+            'sad': 'sadness',
+            'unhappy': 'sadness',
+            'mad': 'anger',
+            'furious': 'anger',
+            'scared': 'fear',
+            'terrified': 'fear',
+            'shocked': 'surprise',
+            'amazed': 'surprise',
+            'affection': 'love',
+            'romantic': 'love',
+            'calm': 'neutral',
+            'peaceful': 'neutral'
         }
         
-        return emotion_mapping.get(emotion.lower(), 'neutral')
+        # Clean the emotion label
+        emotion = emotion.lower().strip()
+        
+        # Return mapped emotion or original if not found
+        return emotion_mapping.get(emotion, emotion)
     
     def _detect_emotion_rule_based(self, text: str) -> Dict[str, Any]:
         """
@@ -438,7 +481,4 @@ class EmotionService:
                 
         except Exception as e:
             logger.error(f"Combined emotion detection failed: {str(e)}")
-            raise ModelError(f"Combined emotion detection failed: {str(e)}")
-
-# Global emotion service instance
-emotion_service = EmotionService() 
+            raise ModelError(f"Combined emotion detection failed: {str(e)}") 
